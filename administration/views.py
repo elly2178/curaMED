@@ -8,6 +8,7 @@ def location_create_view(request):
     form = AdministrationInformationForm(request.POST or None)
     if form.is_valid():
         form.save()
+        form = AdministrationInformationForm()
     context = {
         'form':form
     }

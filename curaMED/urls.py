@@ -27,10 +27,10 @@ urlpatterns = [
     path('', homepage_view, name = 'home'),
     #path('patients/', homepage_patients_view, name ='patientInformation'),
 
-    path('patient/', patient_detail_view, name ='patientDetail'),
+    path('patient/', patient_detail_view, name ='patients'),
     path('patient/create', patient_create_view, name ='patientCreate'),
 
-    path('modalities/', homepage_modalities_view, name ='modality'),
+    path('modalities/', homepage_modalities_view, name ='modalities'),
     path('modalities/create', modality_create_view, name ='modalityCreate'),
     
     path('administration/', homepage_administration_view, name ='administration'),

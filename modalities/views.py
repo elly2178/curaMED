@@ -8,6 +8,7 @@ def modality_create_view(request):
     form = ModalitiesInformationForm(request.POST or None)
     if form.is_valid():
         form.save()
+        form = ModalitiesInformationForm()
     context = {
         'form':form
     }
