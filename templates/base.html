@@ -15,10 +15,10 @@
 
     <body>
         <ul class="nav">
-            <li><a href="#home">Home</a></li>
-            <li><a href="{% url 'patientDetail'%}">Patienten</a></li> 
-            <li><a href="#modalities">Modalitäten</a></li> 
-            <li><a href="#admin">Administration</a> </li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'patientDetail' %}">Patienten</a></li> 
+            <li><a href="{% url 'modality' %}">Modalitäten</a></li> 
+            <li><a href="{% url 'administration' %}">Administration</a> </li>
         </ul> 
         {% block content %}
         this code will be replaced. just like you, if you are not good at your job
