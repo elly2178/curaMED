@@ -12,7 +12,7 @@ class PatientInformation(models.Model):
     geburtsdatum = models.DateField()
     adresse = models.CharField(max_length=50)
     plz = models.CharField(max_length=4)
-    sprache = models.CharField(max_length=10)
+    language = models.CharField(max_length=10)
     #telefon = PhoneNumberField(null=False, blank=False, unique=True)
     
 

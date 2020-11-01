@@ -11,7 +11,7 @@ class PatientInformationForm(forms.ModelForm):
         widget=forms.DateInput(attrs={"placeholder": "Jahr-Monat-Tag"}))
     adresse = forms.CharField()
     plz = forms.CharField()
-    sprache = forms.CharField(required=False)
+    language = forms.CharField(required=False)
     #telefon = PhoneNumberField()
     class Meta: 
         model = PatientInformation
@@ -22,6 +22,6 @@ class PatientInformationForm(forms.ModelForm):
             'geburtsdatum',
             'adresse',
             'plz',
-            'sprache'
+            'language'
             #'telefon'
         ]

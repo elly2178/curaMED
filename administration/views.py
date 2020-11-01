@@ -5,6 +5,13 @@ from .forms import AdministrationInformationForm
 
 
 # Create your views here.
+def location_list_view(request):
+    queryset = AdministrationInformation.objects.all()
+    context ={
+        'object_list': queryset
+    }
+    return render(request, 'administration/location_list.html', context)
+
 def location_delete_view(request,id):
     obj = get_object_or_404(AdministrationInformation, id=id)
     if request.method =='POST':
