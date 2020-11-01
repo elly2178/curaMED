@@ -1,12 +1,19 @@
-
 {% extends 'base.html' %} 
+ 
+
 
 {% block content %}
+
+
 <h2>Lists of adresses</h2>
 <br>
 
 {% for instance in object_list %}
-<p> {{ instance.id }} = {{ instance.street}} </p>
+
+<li>{{ instance.id }} = {{ instance.street}}  </li>   
+ 
+
+ 
 {% endfor %}
 
 {% endblock %}

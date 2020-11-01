@@ -4,9 +4,23 @@
 {% block content %}
 <h2>Lists of patients</h2>
 <br>
-
 {% for instance in object_list %}
-<p> {{ instance.id }} = {{ instance.name}} </p>
+<div class="card" style="width: 25rem;">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{instance.first_name}} {{ instance.second_name}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">ID: {{instance.id}}</h6>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{ instance.birthdate }}</li>
+        <li class="list-group-item">{{ instance.address }}</li>
+        <li class="list-group-item"> {{ instance.code }}</li>
+        <li class="list-group-item"> {{ instance.language }}</li>
+      </ul>
+      <a href="/templates/patient/patient_edit.html" class="btn btn-primary">Patient bearbeiten</a>
+    </div>
+  </div>
+
+
 {% endfor %}
 
 {% endblock %}

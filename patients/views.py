@@ -12,17 +12,17 @@ def patient_list_view(request):
         'object_list': queryset
     }
     return render(request, 'patient/patient_list.html', context)
+
 def patient_delete_view(request,id):
     obj = get_object_or_404(PatientInformation, id=id)
     if request.method =='POST':
         obj.delete()
         #make the redirect to another page
         return redirect('../../')
-    
     context = {
         'object':obj
     }
-    return render(request, 'patient/patient_delete.html', context)
+    return render(request,'patient/patient_delete.html', context)
 
 def patient_create_view(request):
     form = PatientInformationForm(request.POST or None)

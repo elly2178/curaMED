@@ -28,7 +28,7 @@ urlpatterns = [
    
     #path('patient/', patient_detail_view, name ='patients'),
     path('patient/create', patient_create_view, name ='patientCreate'),
-    path('patient/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
+    path('patient/list/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
     path('patient/list/', patient_list_view, name ='patients'),
     
     #path('modalities/', homepage_modalities_view, name ='modalities'),
