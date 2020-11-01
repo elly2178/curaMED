@@ -3,6 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import PatientInformation
 from .forms import PatientInformationForm
 
+#for translation
+from django.utils.translation import gettext as _
 
 # Create your views here.
 def patient_delete_view(request,id):
@@ -23,7 +25,7 @@ def patient_create_view(request):
         form.save()
         form = PatientInformationForm()
     context = {
-        'form':form
+        'form':_(form)
     }
     return render(request, 'patient/create.html', context)
 

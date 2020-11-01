@@ -8,6 +8,7 @@ class ModalitiesInformationForm(forms.ModelForm):
     {"placeholder": "Ultraschall"}))
     description = forms.CharField(required=False)
     status = forms.CharField(required=False)
+    
     class Meta: 
         model = ModalitiesInformation
         fields = [
