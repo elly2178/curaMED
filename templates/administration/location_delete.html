@@ -1,0 +1,12 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<h2>Standort löschen</h2>
+<br>
+<form method='POST'> {% csrf_token %}
+    <h4> Möchten Sie der Standort "
+        {{ object.street}}" löschen?</h4>
+    <input type='submit' value ='Ja'/>
+    <a href='../'>Nein</a>
+</form>
+{% endblock %}

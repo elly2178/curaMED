@@ -18,9 +18,9 @@ from django.urls import path
 
 #own imports
 from pages.views import homepage_view, homepage_administration_view, homepage_modalities_view
-from patients.views import patient_detail_view, patient_create_view
-from modalities.views import modality_create_view, modality_detail_view
-from administration.views import location_create_view, location_detail_view
+from patients.views import patient_detail_view, patient_create_view, patient_delete_view
+from modalities.views import modality_create_view, modality_detail_view, modality_delete_view
+from administration.views import location_create_view, location_detail_view, location_delete_view
 # homepage_patients_view,
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,10 +29,13 @@ urlpatterns = [
 
     path('patient/', patient_detail_view, name ='patients'),
     path('patient/create', patient_create_view, name ='patientCreate'),
-
+    path('patient/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
+    
     path('modalities/', homepage_modalities_view, name ='modalities'),
     path('modalities/create', modality_create_view, name ='modalityCreate'),
-    
+    path('modalities/<int:id>/delete/', modality_delete_view, name ='modalityDelete'),
+
     path('administration/', homepage_administration_view, name ='administration'),
     path('administration/create', location_create_view, name ='locationCreate'),
+    path('administration/<int:id>/delete/', location_delete_view, name ='locationDelete'),
 ]
