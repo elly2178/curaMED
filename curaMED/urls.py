@@ -17,12 +17,14 @@ from django.contrib import admin
 from django.urls import path
 
 #own imports
+from django.views.generic import RedirectView
 from pages.views import homepage_view, homepage_administration_view, homepage_modalities_view
 from patients.views import patient_create_view, patient_delete_view, patient_list_view
 from modalities.views import modality_create_view, modality_detail_view, modality_delete_view, modality_list_view
 from administration.views import location_create_view, location_detail_view, location_delete_view, location_list_view
  
 urlpatterns = [
+    path(r'^favicon\.ico$',RedirectView.as_view(url='/static/images/favicon.ico')),
     path('admin/', admin.site.urls),
     path('', homepage_view, name = 'home'),
    
