@@ -20,19 +20,3 @@ def homepage_modalities_view(request, *args, **kwargs):
 
 def homepage_administration_view(request, *args, **kwargs):
     return render(request, "administration/detail.html", {})
-
-# def patientspage_view(request, *args, **kwargs):
-#     my_context = {
-#         # add here the context you desire to have on your page
-#         "Name": "Patient Name", 
-#         "Vorname" : "Patient Vorname",
-
-#         "this_is_true": True,
-#         "my_number" : 123,
-#         #afre making the dictionary, go to the about.html
-#         "my_list": [23456,4567,78952,321,89, "Abc"]
-#     }
-#     return render(request, 'about.html',my_context) 
-
-def bootie_view(request,*args, **kwargs):
-    return render(request, 'bootie.html', {})

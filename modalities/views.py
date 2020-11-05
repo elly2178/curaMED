@@ -5,6 +5,13 @@ from .forms import ModalitiesInformationForm
 
 
 # Create your views here.
+def modality_list_view(request):
+    queryset = ModalitiesInformation.objects.all()
+    context ={
+        'object_list': queryset
+    }
+    return render(request, 'modality/modality_list.html', context)
+
 def modality_delete_view(request,id):
     obj = get_object_or_404(ModalitiesInformation, id=id)
     if request.method =='POST':

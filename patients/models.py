@@ -7,12 +7,12 @@ from django.urls import reverse
 class PatientInformation(models.Model):
     sex=[('male','Herr'),('female','Frau')]
     title =  models.CharField(max_length=6,choices=sex)
-    name = models.CharField(max_length=50)
-    vorname = models.CharField(max_length=50)
-    geburtsdatum = models.DateField()
-    adresse = models.CharField(max_length=50)
-    plz = models.CharField(max_length=4)
-    sprache = models.CharField(max_length=10)
+    first_name = models.CharField(max_length=50)
+    second_name = models.CharField(max_length=50)
+    birthdate = models.DateField()
+    address = models.CharField(max_length=50)
+    code = models.CharField(max_length=4)
+    language = models.CharField(max_length=10)
     #telefon = PhoneNumberField(null=False, blank=False, unique=True)
     
 
