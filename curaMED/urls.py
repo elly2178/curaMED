@@ -14,22 +14,42 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import path
 
 #own imports
 from django.views.generic import RedirectView
 from pages.views import homepage_view, homepage_administration_view, homepage_modalities_view
- 
-from modalities.views import modality_create_view, modality_detail_view, modality_delete_view, modality_list_view
-from administration.views import location_create_view, location_detail_view, location_delete_view, location_list_view
- 
+
+#own imports
+from patients.views import(
+    patient_create_view, 
+    patient_delete_view, 
+    patient_list_view, 
+    patient_search_view
+     #, patient_edit_view
+)
+from modalities.views import(
+    modality_create_view, 
+    modality_detail_view, 
+    modality_delete_view, 
+    modality_list_view
+)
+from administration.views import(
+     location_create_view, 
+     location_detail_view, 
+     location_delete_view, 
+     location_list_view
+)
 urlpatterns = [
     path(r'^favicon\.ico$',RedirectView.as_view(url='/static/images/favicon.ico')),
     path('admin/', admin.site.urls),
     path('', homepage_view, name = 'home'),
 
-    path('patients/', include('patients.urls')),
-    path('modalities/', include('modalities.urls')),
+    path('patients/create/', patient_create_view, name ='patientCreate'),
+    path('patients/list/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
+    path('patients/list/', patient_list_view, name ='patients'),
+    # path('patients/list/<int:id>/edit/', patient_edit_view, name ='patientEdit'),
+    path('patients/search/', patient_search_view, name = 'patientSearch'),
 
     #path('modalities/', homepage_modalities_view, name ='modalities'),
     path('modalities/create', modality_create_view, name ='modalityCreate'),
