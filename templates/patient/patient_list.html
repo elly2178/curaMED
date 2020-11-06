@@ -2,7 +2,18 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-<h2>Lists of patients</h2>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <form class="form-inline my-2 my-lg-0" action ="{% url 'patientSearch' %}" method="GET">
+      <input class="form-control mr-sm-2" type="search" placeholder="Patient suchen" aria-label="Search">
+      {% for i in post %}
+      <a href="../patient/patient_list.html/{{ i.slug }}">{{ i.title }}: {{i.snipet}}</a>
+      {% endfor %}
+      <!-- search bar does not work... fuck-->
+      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Suchen</button>
+    </form>
+</nav>
+
+<h2>Patientenliste</h2>
 <br>
 {% for instance in object_list %}
 <div class="card border-info mb-3 w-100" >
@@ -27,8 +38,9 @@
         <li class="list-group-item">{{ instance.address }}</li>
         <li class="list-group-item"> {{ instance.code }}</li>
         <li class="list-group-item"> {{ instance.language }}</li>
-      </ul>
-      <a href="/templates/patient/patient_edit.html" class="btn btn-primary">Patient bearbeiten</a>
+      </ul>  
+      <a href="#fuck" class="btn btn-outline-primary">Patient bearbeiten</a>
+      <a href="#fuck" class="btn btn-outline-primary">Patient bearbeiten</a>
     </div>
   </div>
 

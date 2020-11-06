@@ -5,6 +5,7 @@ from .forms import AdministrationInformationForm
 
 
 # Create your views here.
+# nu cred ca iti tre location list
 def location_list_view(request):
     queryset = AdministrationInformation.objects.all()
     context ={
