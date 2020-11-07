@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path 
 
 #own imports
 from django.views.generic import RedirectView
@@ -25,8 +25,9 @@ from patients.views import(
     patient_create_view, 
     patient_delete_view, 
     patient_list_view, 
-    patient_search_view
-     #, patient_edit_view
+    patient_search_view,
+    patient_detail_view
+    
 )
 from modalities.views import(
     modality_create_view, 
@@ -44,12 +45,13 @@ urlpatterns = [
     path(r'^favicon\.ico$',RedirectView.as_view(url='/static/images/favicon.ico')),
     path('admin/', admin.site.urls),
     path('', homepage_view, name = 'home'),
-
+ 
     path('patients/create/', patient_create_view, name ='patientCreate'),
     path('patients/list/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
     path('patients/list/', patient_list_view, name ='patients'),
     # path('patients/list/<int:id>/edit/', patient_edit_view, name ='patientEdit'),
     path('patients/search/', patient_search_view, name = 'patientSearch'),
+    path('patients/<int:id>/detail/', patient_detail_view, name ='patientDetail'),
 
     #path('modalities/', homepage_modalities_view, name ='modalities'),
     path('modalities/create', modality_create_view, name ='modalityCreate'),

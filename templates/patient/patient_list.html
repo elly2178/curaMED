@@ -39,7 +39,8 @@
         <li class="list-group-item"> {{ instance.code }}</li>
         <li class="list-group-item"> {{ instance.language }}</li>
       </ul>  
-      <a href="#fuck" class="btn btn-outline-primary">Patient bearbeiten</a>
+      <!-- aici ai eroarea cu reverse for patients detail with no argument pattern-->
+      <a href="{% url 'patientDetail' 13 %}" class="btn btn-outline-primary">Patient bearbeiten</a>
       <a href="#fuck" class="btn btn-outline-primary">Patient bearbeiten</a>
     </div>
   </div>

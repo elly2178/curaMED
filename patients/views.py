@@ -1,8 +1,12 @@
 
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import (
+    render, get_object_or_404, redirect)
+from django.urls import reverse
 from .models import PatientInformation
 from .forms import PatientInformationForm
-
+from django.views.generic import(
+    DetailView
+)
 
 
 # Create your views here.
@@ -16,9 +20,16 @@ def patient_update_view(request, id= id):
         'form' : form
     }
     return render(request, 'patient/patient_create.html', context)
+
 # asta e nou
-def patietn_detail_view(request, id):
-    obj = get_object_or_404(PatientInformation, id = id)
+# class PatientDetailView(DetailView):
+#     template_name = 'patient/patient_detail.html'
+#     def get_object(self):
+#         id_ = self.kwargs.get("id")
+#         return get_object_or_404(PatientInformation, id=id_)
+
+def patient_detail_view(request, id):
+    obj = get_object_or_404(PatientInformation, id=id)
     context ={
         'object' : obj
     }
