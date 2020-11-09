@@ -3,12 +3,13 @@
 
 {% block content %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <form class="form-inline my-2 my-lg-0" action ="{% url 'patientSearch' %}" method="GET">
-      <input class="form-control mr-sm-2" type="search" placeholder="Patient suchen" aria-label="Search">
-      {% for i in post %}
-      <a href="../patient/patient_list.html/{{ i.slug }}">{{ i.title }}: {{i.snipet}}</a>
-      {% endfor %}
-      <!-- search bar does not work... fuck-->
+    <form class="form-inline my-2 my-lg-0" action ="# patientSearch " method="GET">
+      <input class="form-control mr-sm-2" type="text" 
+      name ='q' id= 'id_q' placeholder="Patient suchen" aria-label="Search">
+      <script type="text/javascript">
+      document.getElementById("id_q").value="{{query}}"
+      </script>
+       
       <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Suchen</button>
     </form>
 </nav>
@@ -40,8 +41,9 @@
         <li class="list-group-item"> {{ instance.language }}</li>
       </ul>  
       <!-- aici ai eroarea cu reverse for patients detail with no argument pattern-->
-      <a href="{% url 'patientDetail' 13 %}" class="btn btn-outline-primary">Patient bearbeiten</a>
-      <a href="#fuck" class="btn btn-outline-primary">Patient bearbeiten</a>
+      <a href="{% url 'patientDetail' instance.id %}" 
+       class="btn btn-outline-primary">Patient bearbeiten</a>
+      <a href="#fuck" class="btn btn-outline-primary">Worklist erstellen</a>
     </div>
   </div>
 

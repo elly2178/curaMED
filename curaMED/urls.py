@@ -22,12 +22,14 @@ from pages.views import homepage_view, homepage_administration_view, homepage_mo
 
 #own imports
 from patients.views import(
-    patient_create_view, 
+    #patient_create_view, 
     patient_delete_view, 
     patient_list_view, 
-    patient_search_view,
-    patient_detail_view
-    
+    #patient_search_view,
+    #patient_detail_view
+    PatientDetailView,
+    PatientCreateView
+     
 )
 from modalities.views import(
     modality_create_view, 
@@ -39,19 +41,20 @@ from administration.views import(
      location_create_view, 
      location_detail_view, 
      location_delete_view, 
-     location_list_view
+     location_view 
 )
 urlpatterns = [
     path(r'^favicon\.ico$',RedirectView.as_view(url='/static/images/favicon.ico')),
     path('admin/', admin.site.urls),
     path('', homepage_view, name = 'home'),
  
-    path('patients/create/', patient_create_view, name ='patientCreate'),
+    path('patients/list/create/', PatientCreateView.as_view(), name ='patientCreate'),
     path('patients/list/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
+   
     path('patients/list/', patient_list_view, name ='patients'),
     # path('patients/list/<int:id>/edit/', patient_edit_view, name ='patientEdit'),
-    path('patients/search/', patient_search_view, name = 'patientSearch'),
-    path('patients/<int:id>/detail/', patient_detail_view, name ='patientDetail'),
+    #path('patients/search/', patient_search_view, name = 'patientSearch'),
+    path('patients/<int:id>/detail/', PatientDetailView.as_view(), name ='patientDetail'),
 
     #path('modalities/', homepage_modalities_view, name ='modalities'),
     path('modalities/create', modality_create_view, name ='modalityCreate'),
@@ -61,5 +64,7 @@ urlpatterns = [
     #path('administration/', homepage_administration_view, name ='administration'),
     path('administration/create', location_create_view, name ='locationCreate'),
     path('administration/<int:id>/delete/', location_delete_view, name ='locationDelete'),
-    path('administration/list', location_list_view, name ='administration'),
+    path('administration/list', location_view, name ='administration'),
+    path('administration/list/detail/<int:id>', location_detail_view, name ='locationDetail'),
+   
 ]

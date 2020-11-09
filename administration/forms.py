@@ -3,23 +3,30 @@ from django import forms
 from.models import AdministrationInformation
 
 class AdministrationInformationForm(forms.ModelForm):
-    strasse =  forms.CharField(
+    street =  forms.CharField(label='Strasse',
         widget=forms.TextInput(attrs=
     {"placeholder": "Mittlerestrasse"}))
-    stadt =  forms.CharField(
-        widget=forms.TextInput(attrs=
-    {"placeholder": "Zürich"}))
-    plz =  forms.CharField(
-        widget=forms.TextInput(attrs=
-    {"placeholder": "8000"}))
-    nummer =  forms.CharField(
+    number =  forms.CharField(label='Nr.',
         widget=forms.TextInput(attrs=
     {"placeholder": "28"}))
+    city =  forms.CharField(label='Stadt',
+        widget=forms.TextInput(attrs=
+    {"placeholder": "Zürich"}))
+    plz =  forms.CharField(label='PLZ',
+        widget=forms.TextInput(attrs=
+    {"placeholder": "8000"}))
+    
+    telefon_number = forms.CharField(label='Telefon Nr.',
+    widget=forms.TextInput(attrs=
+    {"placeholder": "123456789"}))
+   
     class Meta: 
         model = AdministrationInformation
         fields = [
              'street',
              'city',
              'plz',
-             'number'
+             'number',
+             'telefon_number',
         ]
+

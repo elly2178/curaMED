@@ -36,7 +36,7 @@
       <!-- <a href="#Patienten suche" button type="button" class="btn btn-link btn-sm">Patient suchen</a>
       pat suchen nicht mehr sondern auf gleichen seite wie pat liste-->
       
-      <a href="#Patienten erstellen" button type="button" class="btn btn-link btn-sm">Patient erstellen</a>
+      <a href="{% url 'patientCreate' %}" button type="button" class="btn btn-link btn-sm">Patient erstellen</a>
       <a href="#Patienten importieren" button type="button" class="btn btn-link btn-sm">Patienten importieren</a>
     </div>
   </div>
@@ -44,7 +44,7 @@
   <div class="card border-info">
       <div class="card-body">
         <h5 class="card-title">Modalitäten</h5>
-        <a href="#Neue Modalität hinzufügen" button type="button" class="btn btn-link btn-sm">Neue Modalität</a>
+        <a href="{% url 'modalityCreate' %}" button type="button" class="btn btn-link btn-sm">Neue Modalität</a>
         <a href="{% url 'modalities' %}" button type="button" class="btn btn-link btn-sm">Modalitäten anzeigen</a>
         <a href="/templates/modality/modality_delete.html" button type="button" class="btn btn-link btn-sm">Modalität entfernen</a>
       </div>
@@ -53,7 +53,8 @@
   <div class="card border-info">
     <div class="card-body">
       <h5 class="card-title">Administration</h5>
-      <a href=" {% url 'administration' %}" button type="button" class="btn btn-link btn-sm">Standort konfigurieren</a>
+      <a href=" {% url 'locationCreate' %}" button type="button" class="btn btn-link btn-sm">Standort konfigurieren</a>
+      <a href=" {% url 'administration' %}" button type="button" class="btn btn-link btn-sm">Standortliste</a>
     </div>
   </div>
 </div>

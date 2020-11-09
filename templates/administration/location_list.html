@@ -8,12 +8,37 @@
 <h2>Addresse konfigurieren</h2>
 <br>
 
-{% for instance in object_list %}
+{% for object in object_list %}
+<div class="card border-info mb-3 w-100" >
+    <div class="card-body">
+    <div class="container">
+      <div class="row">
+        <div class = "card w-2">
+        <div class="col">
+          <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
+        </div>
+      </div>
+        <div class="col-15">
+          <h5 class="card-title">{{object.id}} {{ object.street}}</h5>
+        </div>
+      </div>
+    </div>
+     
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Strasse: {{ object.street }}</li>
+          <li class="list-group-item">Stadt: {{ object.city }}</li>
+          <li class="list-group-item">PLZ: {{ object.plz }}</li>
+          <li class="list-group-item">Nr: {{ object.number }}</li>
+          <li class="list-group-item">Telefon nummer: {{ object.telefon_number }}</li>
+        </ul>  
+        
+        <a href="{% url 'locationDetail' object.id %}" 
+         class="btn btn-outline-primary">Standort bearbeiten</a>
+        
+      </div>
+    </div>
 
-<li>{{ instance.id }} = {{ instance.street}}  </li>   
- 
 
- 
 {% endfor %}
 
 {% endblock %}

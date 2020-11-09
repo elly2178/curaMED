@@ -2,10 +2,10 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-<h2>Neuer Standord hinzufügen</h2>
+<h2>Neuen Standort hinzufügen</h2>
 
 <form method='POST'> {% csrf_token %}
     {{ form.as_p}}
-    <input type =  'submit' value ='Save'/>
+    <input type =  'submit' value ='Speichern' class="btn btn-outline-primary"/>
 </form>
 {% endblock %}

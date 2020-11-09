@@ -1,10 +1,82 @@
-
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 
-<h2>Patient Information detail</h2>
+<h2>Addresse</h2>
+<form method='POST'> {% csrf_token %}
+     
+    <div class="card border-info mb-3 w-100">
+        <div class="card-header">
+            ID: {{ object.id }}
+          </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Strasse: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" placeholder='{{ object.street }}'>
+                        </div>
+                    </div>
+                </li>
 
-<p> {{ object.name}}</p>
- 
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Nr.: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" placeholder='{{ object.number }}'>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Stadt: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" placeholder='{{ object.city }}'>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>PLZ: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" placeholder='{{ object.plz }}'>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Telefon Nr.: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" placeholder='{{ object.telefon_number }}'>
+                        </div>
+                    </div>
+                </li>
+
+
+        </div>
+
+    </div>
+    <input type='submit' value='Ändern' class="btn btn-outline-primary"
+    />
+   
+</form>
+
+
+
 {% endblock %}
