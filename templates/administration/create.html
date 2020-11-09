@@ -1,11 +1,83 @@
-
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 <h2>Neuen Standort hinzufügen</h2>
 
 <form method='POST'> {% csrf_token %}
-    {{ form.as_p}}
-    <input type =  'submit' value ='Speichern' class="btn btn-outline-primary"/>
+
+  <div class="card border-info mb-3">
+    <div class="card-body">
+      <div class="container">
+        <div class="row">
+          <div class="card w-2">
+            <div class="col">
+
+              <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col">
+              <label>Strasse: </label>
+            </div>
+            <div class="col">
+               {{form.street}}
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col">
+              <label>NR.: </label>
+            </div>
+            <div class="col">
+              {{form.number}}
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col">
+              <label>Stadt: </label>
+            </div>
+            <div class="col">
+              {{form.city}}
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col">
+              <label>PLZ: </label>
+            </div>
+            <div class="col">
+              {{form.plz}}
+            </div>
+          </div>
+        </li>
+        
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col">
+              <label>Telefon Nr.: </label>
+            </div>
+            <div class="col">
+              {{form.telefon_number}}
+            </div>
+          </div>
+        </li>
+        
+    </div>
+  </div> 
+   
+<input type='submit' value='Speichern' class="btn btn-outline-primary" />
+ 
+
 </form>
 {% endblock %}

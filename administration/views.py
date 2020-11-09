@@ -36,7 +36,6 @@ def location_delete_view(request,id):
     return render(request, 'administration/location_delete.html', context)
 
 def location_create_view(request):
-    
     # more addressen für einfügen
     form = AdministrationInformationForm(request.POST or None)
     if form.is_valid():

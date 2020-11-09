@@ -16,15 +16,15 @@
 
   <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
 </head>
- 
-{% block content %}
 <nav class="navbar navbar-light">
   <a class="navbar-brand" href="#">
     <img src="/static/images/favicon.ico" width="30" height="30" alt="" loading="lazy">curaMED
   
   </a>
-</nav>
+</nav> 
+{% block content %}
 
+ 
 <h3>Wilkommen bei curaMED</h3>
 
 <div class="card-deck" style="width:auto">
@@ -63,5 +63,7 @@
       <h6 class="text-blue h4">Kontakt: dumig1@bfh.ch</h6>
       <h6 class="text-blue h4">Addresse: Quellgasse 21, 2502 Biel</h6>
     </nav>
+
+ 
 {% endblock %}
  
