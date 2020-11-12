@@ -28,21 +28,35 @@ def patient_update_view(request, id= id):
     return render(request, 'patient/patient_create.html', context)
 
 # asta e nou
-class PatientDetailView(DetailView):
-    template_name = 'patient/patient_detail.html'
-    def get(self, request, id = None, *args, **kwargs):
-        context = {}
-        if id is not None:
-           obj = get_object_or_404(PatientInformation, id =id)
-           context['object'] = obj
-        return render(request, self.template_name, context)
+# class PatientDetailView(DetailView):
+#     template_name = 'patient/patient_detail.html'
+#     def get(self, request, id = None, *args, **kwargs):
+#         context = {}
+#         if id is not None:
+#            obj = get_object_or_404(PatientInformation, id =id)
+#            context['object'] = obj
+        
+#         #return redirect('patients')
+#         return render(request, self.template_name, context)
 
 def patient_detail_view(request, id):
     obj = get_object_or_404(PatientInformation, id=id)
-    context ={
-        'object' : obj
+    form = PatientInformationForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        form = PatientInformationForm()
+        return redirect('patients')
+    context = {
+        'object': obj
     }
     return render(request, 'patient/patient_detail.html', context)
+
+# def patient_detail_view(request, id):
+#     obj = get_object_or_404(PatientInformation, id=id)
+#     context ={
+#         'object' : obj
+#     }
+#     return render(request, 'patient/patient_detail.html', context)
 
 # def patient_search_view(request):
 #     if request.method =='GET':
@@ -110,7 +124,7 @@ class PatientCreateView(View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        #post method
+        #post method 
         form = PatientInformationForm(request.POST)
         if form.is_valid():
             form.save()

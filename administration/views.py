@@ -8,7 +8,7 @@ from django.views.generic import (
 )
 
 # Create your views here.
-# nu cred ca iti tre location list
+ 
 def location_view(request):
     queryset = AdministrationInformation.objects.all()
     context = {
@@ -16,13 +16,7 @@ def location_view(request):
     }
     return render(request, 'administration/location_list.html', context)
 
-# def location_list_view(request):
-#     queryset = AdministrationInformation.objects.all()
-#     context ={
-#         'object_list': queryset
-#     }
-#     return render(request, 'administration/location_list.html', context)
-
+ 
 def location_delete_view(request,id):
     obj = get_object_or_404(AdministrationInformation, id=id)
     if request.method =='POST':
@@ -50,7 +44,9 @@ def location_create_view(request):
 def location_detail_view(request, id):
     obj = get_object_or_404(AdministrationInformation, id=id)
     form = AdministrationInformationForm(request.POST or None, instance=obj)
+    print("REQUEST is " + str(dir(request)))
     if form.is_valid():
+        print("FORM is valid")
         form.save()
         form = AdministrationInformationForm()
         return redirect('administration')

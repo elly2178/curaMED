@@ -29,57 +29,59 @@
 </head>
 
 <body>
+  <nav class="navbar sticky-top navbar-light bg-light">
 
-  <div class="card text-center">
-    <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs">
-        <img src="/static/images/favicon.ico" width="30" height="30" alt="" loading="lazy">
-        <li class="nav-item">
-          <a class="nav-link home" href="{% url 'home' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPatientenButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Patienten
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownPatientenButton">
-            <a class="dropdown-item" href="{% url 'patients' %}">Patientenliste</a>
+    <div class="card text-center w-100 ">
+      <div class="card-header  ">
+        <ul class="nav ">
+          <img src="/static/images/favicon.ico" width="30" height="30" alt="" loading="lazy">
+          <li class="nav-item">
+            <a class="nav-link home" href="{% url 'home' %}">Home</a>
+          </li>
 
-            <a class="dropdown-item" href="{% url 'patientCreate' %}">Patient erstellen</a>
-            <a class="dropdown-item" href="#">Patienten importieren</a>
-          </div>
-        </li>
-        <li class="nav-item">
+          <li class="nav-item dropdown">
+            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPatientenButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Patienten
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownPatientenButton">
+              <a class="dropdown-item" href="{% url 'patients' %}">Patientenliste</a>
+              <a class="dropdown-item" href="{% url 'patientCreate' %}">Patient erstellen</a>
+              <a class="dropdown-item" href="#">Patienten importieren</a>
+            </div>
+          </li>
 
-          <button class="btn btn-link dropdown-toggle" type="button" id="dropdownModalityButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Modalitäten
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownModalityButton">
-            <a class="dropdown-item" href="{% url 'modalityCreate' %}">Neue Modalität</a>
-            <a class="dropdown-item" href="{% url 'modalities' %}">Modalitäten anzeigen</a>
-            <a class="dropdown-item" href="#">Modalität entfernen</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <button class="btn btn-link dropdown-toggle" type="button" id="dropdownAdminButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Administration
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownAdminButton">
-            <a class="dropdown-item" href="{% url 'locationCreate' %}">Standort konfigurieren </a>
-            <a class="dropdown-item" href="{% url 'administration' %}">Standortliste</a>
+          <li class="nav-item dropdown">
+            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownModalityButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Modalitäten
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownModalityButton">
+              <a class="dropdown-item" href="{% url 'modalityCreate' %}">Neue Modalität</a>
+              <a class="dropdown-item" href="{% url 'modalities' %}">Modalitäten anzeigen</a>
+              <a class="dropdown-item" href="#">Modalität entfernen</a>
+            </div>
+          </li>
 
-        </li>
-      </ul>
+          <li class="nav-item dropdown">
+            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownAdminButton" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Administration
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownAdminButton">
+              <a class="dropdown-item" href="{% url 'locationCreate' %}">Standort konfigurieren </a>
+              <a class="dropdown-item" href="{% url 'administration' %}">Standortliste</a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    </ul>
-    <div class="container-md"> 
+  <div class="container-md">
     {% block content %}
     this code will be replaced. just like you, if you are not good at your job
     {% endblock %}
-    </div>
+  </div>
 
 
 </body>

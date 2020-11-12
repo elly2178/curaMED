@@ -11,6 +11,7 @@ class PatientInformation(models.Model):
     second_name = models.CharField(max_length=50)
     birthdate = models.DateField()
     address = models.CharField(max_length=50)
+    number = models.CharField(max_length=10)
     code = models.CharField(max_length=4)
     language = models.CharField(max_length=10)
     #telefon = PhoneNumberField(null=False, blank=False, unique=True)

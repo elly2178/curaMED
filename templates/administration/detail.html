@@ -3,9 +3,9 @@
 {% block content %}
 
 <h2>Addresse</h2>
-<form method='POST'> {% csrf_token %}
-     
-    <div class="card border-info mb-3 w-100">
+<form action='.' method='POST'> 
+    {% csrf_token %} 
+    <div class="card border-info mb-3 w-75">
         <div class="card-header">
             ID: {{ object.id }}
           </div>
@@ -17,7 +17,7 @@
                             <label>Strasse: </label>
                         </div>
                         <div class="col">
-                            <input type="text" placeholder='{{ object.street }}'>
+                            <input type="text" name="street" id="id_street" value='{{ object.street }}'>
                         </div>
                     </div>
                 </li>
@@ -28,7 +28,7 @@
                             <label>Nr.: </label>
                         </div>
                         <div class="col">
-                            <input type="text" placeholder='{{ object.number }}'>
+                            <input type="text" name="number" id="id_number" value='{{ object.number }}'>
                         </div>
                     </div>
                 </li>
@@ -39,7 +39,7 @@
                             <label>Stadt: </label>
                         </div>
                         <div class="col">
-                            <input type="text" placeholder='{{ object.city }}'>
+                            <input type="text" name="city" id="id_city" value='{{ object.city }}'>
                         </div>
                     </div>
                 </li>
@@ -51,7 +51,7 @@
                             <label>PLZ: </label>
                         </div>
                         <div class="col">
-                            <input type="text" placeholder='{{ object.plz }}'>
+                            <input type="text" name="plz" id="id_plz" value='{{ object.plz }}'>
                         </div>
                     </div>
                 </li>
@@ -63,14 +63,11 @@
                             <label>Telefon Nr.: </label>
                         </div>
                         <div class="col">
-                            <input type="text" placeholder='{{ object.telefon_number }}'>
+                            <input type="text" name="telefon_number" id="id_telefon_number" value='{{ object.telefon_number }}'>
                         </div>
                     </div>
                 </li>
-
-
         </div>
-
     </div>
     <input type='submit' value='Ändern' class="btn btn-outline-primary"
     />
