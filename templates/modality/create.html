@@ -5,7 +5,88 @@
 <h2> Neue Modalität hinzufügen</h2>
 
 <form method='POST'> {% csrf_token %}
-    {{ form.as_p}}
+    <!-- {{ form.as_p}} -->
+      
+    <div class="card border-info mb-3">
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="card w-2">
+                        <div class="col">
+
+                            <img src="/static/images/mri.png" class="card-img-top" width="55" height="45">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div> 
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>AETitle: </label>
+                        </div>
+                        <div class="col">
+                            {{form.title}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Beschreibung: </label>
+                        </div>
+                        <div class="col">
+                            {{form.description}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>IP: </label>
+                        </div>
+                        <div class="col">
+                            {{form.ip}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Port: </label>
+                        </div>
+                        <div class="col">
+                            {{form.port}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Status: </label>
+                        </div>
+                        <div class="col">
+                            {{form.status}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Standort: </label>
+                        </div>
+                        <div class="col">
+                            {{form.associate_location }}
+                        </div>
+                    </div>
+                </li>
+                 
+                 
+            </ul>
+        </div>
+    </div>
     <input type='submit' value ='Save'/>
 </form>
 {% endblock %}

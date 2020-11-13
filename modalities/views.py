@@ -27,6 +27,7 @@ def modality_delete_view(request,id):
 def modality_create_view(request):
     form = ModalitiesInformationForm(request.POST or None)
     if form.is_valid():
+        print("Form is " + str(dir(request)))
         form.save()
         form = ModalitiesInformationForm()
     context = {

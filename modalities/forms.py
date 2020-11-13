@@ -20,7 +20,8 @@ class ModalitiesInformationForm(forms.ModelForm):
     status = forms.CharField(required=False)
     ip = forms.GenericIPAddressField(label="IP Adresse")
     port = forms.CharField()
-    associate_location = StandortModelChoiceField(label="Standort",queryset=AdministrationInformation.objects.all(), to_field_name='street')
+    associate_location = StandortModelChoiceField(
+    label="Standort",queryset=AdministrationInformation.objects.all(), to_field_name='street')
 
     class Meta: 
         model = ModalitiesInformation

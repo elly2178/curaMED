@@ -3,17 +3,44 @@
 
 {% block content %}
 <h2>Lists of modalities</h2>
-<h1>bei pstienten: pat liste --> eine nutton für create neue radio auftrag
---> new page hier die worklist erstellen
-fpr modalitäten brauchst noch die attribute dafür --> EINE form erstellen
 
-im bestehende workist anzeigen --> was steht drin? welche pat, zeit, modalitäte
-
-</h1>
 <br>
 
 {% for instance in object_list %}
-<p> {{ instance.id }} = {{ instance.title}} </p>
+<div class="card border-info mb-3 w-100" >
+    <div class="card-body">
+    <div class="container">
+      <div class="row">
+        <div class = "card w-2">
+        <div class="col">
+          <img src="/static/images/mri.png" class="card-img-top" width="55" height="45">
+        </div>
+      </div>
+       
+        <div class="col-15">
+          <h5 class="card-title">{{instance.title}} </h5>
+        </div>
+      </div>
+    </div>
+      
+        
+         
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">AETitle: {{ instance.title }}</li>
+          <li class="list-group-item">Beschreibung: {{ instance.description }}</li>
+          <li class="list-group-item">IP: {{ instance.ip }}</li>
+          <li class="list-group-item">Port: {{ instance.port }}</li>
+          <li class="list-group-item">Status: {{ instance.status }}</li>
+          <li class="list-group-item"> Standort: {{ instance.associate_location }}</li>
+
+        </ul>  
+        <!-- aici ai eroarea cu reverse for patients detail with no argument pattern-->
+        <a href="#modalität bearbeiten" 
+         class="btn btn-outline-primary">Modalität bearbeiten</a>
+        <a href="#fuck" class="btn btn-outline-primary">Worklist erstellen</a>
+      </div>
+    </div>
+ 
 {% endfor %}
 
 {% endblock %}
