@@ -1,3 +1,4 @@
+from operator import attrgetter
 
 from django.shortcuts import (
     render, get_object_or_404, redirect)
@@ -67,29 +68,33 @@ def patient_detail_view(request, id):
 #         }
 #         return render(request, 'patient/patient_list.html', context )
 
-# def patient_search_view(queryset=None):
-#     queryset = []
-#     queriesList = query.split(" ")
-#     for q in queriesList:
-#         patients = PatientInformation.objects.filter(
-#             Q(first_name_icontains=q)|
-#             # | or
-#             Q(second_name_icontains=q)
-#         ).distinct()
-#         for patient in patients:
-#             queryset.append(patient)
-#     # return unique set        
-#     return list(set(queryset))
 
-# def patient_search_result_view(request):
-#     context = {
+def patient_search_view(query=None):
+    
+    queryset, queries = []
+    if query not None:
+        queries = query.split(' ')
+    
+    for q in queries:
+        patients = PatientInformation.objects.filter(
+            Q(first_name__icontains=q)|         
+            Q(second_name__icontains=q)
+        ).distinct()
+        for patient in patients:
+            queryset.append(patient)
+    # return unique set 
+    return list(set(queryset)) 
 
-#     }
-#     query = ''
-#     if request.GET:
-#         query = request.GET['g']
-#         context['query'] = str(query)
-#     return render(request, 'patients/patients_list.html', context)
+def patient_search_result_view(request):
+    # e posibil sa trebuiasca sa puui parte din cod in definitia pati list
+    context = {}
+    query = ''
+    if request.GET:
+        query = request.GET['q']
+        context['query'] = str(query)
+    patient = sorted(patient_search_view(query), key=attrgetter('id'), reverse=True)
+    context['object_list'] = patient
+    return render(request, 'patient/patient_list.html', context)
  
 def patient_list_view(request):
     queryset = PatientInformation.objects.all()

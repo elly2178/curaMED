@@ -3,6 +3,7 @@ from django import forms
 from.models import AdministrationInformation
 
 class AdministrationInformationForm(forms.ModelForm):
+    # add name of administration --> bröniman praxis
     street =  forms.CharField(label='Strasse',
         widget=forms.TextInput(attrs=
     {"placeholder": "Mittlerestrasse"}))

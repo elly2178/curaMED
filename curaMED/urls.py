@@ -22,11 +22,11 @@ from pages.views import homepage_view, homepage_administration_view, homepage_mo
 
 #own imports
 from patients.views import(
-    #patient_create_view, 
+    
     patient_delete_view, 
     patient_list_view, 
-    #patient_search_view,
-     
+    patient_search_view,
+    patient_search_result_view,
     patient_detail_view,
     PatientCreateView
      
@@ -53,7 +53,8 @@ urlpatterns = [
    
     path('patients/list/', patient_list_view, name ='patients'),
     # path('patients/list/<int:id>/edit/', patient_edit_view, name ='patientEdit'),
-    #path('patients/search/', patient_search_view, name = 'patientSearch'),
+    path('patients/search/', patient_search_view, name = 'patientSearch'),
+    path('patients/search/result', patient_search_result_view, name = 'searchResult'),
     path('patients/<int:id>/detail/', patient_detail_view, name ='patientDetail'),
 
     #path('modalities/', homepage_modalities_view, name ='modalities'),
