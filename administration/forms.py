@@ -3,7 +3,10 @@ from django import forms
 from.models import AdministrationInformation
 
 class AdministrationInformationForm(forms.ModelForm):
-    # add name of administration --> bröniman praxis
+    
+    name = forms.CharField(label='Betriebsname',
+    widget=forms.TextInput(attrs=
+    {"placeholder": "Praxis Brönnimann"}))
     street =  forms.CharField(label='Strasse',
         widget=forms.TextInput(attrs=
     {"placeholder": "Mittlerestrasse"}))
@@ -24,6 +27,7 @@ class AdministrationInformationForm(forms.ModelForm):
     class Meta: 
         model = AdministrationInformation
         fields = [
+            'name',
              'street',
              'city',
              'plz',

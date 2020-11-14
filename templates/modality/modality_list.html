@@ -2,7 +2,7 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-<h2>Lists of modalities</h2>
+<h2>Modalitäten liste</h2>
 
 <br>
 
@@ -37,7 +37,7 @@
         <!-- aici ai eroarea cu reverse for patients detail with no argument pattern-->
         <a href="#modalität bearbeiten" 
          class="btn btn-outline-primary">Modalität bearbeiten</a>
-        <a href="#fuck" class="btn btn-outline-primary">Worklist erstellen</a>
+        <a href="{% url 'modalityDelete' instance.id %}" class="btn btn-outline-primary">Modalität entfernen</a>
       </div>
     </div>
  

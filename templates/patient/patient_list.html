@@ -28,23 +28,24 @@
       </div>
     </div>
       <div class="col-15">
-        <h5 class="card-title">{{instance.first_name}} {{ instance.second_name}}</h5>
+        <h5 class="card-title">[ID: {{instance.id}}] {{instance.first_name}} {{ instance.second_name}}</h5>
       </div>
     </div>
   </div>
-    
-      
-      <h6 class="card-subtitle mb-2 text-muted">ID: {{instance.id}}</h6>
+     
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{ instance.birthdate }}</li>
-        <li class="list-group-item">{{ instance.address }}</li>
-        <li class="list-group-item"> {{ instance.code }}</li>
-        <li class="list-group-item"> {{ instance.language }}</li>
+        <li class="list-group-item">Geburtstag: {{ instance.birthdate }}</li>
+        <li class="list-group-item">Strasse: {{ instance.address }}</li>
+        <li class="list-group-item">NR.: {{ instance.number }}</li>
+        <li class="list-group-item">PLZ: {{ instance.code }}</li>
+        <li class="list-group-item">Sprache: {{ instance.language }}</li>
       </ul>  
       <!-- aici ai eroarea cu reverse for patients detail with no argument pattern-->
       <a href="{% url 'patientDetail' instance.id %}" 
        class="btn btn-outline-primary">Patient bearbeiten</a>
       <a href="#fuck" class="btn btn-outline-primary">Worklist erstellen</a>
+      <a href="{% url 'patientDelete' instance.id %}" 
+       class="btn btn-outline-primary">Patient loschen</a>
     </div>
   </div>
 

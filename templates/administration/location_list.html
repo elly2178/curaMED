@@ -5,7 +5,7 @@
 {% block content %}
 
 
-<h2>Addresse konfigurieren</h2>
+<h2>Standortliste</h2>
 <br>
 
 {% for object in object_list reversed %}
@@ -19,12 +19,13 @@
         </div>
       </div>
         <div class="col-15">
-          <h5 class="card-title">{{object.id}} {{ object.street}}</h5>
+          <h5 class="card-title"> {{ object.name}}</h5>
         </div>
       </div>
     </div>
      
         <ul class="list-group list-group-flush">
+          <li class="list-group-item">Strasse: {{ object.name }}</li>
           <li class="list-group-item">Strasse: {{ object.street }}</li>
           <li class="list-group-item">Stadt: {{ object.city }}</li>
           <li class="list-group-item">PLZ: {{ object.plz }}</li>
@@ -34,7 +35,8 @@
         
         <a href="{% url 'locationDetail' object.id %}" 
          class="btn btn-outline-primary">Standort bearbeiten</a>
-        
+         <a href="{% url 'locationDelete' object.id %}" 
+         class="btn btn-outline-primary">Standort löschen</a>
       </div>
     </div>
 

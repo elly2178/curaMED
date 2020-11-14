@@ -7,10 +7,21 @@
     {% csrf_token %} 
     <div class="card border-info mb-3 w-75">
         <div class="card-header">
-            ID: {{ object.id }}
+            Betriebsname: {{ object.name }}
           </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Betriebsname: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="name" id="id_name" value='{{ object.name }}'>
+                        </div>
+                    </div>
+                </li>
+
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
@@ -71,6 +82,7 @@
     </div>
     <input type='submit' value='Ändern' class="btn btn-outline-primary"
     />
+    <a href="{% url 'administration' %}"  class="btn btn-outline-primary">Abbrechen</a>
    
 </form>
 

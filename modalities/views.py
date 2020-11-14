@@ -17,7 +17,7 @@ def modality_delete_view(request,id):
     if request.method =='POST':
         obj.delete()
         #make the redirect to another page
-        return redirect('../../')
+        return redirect('modalities')
     
     context = {
         'object':obj
@@ -30,6 +30,7 @@ def modality_create_view(request):
         print("Form is " + str(dir(request)))
         form.save()
         form = ModalitiesInformationForm()
+        return redirect('modalities')
     context = {
         'form':form
     }

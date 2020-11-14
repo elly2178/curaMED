@@ -24,6 +24,16 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col">
+              <label>Betriebsname: </label>
+            </div>
+            <div class="col">
+               {{form.name}}
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col">
               <label>Strasse: </label>
             </div>
             <div class="col">
@@ -77,7 +87,7 @@
   </div> 
    
 <input type='submit' value='Speichern' class="btn btn-outline-primary" />
- 
+<a href="{% url 'administration' %}" class="btn btn-outline-primary" >Abbrechen</a>
 
 </form>
 {% endblock %}

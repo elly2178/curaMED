@@ -8,7 +8,33 @@
   
    <h4> Möchten Sie der Standort "
         {{ object.street}}" löschen?</h4>
-    <input type='submit' value ='Ja'/>
-    <a href='../'>Nein</a>
+        <div class="card border-info mb-3 w-100" >
+            <div class="card-body">
+            <div class="container">
+              <div class="row">
+                <div class = "card w-2">
+                <div class="col">
+                  <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
+                </div>
+              </div>
+                
+              </div>
+            </div>
+             
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"> Betriebsname: {{ object.name }}</li>
+                    <li class="list-group-item">Strasse: {{ object.street }}</li>
+                  <li class="list-group-item">Stadt: {{ object.city }}</li>
+                  <li class="list-group-item">PLZ: {{ object.plz }}</li>
+                  <li class="list-group-item">Nr.: {{ object.number }}</li>
+                  <li class="list-group-item">Telefon Nr.: {{ object.telefon_number }}</li>
+                  
+        
+                </ul>  
+              
+              </div>
+            </div>
+    <input type='submit' class="btn btn-outline-primary" value ='Ja'/>
+    <a href="{% url 'administration' %}" class="btn btn-outline-primary">Nein</a>
 </form>
 {% endblock %}

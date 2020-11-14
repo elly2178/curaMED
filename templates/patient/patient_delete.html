@@ -7,7 +7,36 @@
 <form method='POST'> {% csrf_token %}
     <h4> Möchten Sie der Patient "
         {{ object.first_name}}" löschen?</h4>
-    <input type='submit' value ='Ja'/>
-    <a href='../'>Nein</a>
+        <div class="card border-info mb-3 w-100" >
+            <div class="card-body">
+            <div class="container">
+              <div class="row">
+                <div class = "card w-2">
+                <div class="col">
+                  <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
+                </div>
+              </div>
+                
+              </div>
+            </div>
+            
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"> Geschlecht: {{ object.title }}</li>
+                    <li class="list-group-item">Vorname: {{ object.first_name }}</li>
+                  <li class="list-group-item">Nachname: {{ object.second_name }}</li>
+                  <li class="list-group-item">Geburtstag: {{ object.birthdate }}</li>
+                  <li class="list-group-item">Strasse.: {{ object.address }}</li>
+                  <li class="list-group-item">Nr.: {{ object.number }}</li>
+                  <li class="list-group-item">PLZ: {{ object.code }}</li>
+                  <li class="list-group-item">Sprache: {{ object.language }}</li>
+                  
+        
+                </ul>  
+              
+              </div>
+            </div>
+    <input type='submit' class="btn btn-outline-primary" value ='Ja'/>
+    <a href="{% url 'patients' %}" class="btn btn-outline-primary">Nein</a>
+ 
 </form>
 {% endblock %}

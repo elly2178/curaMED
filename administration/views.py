@@ -22,7 +22,7 @@ def location_delete_view(request,id):
     if request.method =='POST':
         obj.delete()
         #make the redirect to another page
-        return redirect('../../')
+        return redirect('administration')
     
     context = {
         'object':obj

@@ -12,7 +12,7 @@ class AdministrationInformation(models.Model):
     # order of the elements --> different
     # for loop for showing location --> latest first
     # set default one of them--> last added
-
+    name = models.CharField(max_length=100)
     street = models.CharField(max_length=80)
     city = models.CharField(max_length=40)
     plz = models.CharField(max_length=4)

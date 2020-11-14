@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'patients',
     'administration',
     'modalities',
+    'worklists'
 ]
 
 MIDDLEWARE = [

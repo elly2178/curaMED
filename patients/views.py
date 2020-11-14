@@ -71,8 +71,9 @@ def patient_detail_view(request, id):
 
 def patient_search_view(query=None):
     
-    queryset, queries = []
-    if query not None:
+    queryset= []
+    queries = []
+    if query is not None:
         queries = query.split(' ')
     
     for q in queries:

@@ -28,7 +28,8 @@ from patients.views import(
     patient_search_view,
     patient_search_result_view,
     patient_detail_view,
-    PatientCreateView
+    PatientCreateView,
+    patient_delete_view
      
 )
 from modalities.views import(
@@ -56,6 +57,7 @@ urlpatterns = [
     path('patients/search/', patient_search_view, name = 'patientSearch'),
     path('patients/search/result', patient_search_result_view, name = 'searchResult'),
     path('patients/<int:id>/detail/', patient_detail_view, name ='patientDetail'),
+    path('patients/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
 
     #path('modalities/', homepage_modalities_view, name ='modalities'),
     path('modalities/create', modality_create_view, name ='modalityCreate'),
