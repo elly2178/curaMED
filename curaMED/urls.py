@@ -44,6 +44,10 @@ from administration.views import(
      location_delete_view, 
      location_view 
 )
+
+from worklists.views import (
+    WorklistCreateView
+)
 urlpatterns = [
     path(r'^favicon\.ico$',RedirectView.as_view(url='/static/images/favicon.ico')),
     path('admin/', admin.site.urls),
@@ -55,19 +59,20 @@ urlpatterns = [
     path('patients/list/', patient_list_view, name ='patients'),
     # path('patients/list/<int:id>/edit/', patient_edit_view, name ='patientEdit'),
     path('patients/search/', patient_search_view, name = 'patientSearch'),
-    path('patients/search/result', patient_search_result_view, name = 'searchResult'),
+    path('patients/search/result/', patient_search_result_view, name = 'searchResult'),
     path('patients/<int:id>/detail/', patient_detail_view, name ='patientDetail'),
     path('patients/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
 
     #path('modalities/', homepage_modalities_view, name ='modalities'),
-    path('modalities/create', modality_create_view, name ='modalityCreate'),
+    path('modalities/create/', modality_create_view, name ='modalityCreate'),
     path('modalities/<int:id>/delete/', modality_delete_view, name ='modalityDelete'),
-    path('modalities/list', modality_list_view, name ='modalities'),
+    path('modalities/list/', modality_list_view, name ='modalities'),
 
     #path('administration/', homepage_administration_view, name ='administration'),
-    path('administration/create', location_create_view, name ='locationCreate'),
+    path('administration/create/', location_create_view, name ='locationCreate'),
     path('administration/<int:id>/delete/', location_delete_view, name ='locationDelete'),
-    path('administration/list', location_view, name ='administration'),
+    path('administration/list/', location_view, name ='administration'),
     path('administration/list/<int:id>/detail/', location_detail_view, name ='locationDetail'),
    
+    path('worklists/create/', WorklistCreateView.as_view(), name ='worklistCreate'),
 ]

@@ -43,9 +43,9 @@
       <!-- aici ai eroarea cu reverse for patients detail with no argument pattern-->
       <a href="{% url 'patientDetail' instance.id %}" 
        class="btn btn-outline-primary">Patient bearbeiten</a>
-      <a href="#fuck" class="btn btn-outline-primary">Worklist erstellen</a>
+      <a href="{% url 'worklistCreate' %}" class="btn btn-outline-primary">Worklist erstellen</a>
       <a href="{% url 'patientDelete' instance.id %}" 
-       class="btn btn-outline-primary">Patient loschen</a>
+       class="btn btn-outline-primary">Patient löschen</a>
     </div>
   </div>
 

@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Worklist erstellen</h2>
+<h2>Auftrag erstellen</h2>
+
+
 <!-- 
     # info taken from patient:
     # PID,  Vorname, Nachname, geb dat, geschlecht, tel nr -non editable data
@@ -11,9 +13,9 @@
     #geplannte durchführeung datum/ zeit
     # requestion physician look in dicom standard
     # standort/ raumnr/modalität
-    
+-->
 <form action='.' method='POST'> {% csrf_token %}
-     
+
     <div class="card border-info mb-3">
         <div class="card-body">
             <div class="container">
@@ -21,91 +23,105 @@
                     <div class="card w-2">
                         <div class="col">
 
-                            <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
+                            <img src="/static/images/file-hosting.png" class="card-img-top" width="55" height="45">
                         </div>
                     </div>
 
                 </div>
 
-            </div> 
+            </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-                            <label>Geschlecht: </label>
+                            <label>Auftragsdatum: </label>
                         </div>
                         <div class="col">
-                            {{form.title}}
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col">
-                            <label>Vorname: </label>
-                        </div>
-                        <div class="col">
-                            {{form.first_name}}
+                            {{form.scheduled_procedure_step_start_date}}
                         </div>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-                            <label>Nachname: </label>
+                            <label>Auftragszeit: </label>
                         </div>
                         <div class="col">
-                            {{form.second_name}}
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col">
-                            <label>Geburtstag: </label>
-                        </div>
-                        <div class="col">
-                            {{form.birthdate}}
+                            {{form.scheduled_procedure_step_start_time}}
                         </div>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-                            <label>Strasse: </label>
+                            <label>Modalität: </label>
                         </div>
                         <div class="col">
-                            {{form.address}}
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col">
-                            <label>Nr.: </label>
-                        </div>
-                        <div class="col">
-                            {{form.number}}
+                            {{form.modality}}
                         </div>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-                            <label>PLZ: </label>
+                            <label>Zuständiger Arzt: </label>
                         </div>
                         <div class="col">
-                            {{form.code}}
+                            {{form.scheduled_performing_physician_s_name}}
                         </div>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-                            <label>Sprache: </label>
+                            <label>Patient Name: </label>
                         </div>
                         <div class="col">
-                            {{form.language}}
+                            {{form.patient_s_name}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                        <label>Patient ID: </label>
+                        </div>
+                        <div class="col">
+                            {{form.patient_id}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Patient Geburtstag: </label>
+                        </div>
+                        <div class="col">
+                            {{form.patient_s_birth_date}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+
+
+                            <label>Patient Geschlächt: </label>
+                        </div>
+                        <div class="col">
+                            {{form.patient_s_sex}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+
+                            <label>Auftragsdeskription: </label>
+                        </div>
+                        <div class="col">
+                            {{form.scheduled_procedure_step_description}}
                         </div>
                     </div>
                 </li>
@@ -113,7 +129,7 @@
         </div>
     </div>
     <input type='submit' value='Speichern' class="btn btn-outline-primary" />
-    <a href="{% url 'patients' %}" class="btn btn-outline-primary" >Abbrechen</a>
+    <a href="{% url 'patients' %}" class="btn btn-outline-primary">Abbrechen</a>
 </form>
--->
-{% endblock %} 
+
+{% endblock %}
