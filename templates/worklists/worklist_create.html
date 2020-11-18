@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Worklist erstellen</h2>
+<!-- 
+    # info taken from patient:
+    # PID,  Vorname, Nachname, geb dat, geschlecht, tel nr -non editable data
+    # AUftragsnr - find range of values - dicom attribut 
+    # auftragsnr ==? accession nr? 
+    #procedure name + procedure code
+    #geplannte durchführeung datum/ zeit
+    # requestion physician look in dicom standard
+    # standort/ raumnr/modalität
+    
+<form action='.' method='POST'> {% csrf_token %}
+     
+    <div class="card border-info mb-3">
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="card w-2">
+                        <div class="col">
+
+                            <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div> 
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Geschlecht: </label>
+                        </div>
+                        <div class="col">
+                            {{form.title}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Vorname: </label>
+                        </div>
+                        <div class="col">
+                            {{form.first_name}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Nachname: </label>
+                        </div>
+                        <div class="col">
+                            {{form.second_name}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Geburtstag: </label>
+                        </div>
+                        <div class="col">
+                            {{form.birthdate}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Strasse: </label>
+                        </div>
+                        <div class="col">
+                            {{form.address}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Nr.: </label>
+                        </div>
+                        <div class="col">
+                            {{form.number}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>PLZ: </label>
+                        </div>
+                        <div class="col">
+                            {{form.code}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Sprache: </label>
+                        </div>
+                        <div class="col">
+                            {{form.language}}
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <input type='submit' value='Speichern' class="btn btn-outline-primary" />
+    <a href="{% url 'patients' %}" class="btn btn-outline-primary" >Abbrechen</a>
+</form>
+-->
+{% endblock %} 
