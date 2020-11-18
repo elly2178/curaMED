@@ -15,7 +15,7 @@ class ModalitiesInformation(models.Model):
     description = models.TextField(max_length=400)
     ip = models.GenericIPAddressField()
     port = models.PositiveIntegerField(validators = [validate_port])
-    associate_location = models.ForeignKey('administration.AdministrationInformation', on_delete=models.CASCADE)
+     
    
 
     def get_absolute_url(self):

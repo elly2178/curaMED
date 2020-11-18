@@ -46,7 +46,8 @@ from administration.views import(
 )
 
 from worklists.views import (
-    WorklistCreateView
+    WorklistCreateView,
+    worklist_list_view
 )
 urlpatterns = [
     path(r'^favicon\.ico$',RedirectView.as_view(url='/static/images/favicon.ico')),
@@ -75,4 +76,5 @@ urlpatterns = [
     path('administration/list/<int:id>/detail/', location_detail_view, name ='locationDetail'),
    
     path('worklists/create/', WorklistCreateView.as_view(), name ='worklistCreate'),
+    path('worklists/list/', worklist_list_view, name ='worklistList'),
 ]
