@@ -1,7 +1,13 @@
 from django.db import models
 from django.urls import reverse
+from django.forms import ModelChoiceField
 # for saving phonenumbers with correct country code
 #from phonenumber_field.modelfields import PhoneNumberField
+
+
+# class PatientModelChoiceField(ModelChoiceField):
+#     def label_from_instance(self, obj):
+#         return f"{obj.first_name}, {obj.second_name}"  
 
 # Create your models here., Importable
 class PatientInformation(models.Model):

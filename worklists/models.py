@@ -9,9 +9,9 @@ class WorklistInformation(models.Model):
     #scheduled_station_ae_title = models.ForeignKey('modalities.ModalitiesInformation', on_delete=models.CASCADE)
     scheduled_procedure_step_start_date = models.CharField(max_length=8) 
     scheduled_procedure_step_start_time  = models.CharField(max_length=12)
-    modality = models.CharField(max_length=8)
+    
     scheduled_performing_physician_s_name = models.CharField(max_length=50)
-    patient_s_name = models.CharField(max_length=64)
+     
     patient_id = models.CharField(max_length= 64)
     scheduled_procedure_step_description =  models.CharField(max_length=64)
     patient_s_birth_date = models.CharField(max_length=8) 

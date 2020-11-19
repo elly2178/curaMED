@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import WorklistInformation
+from patients.models import PatientInformation
 from .forms import WorklistInformationForm
 from django.views import View
 from django.shortcuts import (
@@ -9,16 +10,20 @@ class WorklistCreateView(View):
     #works
     template_name = 'worklists/worklist_create.html'
     def get(self, request, *args, **kwargs):
+        patient_id = request.GET.get('patient-id')
+        patient = get_object_or_404(PatientInformation, id=patient_id)
         # get method
-        form = WorklistInformationForm()
+        form = WorklistInformationForm(request.POST)
         print('this is the get')
         context = {
-            'form':form
+            'patient': patient,
+            'form': form
         }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         #post method 
+        
         form = WorklistInformationForm(request.POST)
         print('somethign wong'+ str(form))
         if form.is_valid():

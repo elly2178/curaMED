@@ -14,6 +14,7 @@
     # requestion physician look in dicom standard
     # standort/ raumnr/modalität
 -->
+ 
 <form action='.' method='POST'> {% csrf_token %}
 
     <div class="card border-info mb-3">
@@ -76,8 +77,9 @@
                         <div class="col">
                             <label>Patient Name: </label>
                         </div>
+                        
                         <div class="col">
-                            {{form.patient_s_name}}
+                            <input type="text" name="patient_s_name" id="id_patient_s_name" value='{{ patient.first_name }} {{ patient.second_name }}' readonly>
                         </div>
                     </div>
                 </li>
@@ -89,6 +91,7 @@
                         <div class="col">
                             {{form.patient_id}}
                         </div>
+                       
                     </div>
                 </li>
                 <li class="list-group-item">
@@ -131,5 +134,5 @@
     <input type='submit' value='Speichern' class="btn btn-outline-primary" />
     <a href="{% url 'patients' %}" class="btn btn-outline-primary">Abbrechen</a>
 </form>
-
+ 
 {% endblock %}

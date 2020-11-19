@@ -1,6 +1,11 @@
 from django.db import models
 from django.urls import reverse
 from django.core.exceptions import ValidationError
+from django.forms import ModelChoiceField
+
+class ModalityModelChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+        return f"{obj.title}, {obj.description}" 
 
 #validation
 def validate_port(value):
