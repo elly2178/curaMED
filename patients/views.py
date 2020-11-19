@@ -52,23 +52,6 @@ def patient_detail_view(request, id):
     }
     return render(request, 'patient/patient_detail.html', context)
 
-# def patient_detail_view(request, id):
-#     obj = get_object_or_404(PatientInformation, id=id)
-#     context ={
-#         'object' : obj
-#     }
-#     return render(request, 'patient/patient_detail.html', context)
-
-# def patient_search_view(request):
-#     if request.method =='GET':
-#         search = request.GET.get('search')
-#         post = PatientInformation.objects.all().filter(id=search)
-#         context = {
-#             'post': post
-#         }
-#         return render(request, 'patient/patient_list.html', context )
-
-
 def patient_search_view(query=None):
     
     queryset= []

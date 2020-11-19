@@ -3,7 +3,7 @@ from.models import WorklistInformation
 from modalities.models import ModalitiesInformation
 from modalities.models import ModalityModelChoiceField
 from patients.models import PatientInformation
-# from patients.models import PatientModelChoiceField
+ 
 
 
 # class DateInput(forms.DateInput):
@@ -19,13 +19,12 @@ class WorklistInformationForm(forms.ModelForm):
     # yetzige time
     scheduled_procedure_step_start_time  = forms.CharField(label='Auftragszeit')
     modality = ModalityModelChoiceField(
-        queryset=ModalitiesInformation.objects.all(), to_field_name='ae_title')
+        queryset=ModalitiesInformation.objects.all(), to_field_name='ae_title', initial=0)
     # modality als doropdpwn
     scheduled_performing_physician_s_name = forms.CharField(label='Zuständiger Arzt')
     # doctor automatisch reigefügr, pat id should unedit + name
     patient_s_name = forms.CharField()
-    # patient_s_name =  PatientModelChoiceField(label='Patienten name',
-    #     queryset=PatientInformation.objects.all(), to_field_name='first_name')
+   
     
     patient_id = forms.CharField(label='Patient ID')
     # description als textfield
@@ -51,7 +50,7 @@ class WorklistInformationForm(forms.ModelForm):
             'scheduled_procedure_step_description'
         
         ]
-        #widgets = {}
+        
     
 
  

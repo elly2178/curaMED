@@ -33,7 +33,7 @@ class WorklistCreateView(View):
             print('worklist erstellt')
         context = { 'form':form }
         return render(request, self.template_name, context)
-
+  
 
 def worklist_list_view(request):
     queryset = WorklistInformation.objects.all()

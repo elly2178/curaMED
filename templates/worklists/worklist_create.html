@@ -89,7 +89,8 @@
                         <label>Patient ID: </label>
                         </div>
                         <div class="col">
-                            {{form.patient_id}}
+                            <input type="text" name="id" id="id_id" value=' {{ patient.id }}' readonly>
+                            
                         </div>
                        
                     </div>
@@ -97,10 +98,11 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-                            <label>Patient Geburtstag: </label>
+                            <label>Patient Geburtsdatum: </label>
                         </div>
                         <div class="col">
-                            {{form.patient_s_birth_date}}
+                            <input type="text" name="patient_s_birth_date" id="id_patient_s_birth_date" value=' {{ patient.birthdate }}' readonly>
+                             
                         </div>
                     </div>
                 </li>
@@ -109,10 +111,11 @@
                         <div class="col">
 
 
-                            <label>Patient Geschlächt: </label>
+                            <label>Patient Geschlecht: </label>
                         </div>
                         <div class="col">
-                            {{form.patient_s_sex}}
+                            <input type="text" name="patient_s_sex" id="id_patient_s_sex" value=' {{ patient.title}}' readonly>
+                            
                         </div>
                     </div>
                 </li>
@@ -121,7 +124,7 @@
                     <div class="row">
                         <div class="col">
 
-                            <label>Auftragsdeskription: </label>
+                            <label>Auftragsbeschreibung: </label>
                         </div>
                         <div class="col">
                             {{form.scheduled_procedure_step_description}}
