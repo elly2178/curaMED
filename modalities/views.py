@@ -5,6 +5,7 @@ from .forms import ModalitiesInformationForm
 
 
 # Create your views here.
+
 def modality_list_view(request):
     queryset = ModalitiesInformation.objects.all()
     context ={

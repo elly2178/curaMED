@@ -9,7 +9,7 @@
     <div class="card-body">
       <div class="container">
         <div class="row">
-          <div class="card w-2">
+          <div class="card w-2 border-0">
             <div class="col">
 
               <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
@@ -19,75 +19,75 @@
         </div>
 
       </div>
-      
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col">
-              <label>Betriebsname: </label>
+      <div class="card-body ">
+        <div class="container">
+
+           
+            <div class="row">
+              <div class="col">
+                <label>Betriebsname: </label>
+              </div>
+              <div class="col">
+                {{form.name}}
+              </div>
             </div>
-            <div class="col">
-               {{form.name}}
+         <br>
+            <div class="row">
+              <div class="col">
+                <label>Strasse: </label>
+              </div>
+              <div class="col">
+                {{form.street}}
+              </div>
             </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col">
-              <label>Strasse: </label>
+          <br>
+            <div class="row">
+              <div class="col">
+                <label>Hausnr.: </label>
+              </div>
+              <div class="col">
+                {{form.number}}
+              </div>
+
             </div>
-            <div class="col">
-               {{form.street}}
+          <br>
+            <div class="row">
+              <div class="col">
+                <label>Stadt: </label>
+              </div>
+              <div class="col">
+                {{form.city}}
+              </div>
             </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col">
-              <label>NR.: </label>
+          <br>
+            <div class="row">
+              <div class="col">
+                <label>PLZ: </label>
+              </div>
+              <div class="col">
+                {{form.plz}}
+              </div>
             </div>
-            <div class="col">
-              {{form.number}}
+          <br>
+            <div class="row">
+              <div class="col">
+                <label>Telefon Nr.: </label>
+              </div>
+              <div class="col">
+                {{form.telefon_number}}
+              </div>
             </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col">
-              <label>Stadt: </label>
-            </div>
-            <div class="col">
-              {{form.city}}
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col">
-              <label>PLZ: </label>
-            </div>
-            <div class="col">
-              {{form.plz}}
-            </div>
-          </div>
-        </li>
-        
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col">
-              <label>Telefon Nr.: </label>
-            </div>
-            <div class="col">
-              {{form.telefon_number}}
-            </div>
-          </div>
-        </li>
-        
+           
+
+        </div>
+      </div>
+
+
     </div>
-  </div> 
-   
-<input type='submit' value='Speichern' class="btn btn-outline-primary" />
-<a href="{% url 'administration' %}" class="btn btn-outline-primary" >Abbrechen</a>
+  </div>
+
+  <input type='submit' value='Speichern' class="btn btn-outline-primary" />
+  <a href="{% url 'administration' %}" class="btn btn-outline-primary">Abbrechen</a>
 
 </form>
 {% endblock %}

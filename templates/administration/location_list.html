@@ -13,7 +13,7 @@
     <div class="card-body">
     <div class="container">
       <div class="row">
-        <div class = "card w-2">
+        <div class = "card w-2 border-0">
         <div class="col">
           <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
         </div>
@@ -24,14 +24,18 @@
       </div>
     </div>
      
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Strasse: {{ object.name }}</li>
-          <li class="list-group-item">Strasse: {{ object.street }}</li>
-          <li class="list-group-item">Stadt: {{ object.city }}</li>
-          <li class="list-group-item">PLZ: {{ object.plz }}</li>
-          <li class="list-group-item">Nr: {{ object.number }}</li>
-          <li class="list-group-item">Telefon nummer: {{ object.telefon_number }}</li>
-        </ul>  
+        
+            <div class = "card-body"> 
+              <div class="container">
+                <ul class="list-group list-group-flush"> 
+                <li class="list-group-item">Adresse: {{ object.street }},  {{ object.number }}</li>
+                <li class="list-group-item">Stadt: {{ object.city }}, {{ object.plz }}</li>
+                <li class="list-group-item">Telefon nummer: {{ object.telefon_number }}</li>
+              </ul>
+              </div>
+            </div>
+          
+       
         
         <a href="{% url 'locationDetail' object.id %}" 
          class="btn btn-outline-primary">Standort bearbeiten</a>

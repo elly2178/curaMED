@@ -17,7 +17,7 @@ class AdministrationInformation(models.Model):
     city = models.CharField(max_length=40)
     plz = models.CharField(max_length=4)
     number = models.IntegerField()
-    telefon_number = models.CharField(max_length=10)
+    telefon_number = models.CharField(max_length=15)
 
     def get_absolute_url(self):
         return reverse("administration", kwargs={"id":self.id})
