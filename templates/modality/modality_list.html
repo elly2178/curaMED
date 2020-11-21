@@ -31,7 +31,7 @@
           <li class="list-group-item">IP: {{ instance.ip }}</li>
           <li class="list-group-item">Port: {{ instance.port }}</li>
          
-          <li class="list-group-item" > Standort: {{ instance.associate_location }} </li>
+          <li class="list-group-item" > Standort: {{ instance.associate_location.get_location_representation }} </li>
            
         </ul>  
  

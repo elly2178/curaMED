@@ -24,7 +24,7 @@ class ModalitiesInformationForm(forms.ModelForm):
     ip = forms.GenericIPAddressField(label="IP Adresse")
     port = forms.CharField()
     associate_location = LocationModelChoiceField(
-    label="Standort",queryset=AdministrationInformation.objects.all(), to_field_name='street', initial=0)
+    label="Standort",queryset=AdministrationInformation.objects.all(), to_field_name='id', initial=0)
 
 
     def clean_ae_title(self):

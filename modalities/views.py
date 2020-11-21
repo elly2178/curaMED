@@ -11,10 +11,9 @@ def modality_list_view(request):
     queryset = ModalitiesInformation.objects.all()
      
     context ={
-        
         'object_list': queryset
     }
-    print("QUERYSET IS " + str(queryset) + " including: location "+ str(queryset[0].associate_location))
+    print("QUERYSET IS " + str(queryset) + " including: location "+ str(queryset[0].associate_location.street))
     return render(request, 'modality/modality_list.html', context)
 
 def modality_delete_view(request,id):
@@ -33,13 +32,10 @@ def modality_create_view(request):
     form = ModalitiesInformationForm(request.POST or None)
     messages.warning(request,'aeTitle existiert bereit in den Datenbank. Entweder existierende Modalität bearbeiten oder anderen AETitle eingeben')     
     
-    if form.is_valid():  
+    if form.is_valid(): 
         form.save()
         form = ModalitiesInformationForm()        
         return redirect('modalities')
-    
-
-
     
     context = {
         #'messages': messages,

@@ -14,6 +14,7 @@ def validate_port(value):
         return value
     else:
         raise ValidationError('Port value out of range')
+
 # Create your models here.
 class ModalitiesInformation(models.Model):
     title = models.CharField(max_length=150)
@@ -22,7 +23,7 @@ class ModalitiesInformation(models.Model):
     ip = models.GenericIPAddressField()
     port = models.PositiveIntegerField(validators = [validate_port])
     #associate_location = models.CharField(max_length=500) 
-    associate_location = models.ForeignKey('administration.AdministrationInformation',on_delete=models.CASCADE)
+    associate_location = models.ForeignKey('administration.AdministrationInformation', on_delete=models.CASCADE)
      
    
 

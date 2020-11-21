@@ -21,3 +21,6 @@ class AdministrationInformation(models.Model):
 
     def get_absolute_url(self):
         return reverse("administration", kwargs={"id":self.id})
+
+    def get_location_representation(self):
+        return f"{self.street} {self.number}, {self.city}"
