@@ -21,7 +21,8 @@ class ModalitiesInformation(models.Model):
     description = models.TextField(max_length=400)
     ip = models.GenericIPAddressField()
     port = models.PositiveIntegerField(validators = [validate_port])
-    associate_location = models.CharField(max_length=500)
+    #associate_location = models.CharField(max_length=500) 
+    associate_location = models.ForeignKey('administration.AdministrationInformation',on_delete=models.CASCADE)
      
    
 
