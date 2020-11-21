@@ -67,6 +67,7 @@ urlpatterns = [
     #path('modalities/', homepage_modalities_view, name ='modalities'),
     path('modalities/create/', modality_create_view, name ='modalityCreate'),
     path('modalities/<int:id>/delete/', modality_delete_view, name ='modalityDelete'),
+    path('modalities/<int:id>/detail/', modality_detail_view, name ='modalityDetail'),
     path('modalities/list/', modality_list_view, name ='modalities'),
 
     #path('administration/', homepage_administration_view, name ='administration'),

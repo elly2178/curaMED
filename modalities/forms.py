@@ -2,6 +2,8 @@ from django import forms
 from.models import ModalitiesInformation
 from administration.models import AdministrationInformation
 from administration.models import StandortModelChoiceField
+from django.core.exceptions import ValidationError
+from django.contrib import messages
 
 class ModalitiesInformationForm(forms.ModelForm):
     # locations = [("fu","bar"),("fub","schmeow")] #AdministrationInformation.objects.all()
@@ -24,6 +26,18 @@ class ModalitiesInformationForm(forms.ModelForm):
     port = forms.CharField()
     associate_location = StandortModelChoiceField(
     label="Standort",queryset=AdministrationInformation.objects.all(), to_field_name='street', initial=0)
+
+
+    def clean_ae_title(self):
+        ae_title = self.cleaned_data['ae_title']
+        if ModalitiesInformation.objects.filter(ae_title=ae_title).exists():
+            
+            print('raised')
+            raise ValidationError("AETitle already exists")
+            
+            
+        #messages.success('your messages')
+        return ae_title
 
     class Meta: 
         model = ModalitiesInformation

@@ -3,8 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import ModalitiesInformation
 from .forms import ModalitiesInformationForm
 
-
-# Create your views here.
+from django.contrib import messages
 
 def modality_list_view(request):
     queryset = ModalitiesInformation.objects.all()
@@ -27,18 +26,20 @@ def modality_delete_view(request,id):
 
 def modality_create_view(request):
     form = ModalitiesInformationForm(request.POST or None)
-    if form.is_valid():
-        print("Form is " + str(dir(request)))
+    if form.is_valid():       
         form.save()
-        form = ModalitiesInformationForm()
-        return redirect('modalities')
+        form = ModalitiesInformationForm()        
+        return redirect('modalities')    
+    messages.warning(request,'aeTitle existiert bereit in den Datenbank. Entweder existierende Modalität bearbeiten oder anderen AETitle eingeben')
+    
     context = {
-        'form':form
+        'form':form 
     }
     return render(request, 'modality/create.html', context)
+   
  
-def modality_detail_view(request):
-    obj = ModalitiesInformation.objects.get(id=2)
+def modality_detail_view(request,id):
+    obj = ModalitiesInformation.objects.get(id=id)
     context = {
         'object':obj
     }

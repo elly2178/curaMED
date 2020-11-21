@@ -1,11 +1,21 @@
-
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 <h2> Neue Modalität hinzufügen</h2>
 
 <form method='POST'> {% csrf_token %}
-         
+   
+    <div class="alert alert-warning" id='mgs' role="alert">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+    </div>
+   
     <div class="card border-info mb-3">
         <div class="card-body">
             <div class="container">
@@ -19,22 +29,23 @@
 
                 </div>
 
-            </div> 
-            <div class="card-body "> 
+            </div>
+            <div class="card-body ">
                 <div class="container">
-                    
-              
-            
-               
+
+
+
+
                     <div class="row">
                         <div class="col">
                             <label>AETitle: </label>
                         </div>
+
                         <div class="col">
                             {{form.ae_title}}
                         </div>
                     </div>
-               <br>
+                    <br>
                     <div class="row">
                         <div class="col">
                             <label>Title: </label>
@@ -43,7 +54,7 @@
                             {{form.title}}
                         </div>
                     </div>
-                <br>
+                    <br>
                     <div class="row">
                         <div class="col">
                             <label>Beschreibung: </label>
@@ -52,7 +63,7 @@
                             {{form.description}}
                         </div>
                     </div>
-               <br>
+                    <br>
                     <div class="row">
                         <div class="col">
                             <label>IP: </label>
@@ -61,7 +72,7 @@
                             {{form.ip}}
                         </div>
                     </div>
-               <br>
+                    <br>
                     <div class="row">
                         <div class="col">
                             <label>Port: </label>
@@ -70,8 +81,8 @@
                             {{form.port}}
                         </div>
                     </div>
-                <br>
-                    
+                    <br>
+
                     <div class="row">
                         <div class="col">
                             <label>Standort: </label>
@@ -80,15 +91,18 @@
                             {{form.associate_location }}
                         </div>
                     </div>
-               
-             
-               </div>
-            </div>    
-            
-      
+
+
+                </div>
+            </div>
+
+
         </div>
     </div>
-    <input type='submit' class="btn btn-outline-primary" value ='Speichern'/>
-    <a href="{% url 'modalities' %}" class="btn btn-outline-primary" >Abbrechen</a>
+
+    <input type='submit' class="btn btn-outline-primary" value='Speichern'/>
+    <a href="{% url 'modalities' %}" class="btn btn-outline-primary">Abbrechen</a>
 </form>
 {% endblock %}
+
+ 

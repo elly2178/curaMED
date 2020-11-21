@@ -5,6 +5,101 @@
 
 <h2>Modality Information detail1233</h2>
 
-<p> {{ object.name}}</p>
+<form action='.' method='POST'> {% csrf_token %}
+   
+     
+   
+    <div class="card border-info mb-3">
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="card w-2 border-0">
+                        <div class="col">
+
+                            <img src="/static/images/mri.png" class="card-img-top" width="55" height="45">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="card-body ">
+                <div class="container">
+
+
+
+
+                    <div class="row">
+                        <div class="col">
+                            <label>AETitle: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="name" id="id_name" value='{{ object.ae_title }}'>
+                        </div>
+                         
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <label>Title: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="name" id="id_name" value='{{ object.title }}'>
+                        </div>
+                         
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <label>Beschreibung: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="name" id="id_name" value='{{ object.description }}'>
+                        </div>
+                         
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <label>IP: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="name" id="id_name" value='{{ object.ip }}'>
+                        </div>
+                        
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <label>Port: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="name" id="id_name" value='{{ object.port }}'>
+                        </div>
+                        
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col">
+                            <label>Standort: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="name" id="id_name" value='{{ object.associate_location}}'>
+                        </div>
+                         
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <input type='submit' class="btn btn-outline-primary" value='Speichern'/>
+    <a href="{% url 'modalities' %}" class="btn btn-outline-primary">Abbrechen</a>
+</form>
  
 {% endblock %}
