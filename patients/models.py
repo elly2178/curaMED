@@ -10,6 +10,7 @@ class PatientInformation(models.Model):
     birthdate = models.DateField()
     address = models.CharField(max_length=50)
     number = models.CharField(max_length=10)
+    city = models.CharField(max_length=25)
     code = models.CharField(max_length=4)
     language = models.CharField(max_length=10)
    

@@ -14,6 +14,7 @@ class PatientInformationForm(forms.ModelForm):
     birthdate = forms.DateField(widget=DateInput(),label='Geburtsdatum')
     address = forms.CharField(label='Addresse')
     number = forms.CharField(label='Nummer')
+    city = forms.CharField(label='Stadt')
     code = forms.CharField(label='PLZ')
     language = forms.CharField(required=False, label='Sprache')
     #telefon = PhoneNumberField()
@@ -27,6 +28,7 @@ class PatientInformationForm(forms.ModelForm):
             'birthdate',
             'address',
             'number',
+            'city',
             'code',
             'language'
             

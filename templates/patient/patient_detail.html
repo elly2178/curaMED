@@ -2,9 +2,8 @@
 
 {% block content %}
 <h2>Patient bearbeiten</h2>
-    
-{{object.language}}
-<form method='POST'>
+ 
+<form action ='.' method='POST'>
     {% csrf_token %}
     <div class="card border-info mb-3 w-75">
         <div class="card-header">
@@ -12,20 +11,23 @@
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
+                
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
                             <label>Geschlecht: </label>
                         </div>
                         <div class="col">
-                            <select name = 'title' id = 'id_title'>
-                                <option value="male"> Herr</option>
-                                <option value="female"> Frau</option>
+                            <select name = 'title' id = 'id_title'  >
+                                <option value ='{{object.get_title_display}}'>{{object.get_title_display}}</option>
+                                <option value='male '> Herr </option>
+                                <option value='female '> Frau</option>
+                                 
+                                 
                             </select>
                         </div>
                     </div>
                 </li>
-
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
@@ -47,7 +49,7 @@
                         </div>
                     </div>
                 </li>
-
+                
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
@@ -78,6 +80,17 @@
                         <div class="col">
                             <input type="text" name="number" id="id_number"
                                 value='{{ object.number }}'>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <label>Stadt: </label>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="city" id="id_city"
+                                value='{{ object.city }}'>
                         </div>
                     </div>
                 </li>

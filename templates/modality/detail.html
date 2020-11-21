@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h2>Modality Information detail1233</h2>
+<h2> Modalität bearbeiten</h2>
 
 <form action='.' method='POST'> {% csrf_token %}
    
@@ -85,7 +85,7 @@
                             <label>Standort: </label>
                         </div>
                         <div class="col">
-                            <input type="text" name="name" id="id_name" value='{{ object.associate_location}}'>
+                            <input type="text" name="associate_location" id="id_associate_location" value='{{ object.associate_location}}'>
                         </div>
                          
                     </div>

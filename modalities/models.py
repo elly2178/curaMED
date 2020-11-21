@@ -3,9 +3,10 @@ from django.urls import reverse
 from django.core.exceptions import ValidationError
 from django.forms import ModelChoiceField
 
+
 class ModalityModelChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
-        return f"{obj.title}, {obj.description}" 
+        return f"{obj.title}, {obj.description}"  
 
 #validation
 def validate_port(value):
@@ -20,6 +21,7 @@ class ModalitiesInformation(models.Model):
     description = models.TextField(max_length=400)
     ip = models.GenericIPAddressField()
     port = models.PositiveIntegerField(validators = [validate_port])
+    associate_location = models.CharField(max_length=500)
      
    
 

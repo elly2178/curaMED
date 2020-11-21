@@ -2,12 +2,15 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import ModalitiesInformation
 from .forms import ModalitiesInformationForm
+ 
 
 from django.contrib import messages
 
 def modality_list_view(request):
     queryset = ModalitiesInformation.objects.all()
+     
     context ={
+         
         'object_list': queryset
     }
     return render(request, 'modality/modality_list.html', context)
@@ -26,11 +29,12 @@ def modality_delete_view(request,id):
 
 def modality_create_view(request):
     form = ModalitiesInformationForm(request.POST or None)
-    if form.is_valid():       
+    if form.is_valid():  
+        messages.warning(request,'aeTitle existiert bereit in den Datenbank. Entweder existierende Modalität bearbeiten oder anderen AETitle eingeben')     
         form.save()
         form = ModalitiesInformationForm()        
-        return redirect('modalities')    
-    messages.warning(request,'aeTitle existiert bereit in den Datenbank. Entweder existierende Modalität bearbeiten oder anderen AETitle eingeben')
+        return redirect('modalities')
+    
     
     context = {
         'form':form 

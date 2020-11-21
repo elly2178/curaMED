@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.forms import ModelChoiceField
 
 
-class StandortModelChoiceField(ModelChoiceField):
+class LocationModelChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
         return f"{obj.street} {obj.number}, {obj.city}"
         

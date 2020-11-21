@@ -10,14 +10,9 @@ from django.db.models import Q
 
 # import for detail, list view
 from django.views.generic import DetailView
-#from django.urls import reverse_lazy
 
-#import for list view
 from django.views import View
-# Create your views here.
-# asta e nou
-# Class PatientUpdateView(View):
-#     template_name = 'patient/patient_update.html'
+
 def patient_update_view(request, id= id):
     obj = get_object_or_404(PatientInformation, id= id)
     form = PatientInformationForm(request.POST or None, instance =obj)
@@ -28,17 +23,6 @@ def patient_update_view(request, id= id):
     }
     return render(request, 'patient/patient_create.html', context)
 
-# asta e nou
-# class PatientDetailView(DetailView):
-#     template_name = 'patient/patient_detail.html'
-#     def get(self, request, id = None, *args, **kwargs):
-#         context = {}
-#         if id is not None:
-#            obj = get_object_or_404(PatientInformation, id =id)
-#            context['object'] = obj
-        
-#         #return redirect('patients')
-#         return render(request, self.template_name, context)
 
 def patient_detail_view(request, id):
     obj = get_object_or_404(PatientInformation, id=id)
