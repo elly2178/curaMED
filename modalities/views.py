@@ -30,21 +30,23 @@ def modality_delete_view(request,id):
 
 def modality_create_view(request):
     form = ModalitiesInformationForm(request.POST or None)
-    messages.warning(request,'aeTitle existiert bereit in den Datenbank. Entweder existierende Modalität bearbeiten oder anderen AETitle eingeben')     
     
     if form.is_valid(): 
         form.save()
         form = ModalitiesInformationForm()        
         return redirect('modalities')
-    
+    else:
+        for fieldname, errormessages in form.errors.items():
+            for errormessage in errormessages:
+                messages.warning(request, errormessage)
     context = {
-        #'messages': messages,
         'form':form 
     }
     return render(request, 'modality/create.html', context)
    
  
 def modality_detail_view(request,id):
+    # editing modality does not work
     obj = ModalitiesInformation.objects.get(id=id)
     context = {
         'object':obj

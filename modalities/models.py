@@ -25,7 +25,5 @@ class ModalitiesInformation(models.Model):
     #associate_location = models.CharField(max_length=500) 
     associate_location = models.ForeignKey('administration.AdministrationInformation', on_delete=models.CASCADE)
      
-   
-
     def get_absolute_url(self):
         return reverse ("modalities", kwargs={"id":self.id})
