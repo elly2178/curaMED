@@ -21,7 +21,7 @@
         <div class="card-body">
             <div class="container">
                 <div class="row">
-                    <div class="card w-2">
+                    <div class="card w-2 border-0">
                         <div class="col">
 
                             <img src="/static/images/file-hosting.png" class="card-img-top" width="55" height="45">
@@ -37,9 +37,14 @@
                         <div class="col">
                             <label>Auftragsdatum: </label>
                         </div>
+                        
                         <div class="col">
-                            {{form.scheduled_procedure_step_start_date}}
-                        </div>
+                            <input type="text" name="scheduled_procedure_step_start_date" 
+                            id="id_scheduled_procedure_step_start_date" 
+                            value='{{ date|date }}' readonly>
+                             <!-- 
+                             {{ form.scheduled_procedure_step_start_date }}-->
+                        </div>  
                     </div>
                 </li>
                 <li class="list-group-item">
@@ -47,9 +52,13 @@
                         <div class="col">
                             <label>Auftragszeit: </label>
                         </div>
-                        <div class="col">
-                            {{form.scheduled_procedure_step_start_time}}
-                        </div>
+                         <div class="col" >
+                            <input type="text" name="scheduled_procedure_step_start_time" 
+                            id="id_scheduled_procedure_step_start_time" 
+                            value='{{ date|time:"H:i" }}' readonly>
+                            <!-- 
+                             {{form.scheduled_procedure_step_start_time}}-->
+                        </div>  
                     </div>
                 </li>
                 <li class="list-group-item">
@@ -101,7 +110,7 @@
                             <label>Patient Geburtsdatum: </label>
                         </div>
                         <div class="col">
-                            <input type="text" name="patient_s_birth_date" id="id_patient_s_birth_date" value=' {{ patient.birthdate }}' readonly>
+                            <input type="text" name="patient_s_birth_date" id="id_patient_s_birth_date" value='{{ patient.birthdate }}' readonly>
                              
                         </div>
                     </div>

@@ -5,6 +5,7 @@ from .forms import WorklistInformationForm
 from django.views import View
 from django.shortcuts import (
     render, get_object_or_404, redirect)
+import datetime
 # Create your views here.
 class WorklistCreateView(View):
     #works
@@ -15,7 +16,12 @@ class WorklistCreateView(View):
         # get method
         form = WorklistInformationForm(request.POST)
         print('this is the get')
+        current_date = datetime.datetime.today()
+        
+        print(current_date)
         context = {
+             
+            'date':current_date,
             'patient': patient,
             'form': form
         }
@@ -34,7 +40,7 @@ class WorklistCreateView(View):
         context = { 'form':form }
         return render(request, self.template_name, context)
   
-
+# worklists are not saved...
 def worklist_list_view(request):
     queryset = WorklistInformation.objects.all()
     context ={
