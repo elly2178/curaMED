@@ -24,16 +24,12 @@
             </div>
             <div class="card-body ">
                 <div class="container">
-
-
-
-
                     <div class="row">
                         <div class="col">
                             <label>AETitle: </label>
                         </div>
                         <div class="col">
-                            <input type="text" name="name" id="id_name" value='{{ object.ae_title }}'>
+                            <input type="text" name="ae_title" id="id_ae_title" value='{{ object.ae_title }}' readonly>
                         </div>
 
                     </div>
@@ -43,7 +39,7 @@
                             <label>Title: </label>
                         </div>
                         <div class="col">
-                            <input type="text" name="name" id="id_name" value='{{ object.title }}'>
+                            <input type="text" name="title" id="id_name" value='{{ object.title }}'>
                         </div>
 
                     </div>
@@ -53,7 +49,7 @@
                             <label>Beschreibung: </label>
                         </div>
                         <div class="col">
-                            <input type="text" name="name" id="id_name" value='{{ object.description }}'>
+                            <input type="text" name="description" id="id_name" value='{{ object.description }}'>
                         </div>
 
                     </div>
@@ -63,7 +59,7 @@
                             <label>IP: </label>
                         </div>
                         <div class="col">
-                            <input type="text" name="name" id="id_name" value='{{ object.ip }}'>
+                            <input type="text" name="ip" id="id_name" value='{{ object.ip }}'>
                         </div>
 
                     </div>
@@ -73,7 +69,7 @@
                             <label>Port: </label>
                         </div>
                         <div class="col">
-                            <input type="text" name="name" id="id_name" value='{{ object.port }}'>
+                            <input type="text" name="port" id="id_name" value='{{ object.port }}'>
                         </div>
 
                     </div>
@@ -84,8 +80,14 @@
                             <label>Standort: </label>
                         </div>
 
-                        <div class="col" id="associate_location">
-                            {{ object.associate_location }}
+                        <div class="col" id="associate_location">{{ object.associate_location.get_location_representation }}
+                            <select name = 'associate_location' id = 'id_associate_location'  >
+                                              
+                             {% for dropdown in AdministrationInformation %}
+                             <option value='{{ dropdown.id }}'> 
+                                 {{ dropdown.get_location_representation }}</option>
+                             {% endfor %}
+                        </select>
                         </div>
 
                     </div>
