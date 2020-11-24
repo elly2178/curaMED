@@ -27,10 +27,19 @@ def patient_update_view(request, id= id):
 def patient_detail_view(request, id):
     obj = get_object_or_404(PatientInformation, id=id)
     form = PatientInformationForm(request.POST or None, instance=obj)
+    print(str(form))
     if form.is_valid():
         form.save()
         form = PatientInformationForm()
         return redirect('patients')
+    else:
+        if request.POST:             
+            
+            del form.errors["title"]
+            del form.errors["birthdate"]
+            form.save()
+            form = PatientInformationForm()
+            return redirect('patients')
     context = {
         'object': obj
     }
@@ -84,7 +93,7 @@ def patient_delete_view(request,id):
     }
     return render(request,'patient/patient_delete.html', context)
 
-#similar cu create wl
+
 class PatientCreateView(View):
     #works
     template_name = 'patient/patient_create.html'
@@ -105,14 +114,4 @@ class PatientCreateView(View):
         context = { 'form':form }
         return render(request, self.template_name, context)
 
-# def patient_create_view(request):
-    
-#     form = PatientInformationForm(request.POST or None)
-#     if form.is_valid():
-#         form.save()
-#         form = PatientInformationForm()
-#     context = {
-#         'form':form
-#     }
-#     return render(request, 'patient/patient_ create.html', context)
-
+ 

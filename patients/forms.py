@@ -2,6 +2,7 @@ from django import forms
 from.models import PatientInformation
 import datetime
 #from phonenumber_field.formfields import PhoneNumberField
+
 class DateInput(forms.DateInput):
     input_type = 'date'
 
