@@ -20,7 +20,7 @@
     </div>
       <div class="col-15">
              
-        <h5 class="card-title">{{instance.scheduled_station_ae_title}}</h5>
+        <h5 class="card-title">{{instance.scheduled_station_ae_title}} {{instance.id}}</h5>
       </div>
     </div>
   </div>
@@ -28,21 +28,19 @@
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Date: {{ instance.scheduled_procedure_step_start_date}}</li>
         <li class="list-group-item">Time: {{ instance.scheduled_procedure_step_start_time }}</li>
-        <li class="list-group-item">Modality.: {{ instance.modality }}</li>
-        <li class="list-group-item">Doctor name: {{ instance.scheduled_performing_physician_s_name }}</li>
-        <li class="list-group-item">HUman name: {{ instance.patient_s_name }}</li>
-        <li class="list-group-item">human id: {{ instance.patient_id}}</li>
-        <li class="list-group-item">huma birthdate: {{ instance.patient_s_birth_date}}</li>
-        <li class="list-group-item">human sex: {{ instance.patient_s_sex }}</li>
-        <li class="list-group-item">description: {{ instance.scheduled_procedure_step_description }}</li>
+        <li class="list-group-item">Modality.: {{ instance.modality.get_modality_representation}}</li>
+        <li class="list-group-item">Doctor name: {{ instance.get_scheduled_performing_physician_s_name_display }}</li>
+        <li class="list-group-item" >Patient name: {{ instance.patient_s_name }}</li>
+        <li class="list-group-item">Patient id: {{ instance.patient_id}}</li>
+        <li class="list-group-item">Patient geburtsdatum: {{ instance.patient_s_birth_date}}</li>
+        <li class="list-group-item">Patient geschlecht: {{ instance.patient_s_sex }}</li>
+        <li class="list-group-item">Beschreibung: {{ instance.scheduled_procedure_step_description }}</li>
 
       </ul>  
      
-      <a href="{% url 'patientDetail' instance.id %}" 
-       class="btn btn-outline-primary">Patient bearbeiten</a>
-      <a href="{% url 'worklistCreate' %}" class="btn btn-outline-primary">Worklist erstellen</a>
-      <a href="{% url 'patientDelete' instance.id %}" 
-       class="btn btn-outline-primary">Patient löschen</a>
+        
+      <a href="#{% url 'patientDelete' instance.id %}" 
+       class="btn btn-outline-primary">Worklist löschen</a>
     </div>
   </div>
 

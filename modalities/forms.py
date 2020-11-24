@@ -23,7 +23,7 @@ class ModalitiesInformationForm(forms.ModelForm):
                                                   queryset=AdministrationInformation.objects.all(),
                                                   to_field_name='id',
                                                   initial=0)
-
+ 
 
     def clean_ae_title(self):
         ae_title = self.cleaned_data['ae_title']

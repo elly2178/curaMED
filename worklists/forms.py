@@ -5,26 +5,24 @@ from modalities.models import ModalityModelChoiceField
 from patients.models import PatientInformation
 from django.utils import timezone
 import datetime
-# from modalities.models import ModalityModelChoiceField
-
 
 # class DateInput(forms.DateInput):
 #     input_type = 'date'
 
 class WorklistInformationForm(forms.ModelForm):
     # scheduled_station_ae_title = ModalityModelChoiceField(label='ae title',
-    # queryset=WorklistInformation.objects.all(), to_field_name='street') ai eroare
-
-    #change text to german here + in the models
+    
     scheduled_procedure_step_start_date = forms.CharField(label='Auftragsdatum') 
-     
-    # nicht field sondern calendar/ time whaterver
-    # yetzige time
     scheduled_procedure_step_start_time  = forms.CharField(label='Auftragszeit')
     modality = ModalityModelChoiceField(
-        queryset=ModalitiesInformation.objects.all(), to_field_name='ae_title', initial=0)
-    # modality als doropdpwn
-    scheduled_performing_physician_s_name = forms.CharField(label='Zuständiger Arzt')
+        queryset=ModalitiesInformation.objects.all(), 
+        to_field_name='ae_title', 
+        initial=0)
+
+     
+    doctor_list = [('dr1', 'Dr. Thomas Bürkle'), ('dr2','Dr. Michael Lehmann'),('dr3', 'Dr. Stephan Nüssli')]
+    scheduled_performing_physician_s_name = forms.ChoiceField(choices=doctor_list,label='Zuständiger Arzt')
+    
     # doctor automatisch reigefügr, pat id should unedit + name
     patient_s_name = forms.CharField()
    

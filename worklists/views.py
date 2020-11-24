@@ -6,7 +6,8 @@ from django.views import View
 from django.shortcuts import (
     render, get_object_or_404, redirect)
 import datetime
-# Create your views here.
+
+
 class WorklistCreateView(View):
     #works
     template_name = 'worklists/worklist_create.html'
@@ -15,10 +16,8 @@ class WorklistCreateView(View):
         patient = get_object_or_404(PatientInformation, id=patient_id)
         # get method
         form = WorklistInformationForm(request.POST)
-        print('this is the get')
         current_date = datetime.date.today()
-        current_time = datetime.datetime.utcnow()
-        print(current_time)
+        current_time = datetime.datetime.utcnow()       
         context = {
             'time': current_time,
             'date':current_date,
@@ -44,6 +43,6 @@ class WorklistCreateView(View):
 def worklist_list_view(request):
     queryset = WorklistInformation.objects.all()
     context ={
-        'object_list': queryset
+        'object_list': queryset        
     }
     return render(request, 'worklists/worklist_list.html', context)
