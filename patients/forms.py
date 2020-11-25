@@ -1,7 +1,6 @@
 from django import forms 
 from.models import PatientInformation
 import datetime
-#from phonenumber_field.formfields import PhoneNumberField
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -20,8 +19,7 @@ class PatientInformationForm(forms.ModelForm):
     city = forms.CharField(label='Stadt')
     code = forms.CharField(label='PLZ')
     language = forms.CharField(required=False, label='Sprache')
-    #telefon = PhoneNumberField()
-    
+        
     class Meta: 
         model = PatientInformation
         fields = [

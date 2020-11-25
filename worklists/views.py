@@ -9,12 +9,10 @@ import datetime
 
 
 class WorklistCreateView(View):
-    #works
     template_name = 'worklists/worklist_create.html'
     def get(self, request, *args, **kwargs):
         patient_id = request.GET.get('patient-id')
         patient = get_object_or_404(PatientInformation, id=patient_id)
-        # get method
         form = WorklistInformationForm(request.POST)
         current_date = datetime.date.today()
         current_time = datetime.datetime.today()       
@@ -26,9 +24,7 @@ class WorklistCreateView(View):
         }
         return render(request, self.template_name, context)
 
-    def post(self, request, *args, **kwargs):
-        #post method 
-        
+    def post(self, request, *args, **kwargs):        
         form = WorklistInformationForm(request.POST)
         print('somethign wong'+ str(form))
         if form.is_valid():
@@ -38,8 +34,7 @@ class WorklistCreateView(View):
             print('worklist erstellt')
         context = { 'form':form }
         return render(request, self.template_name, context)
-  
-# worklists are not saved...
+
 def worklist_list_view(request):
     queryset = WorklistInformation.objects.all()
     context ={

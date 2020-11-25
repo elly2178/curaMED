@@ -2,10 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import AdministrationInformation
 from .forms import AdministrationInformationForm
-from django.views.generic import (
-     
-    UpdateView 
-)
+from django.views.generic import (     
+    UpdateView )
 
 # Create your views here.
  
@@ -21,7 +19,6 @@ def location_delete_view(request,id):
     obj = get_object_or_404(AdministrationInformation, id=id)
     if request.method =='POST':
         obj.delete()
-        #make the redirect to another page
         return redirect('administration')
     
     context = {
@@ -30,7 +27,6 @@ def location_delete_view(request,id):
     return render(request, 'administration/location_delete.html', context)
 
 def location_create_view(request):
-    # more addressen für einfügen
     form = AdministrationInformationForm(request.POST or None)
     if form.is_valid():
         form.save()

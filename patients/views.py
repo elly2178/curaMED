@@ -6,9 +6,6 @@ from django.urls import reverse
 from .models import PatientInformation
 from .forms import PatientInformationForm
 from django.db.models import Q
-
-
-# import for detail, list view
 from django.views.generic import DetailView
 
 from django.views import View
@@ -27,14 +24,12 @@ def patient_update_view(request, id= id):
 def patient_detail_view(request, id):
     obj = get_object_or_404(PatientInformation, id=id)
     form = PatientInformationForm(request.POST or None, instance=obj)
-    print(str(form))
     if form.is_valid():
         form.save()
         form = PatientInformationForm()
         return redirect('patients')
     else:
-        if request.POST:             
-            
+        if request.POST:
             del form.errors["title"]
             del form.errors["birthdate"]
             form.save()
@@ -45,8 +40,7 @@ def patient_detail_view(request, id):
     }
     return render(request, 'patient/patient_detail.html', context)
 
-def patient_search_view(query=None):
-    
+def patient_search_view(query=None):    
     queryset= []
     queries = []
     if query is not None:
@@ -59,11 +53,9 @@ def patient_search_view(query=None):
         ).distinct()
         for patient in patients:
             queryset.append(patient)
-    # return unique set 
     return list(set(queryset)) 
 
 def patient_search_result_view(request):
-    # e posibil sa trebuiasca sa puui parte din cod in definitia pati list
     context = {}
     query = ''
     if request.GET:
@@ -85,8 +77,6 @@ def patient_delete_view(request,id):
     obj = get_object_or_404(PatientInformation, id=id)
     if request.method =='POST':
         obj.delete()
-        #make the redirect to another page
-        # for modalitäten --> redirect to mod anzeigen
         return redirect('patients')
     context = {
         'object':obj
@@ -95,7 +85,6 @@ def patient_delete_view(request,id):
 
 
 class PatientCreateView(View):
-    #works
     template_name = 'patient/patient_create.html'
     def get(self, request, *args, **kwargs):
         # get method
@@ -113,5 +102,3 @@ class PatientCreateView(View):
             return redirect('patients')
         context = { 'form':form }
         return render(request, self.template_name, context)
-
- 

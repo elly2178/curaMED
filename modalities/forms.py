@@ -6,17 +6,11 @@ from django.core.exceptions import ValidationError
  
 
 class ModalitiesInformationForm(forms.ModelForm):
-    ae_title = forms.CharField(widget=forms.TextInput(attrs=
-    {"placeholder": "ae23456jdmglo_01"}))
+    ae_title = forms.CharField(
+        widget=forms.TextInput(attrs={"placeholder": "ae23456jdmglo_01"}))
     title =  forms.CharField(
-        widget=forms.TextInput(attrs=
-    {"placeholder": "Ultraschall"}))
+        widget=forms.TextInput(attrs={"placeholder": "Ultraschall"}))
     description = forms.CharField(required=False, label="Beschreibung")
-     
-    # mouse over --> help text for dicom ae title
-    # new button Verbindungstest
-    # 
-    
     ip = forms.GenericIPAddressField(label="IP Adresse")
     port = forms.CharField()
     associate_location = LocationModelChoiceField(label="Standort",
