@@ -18,7 +18,7 @@ from django.urls import path
 
 #own imports
 from django.views.generic import RedirectView
-from pages.views import homepage_view, homepage_administration_view, homepage_modalities_view
+from pages.views import homepage_view
 
 from patients.views import(
     
