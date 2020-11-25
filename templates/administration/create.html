@@ -15,7 +15,12 @@
               <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
             </div>
           </div>
-
+          <div class="col-10">
+            <h5 class="card-title">Informationen zu ihren Praxis</h5>
+             
+            <h6 class="card-subtitle"> Tragen Sie die passende Informationen in den Formular ein. Alle felder sind pflichtig</h6>
+         
+ </div>
         </div>
 
       </div>
@@ -82,12 +87,12 @@
         </div>
       </div>
 
+<input type='submit' value='Speichern' class="btn btn-outline-primary" />
+  <a href="{% url 'administration' %}" class="btn btn-outline-primary">Abbrechen</a>
 
     </div>
   </div>
 
-  <input type='submit' value='Speichern' class="btn btn-outline-primary" />
-  <a href="{% url 'administration' %}" class="btn btn-outline-primary">Abbrechen</a>
-
+  
 </form>
 {% endblock %}

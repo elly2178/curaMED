@@ -13,14 +13,14 @@
   <div class="card-body">
   <div class="container">
     <div class="row">
-      <div class = "card w-2">
+      <div class = "card w-2 border-0">
       <div class="col">
-        <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
+        <img src="/static/images/file-hosting.png" class="card-img-top" width="55" height="45">
       </div>
     </div>
       <div class="col-15">
              
-        <h5 class="card-title">{{instance.scheduled_station_ae_title}} {{instance.id}}</h5>
+        <h5 class="card-title">{{instance.modality.get_modality_representation}} {{instance.id}}</h5>
       </div>
     </div>
   </div>

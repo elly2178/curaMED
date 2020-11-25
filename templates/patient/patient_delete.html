@@ -6,7 +6,7 @@
 <br>
 <form method='POST'> {% csrf_token %}
     <h4> Möchten Sie der Patient "
-        {{ object.first_name}}" löschen?</h4>
+        {{ object.first_name}} {{ object.second_name }} " löschen?</h4>
         <div class="card border-info mb-3 w-100" >
             <div class="card-body">
             <div class="container">
@@ -16,28 +16,26 @@
                   <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
                 </div>
               </div>
-                
+              <div class="col-15">
+                <h5 class="card-title">{{object.first_name}} {{ object.second_name}}</h5>
+              </div>
               </div>
             </div>
             
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"> Geschlecht: {{ object.title }}</li>
-                    <li class="list-group-item">Vorname: {{ object.first_name }}</li>
-                  <li class="list-group-item">Nachname: {{ object.second_name }}</li>
+                    <li class="list-group-item"> {{ object.get_title_display }} {{ object.first_name }} {{ object.second_name }}</li>
                   <li class="list-group-item">Geburtstag: {{ object.birthdate }}</li>
-                  <li class="list-group-item">Strasse.: {{ object.address }}</li>
-                  <li class="list-group-item">Hausnr.: {{ object.number }}</li>
-                  <li class="list-group-item">Stadt: {{ object.city }}</li>
-                  <li class="list-group-item">PLZ: {{ object.code }}</li>
+                  <li class="list-group-item">Addrese: {{ object.address }}, {{ object.number }}</li>
+                  <li class="list-group-item">Ort: {{ object.city }}, {{ object.code }}</li>
                   <li class="list-group-item">Sprache: {{ object.language }}</li>
                   
         
                 </ul>  
-              
-              </div>
-            </div>
-    <input type='submit' class="btn btn-outline-primary" value ='Ja'/>
+              <input type='submit' class="btn btn-outline-primary" value ='Ja'/>
     <a href="{% url 'patients' %}" class="btn btn-outline-primary">Nein</a>
  
+              </div>
+            </div>
+    
 </form>
 {% endblock %}

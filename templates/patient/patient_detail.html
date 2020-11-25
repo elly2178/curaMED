@@ -2,126 +2,96 @@
 
 {% block content %}
 <h2>Patient bearbeiten</h2>
- 
-<form action ='.' method='POST'>
+
+<form action='.' method='POST'>
     {% csrf_token %}
     <div class="card border-info mb-3 w-75">
-        <div class="card-header">
-            ID: {{ object.id }}
-        </div>
+        <div class="card-header"> Patient ID: {{ object.id }} </div>
         <div class="card-body">
-            <ul class="list-group list-group-flush">
-                
+            <ul class="list-group list-group-flush"> 
                 <li class="list-group-item">
                     <div class="row">
-                        <div class="col">
-                            <label>Geschlecht: </label>
-                        </div>
-                        <div class="col">
-                            <select name = 'title' id = 'id_title'  >
-                                <option value ='{{object.get_title_display}}'>{{object.get_title_display}}</option>
+                        <div class="col"> <label>Geschlecht: </label> </div>
+                        <div class="col"> <select name='title' id='id_title'>
+                                <option value='{{object.get_title_display}}'>{{object.get_title_display}}</option>
                                 <option value='male '> Herr </option>
-                                <option value='female '> Frau</option>
-                                 
-                                 
-                            </select>
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col">
-                            <label>Vorname: </label>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="first_name" id="id_first_name" value='{{ object.first_name }}'>
-                        </div>
+                                <option value='female '> Frau</option> 
+                            </select></div>
                     </div>
                 </li>
 
                 <li class="list-group-item">
                     <div class="row">
-                        <div class="col">
-                            <label>Nachname </label>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="second_name" id="id_second_name" value='{{ object.second_name }}'>
-                        </div>
-                    </div>
-                </li>
-                
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col">
-                            <label>Geburtstag: </label>
-                        </div>
+                        <div class="col"> <label>Vorname: </label> </div>
                         <div class="col"> 
-                            <!-- class="datepicker" -->
-                            <input type="text" name="birthdate" id="id_birthdate"  
-                            value="{{object.birthdate}}">
-                        </div>
+                            <input type="text" name="first_name" id="id_first_name" value='{{ object.first_name }}'> </div>
                     </div>
                 </li>
 
                 <li class="list-group-item">
                     <div class="row">
+                        <div class="col"><label>Nachname </label></div>
                         <div class="col">
-                            <label>Strasse: </label>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="address" id="id_address"
-                                value='{{ object.address }}'>
-                        </div>
+                            <input type="text" name="second_name" id="id_second_name" value='{{ object.second_name }}'></div>
                     </div>
                 </li>
+
                 <li class="list-group-item">
                     <div class="row">
+                        <div class="col"><label>Geburtstag: </label></div>
                         <div class="col">
-                            <label>Nr.: </label>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="number" id="id_number"
-                                value='{{ object.number }}'>
-                        </div>
+                            <!-- class="datepicker" -->
+                            <input type="text" name="birthdate" id="id_birthdate" value="{{object.birthdate}}"></div>
                     </div>
                 </li>
+
                 <li class="list-group-item">
                     <div class="row">
+                        <div class="col"><label>Strasse: </label></div>
                         <div class="col">
-                            <label>Stadt: </label>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="city" id="id_city"
-                                value='{{ object.city }}'>
-                        </div>
+                            <input type="text" name="address" id="id_address" value='{{ object.address }}'></div>
                     </div>
                 </li>
+
                 <li class="list-group-item">
                     <div class="row">
+                        <div class="col"><label>Nr.: </label></div>
                         <div class="col">
-                            <label>PLZ: </label>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="code" id="id_code"
-                                value='{{ object.code }}'>
-                        </div>
+                            <input type="text" name="number" id="id_number" value='{{ object.number }}'> </div>
                     </div>
                 </li>
+
                 <li class="list-group-item">
                     <div class="row">
+                        <div class="col"><label>Stadt: </label></div>
                         <div class="col">
-                            <label>Sprache: </label>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="language" id="id_language"
-                                value='{{ object.language }}'>
-                        </div>
+                            <input type="text" name="city" id="id_city" value='{{ object.city }}'></div>
                     </div>
                 </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col"><label>PLZ: </label></div>
+                        <div class="col">
+                            <input type="text" name="code" id="id_code" value='{{ object.code }}'></div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col"><label>Sprache: </label></div>
+                        <div class="col">
+                            <input type="text" name="language" id="id_language" value='{{ object.language }}'></div>
+                    </div>
+                </li>
+            </ul>
+    <input type='submit' value='Ändern' class="btn btn-outline-primary" />
+    <a href="{% url 'patients' %}" class="btn btn-outline-primary">Abbrechen</a>
+
         </div>
     </div>
-    <input type='submit' value='Ändern' class="btn btn-outline-primary" />
-    <a href="{% url 'patients' %}" class="btn btn-outline-primary" >Abbrechen</a>
+ 
+
 </form>
 
 {% endblock %}

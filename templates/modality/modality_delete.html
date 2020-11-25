@@ -6,34 +6,34 @@
 <br>
 <form method='POST'> {% csrf_token %}
     <h4> Möchten Sie die Modalität "
-        {{ object.title}}" löschen?</h4>
+        {{ object.ae_title}}" löschen?</h4>
     <div class="card border-info mb-3 w-100" >
         <div class="card-body">
         <div class="container">
           <div class="row">
-            <div class = "card w-2">
+            <div class = "card w-2 border-0">
             <div class="col">
               <img src="/static/images/mri.png" class="card-img-top" width="55" height="45">
             </div>
           </div>
-            
+          <div class="col-15">
+            <h5 class="card-title">AE-Title: {{object.ae_title}} </h5>
+          </div>
           </div>
         </div>
           
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">AETitle: {{ object.title }}</li>
+              <li class="list-group-item">Title: {{ object.title }}</li>
               <li class="list-group-item">Beschreibung: {{ object.description }}</li>
-              <li class="list-group-item">IP: {{ object.ip }}</li>
-              <li class="list-group-item">Port: {{ object.port }}</li>
-              <li class="list-group-item">Status: {{ object.status }}</li>
-              <li class="list-group-item"> Standort: {{ object.associate_location }}</li>
+              <li class="list-group-item">IP: {{ object.ip }}, Port: {{ object.port }}</li>
+              <li class="list-group-item"> Standort: {{ object.associate_location.get_location_representation }}</li>
     
             </ul>  
-          
+           <input type='submit' class="btn btn-outline-primary"  value ='Ja'/>
+    <a href="{% url 'modalities' %}" class="btn btn-outline-primary" >Nein</a>
+
           </div>
         </div>
    
-    <input type='submit' class="btn btn-outline-primary"  value ='Ja'/>
-    <a href="{% url 'modalities' %}" class="btn btn-outline-primary" >Nein</a>
-</form>
+   </form>
 {% endblock %}

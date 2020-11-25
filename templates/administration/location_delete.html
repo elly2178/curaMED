@@ -1,40 +1,36 @@
-
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 <h2>Standort löschen</h2>
 <br>
 <form method='POST'> {% csrf_token %}
+
+  <h4> Möchten Sie der Standort "
+    {{ object.name}}" löschen?</h4>
+  <div class="card border-info mb-3 w-100">
+    <div class="card-body">
+      <div class="container">
+        <div class="row">
+          <div class="card w-2 border-0"> 
+            <div class="col">
+              <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"> Betriebsname: {{ object.name }}</li>
+        <li class="list-group-item">Addresse: {{ object.street }}, {{ object.number }}</li>
+        <li class="list-group-item">{{ object.city }}, {{ object.plz }}</li>
+        <li class="list-group-item">Telefon Nr.: {{ object.telefon_number }}</li>
+      </ul>
+
+      <input type='submit' class="btn btn-outline-primary" value='Ja' />
+      <a href="{% url 'administration' %}" class="btn btn-outline-primary">Nein</a>
+    </div>
+  </div>
   
-   <h4> Möchten Sie der Standort "
-        {{ object.street}}" löschen?</h4>
-        <div class="card border-info mb-3 w-100" >
-            <div class="card-body">
-            <div class="container">
-              <div class="row">
-                <div class = "card w-2">
-                <div class="col">
-                  <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
-                </div>
-              </div>
-                
-              </div>
-            </div>
-             
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"> Betriebsname: {{ object.name }}</li>
-                    <li class="list-group-item">Strasse: {{ object.street }}</li>
-                  <li class="list-group-item">Stadt: {{ object.city }}</li>
-                  <li class="list-group-item">PLZ: {{ object.plz }}</li>
-                  <li class="list-group-item">Nr.: {{ object.number }}</li>
-                  <li class="list-group-item">Telefon Nr.: {{ object.telefon_number }}</li>
-                  
-        
-                </ul>  
-              
-              </div>
-            </div>
-    <input type='submit' class="btn btn-outline-primary" value ='Ja'/>
-    <a href="{% url 'administration' %}" class="btn btn-outline-primary">Nein</a>
 </form>
 {% endblock %}

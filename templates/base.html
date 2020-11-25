@@ -31,20 +31,16 @@
 <body>
   
   <nav class="navbar sticky-top navbar-light md-light border-0">
-<div class="container-md">
+  <div class="container-md">
     <div class="card text-center w-100 ">
       <div class="card-header  ">
         <ul class="nav ">
           <img src="/static/images/favicon.ico" width="30" height="30" alt="" loading="lazy">
-          <li class="nav-item">
-            <a class="nav-link home" href="{% url 'home' %}">Home</a>
-          </li>
+          <li class="nav-item"><a class="nav-link home" href="{% url 'home' %}">Home</a></li>
 
           <li class="nav-item dropdown">
             <button class="btn btn-link dropdown-toggle" type="button" id="dropdownPatientenButton"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Patienten
-            </button>
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Patienten</button>
             <div class="dropdown-menu" aria-labelledby="dropdownPatientenButton">
               <a class="dropdown-item" href="{% url 'patients' %}">Patientenliste</a>
               <a class="dropdown-item" href="{% url 'patientCreate' %}">Patient erstellen</a>
@@ -54,28 +50,26 @@
 
           <li class="nav-item dropdown">
             <button class="btn btn-link dropdown-toggle" type="button" id="dropdownModalityButton"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Modalitäten
-            </button>
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modalitäten</button>
             <div class="dropdown-menu" aria-labelledby="dropdownModalityButton">
               <a class="dropdown-item" href="{% url 'modalityCreate' %}">Neue Modalität</a>
-              <a class="dropdown-item" href="{% url 'modalities' %}">Modalitäten anzeigen</a>
-               
+              <a class="dropdown-item" href="{% url 'modalities' %}">Modalitäten anzeigen</a>               
             </div>
           </li>
 
           <li class="nav-item dropdown">
             <button class="btn btn-link dropdown-toggle" type="button" id="dropdownAdminButton" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Administration
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownAdminButton">
+              aria-haspopup="true" aria-expanded="false">Administration</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownAdminButton"> 
               <a class="dropdown-item" href="{% url 'locationCreate' %}">Standort konfigurieren </a>
               <a class="dropdown-item" href="{% url 'administration' %}">Standortliste</a>
+          </div>
           </li>
+          
         </ul>
       </div>
-    </div></div>
+    </div>
+  </div>
   </nav>
 
   <div class="container-md">
