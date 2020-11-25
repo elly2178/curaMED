@@ -17,7 +17,7 @@ class WorklistCreateView(View):
         # get method
         form = WorklistInformationForm(request.POST)
         current_date = datetime.date.today()
-        current_time = datetime.datetime.utcnow()       
+        current_time = datetime.datetime.today()       
         context = {
             'time': current_time,
             'date':current_date,
