@@ -2,11 +2,10 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-<h2>Patient löschen</h2>
+<h2>Patient entfernen</h2>
 <br>
 <form method='POST'> {% csrf_token %}
-    <h4> Möchten Sie der Patient "
-        {{ object.first_name}} {{ object.second_name }} " löschen?</h4>
+    <h4> Möchten Sie den Patienten {{ object.first_name}} {{ object.second_name }} entfernen?</h4>
         <div class="card border-info mb-3 w-100" >
             <div class="card-body">
             <div class="container">
@@ -25,7 +24,7 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"> {{ object.get_title_display }} {{ object.first_name }} {{ object.second_name }}</li>
                   <li class="list-group-item">Geburtstag: {{ object.birthdate }}</li>
-                  <li class="list-group-item">Addrese: {{ object.address }}, {{ object.number }}</li>
+                  <li class="list-group-item">Adresse: {{ object.address }}, {{ object.number }}</li>
                   <li class="list-group-item">Ort: {{ object.city }}, {{ object.code }}</li>
                   <li class="list-group-item">Sprache: {{ object.language }}</li>
                   

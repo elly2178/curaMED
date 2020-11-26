@@ -97,6 +97,7 @@ class PatientCreateView(View):
     def post(self, request, *args, **kwargs):
         #post method 
         form = PatientInformationForm(request.POST)
+        print(str(form))
         if form.is_valid():
             form.save()
             return redirect('patients')

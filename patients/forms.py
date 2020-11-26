@@ -1,9 +1,11 @@
 from django import forms 
 from.models import PatientInformation
 import datetime
+ 
 
 class DateInput(forms.DateInput):
     input_type = 'date'
+  
 
 class PatientInformationForm(forms.ModelForm):
     
@@ -13,7 +15,8 @@ class PatientInformationForm(forms.ModelForm):
     second_name = forms.CharField(label='Vorname')
       
 
-    birthdate = forms.DateField(widget=DateInput(),label='Geburtsdatum')
+    birthdate = forms.DateField( 
+    widget=DateInput(  ) , label='Geburtsdatum')
     address = forms.CharField(label='Addresse')
     number = forms.CharField(label='Nummer')
     city = forms.CharField(label='Stadt')

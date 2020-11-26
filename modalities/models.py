@@ -17,7 +17,15 @@ def validate_port(value):
 
 
 class ModalitiesInformation(models.Model):
-    title = models.CharField(max_length=150)
+    types = [('CR','Computerradiografie'),
+    ('CT','Computertomografie'),
+    ('US','Ultraschall'),
+    ('ES','Endoskopie'),
+    ('DX','Digitale Radiografie'),
+    ('MG','Mammografie')    
+    ]
+    title = models.CharField(max_length=150, choices=types)
+   
     ae_title = models.CharField(max_length=15)
     description = models.TextField(max_length=400)
     ip = models.GenericIPAddressField()

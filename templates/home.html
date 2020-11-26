@@ -1,10 +1,12 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
   {% load static %}
   <!-- Bootstrap CSS -->
 
@@ -22,10 +24,11 @@
   
   </a>
 </nav> 
+<body> 
 {% block content %}
 
  
-<h3>Wilkommen bei curaMED</h3>
+<h3>Willkommen bei curaMED</h3>
 
 <div class="card-deck" style="width:auto">
    
@@ -33,9 +36,6 @@
     <div class="card-body">
       <h5 class="card-title">Patienten</h5>
       <a href="{% url 'patients' %}" button type="button" class="btn btn-link btn-sm">Patientenliste</a>
-      <!-- <a href="#Patienten suche" button type="button" class="btn btn-link btn-sm">Patient suchen</a>
-      pat suchen nicht mehr sondern auf gleichen seite wie pat liste-->
-      
       <a href="{% url 'patientCreate' %}" button type="button" class="btn btn-link btn-sm">Patient erstellen</a>
       <a href="#Patienten importieren" button type="button" class="btn btn-link btn-sm">Patienten importieren</a>
     </div>
@@ -54,16 +54,17 @@
     <div class="card-body">
       <h5 class="card-title">Administration</h5>
       <a href=" {% url 'locationCreate' %}" button type="button" class="btn btn-link btn-sm">Standort konfigurieren</a>
-      <a href=" {% url 'administration' %}" button type="button" class="btn btn-link btn-sm">Standortliste</a>
+      <a href=" {% url 'administration' %}" button type="button" class="btn btn-link btn-sm">Standorte anzeigen</a>
     </div>
   </div>
 </div>
 
     <nav class="navbar fixed-bottom navbar-light bg-light">
-      <h6 class="text-blue h4">Kontakt: dumig1@bfh.ch</h6>
-      <h6 class="text-blue h4">Addresse: Quellgasse 21, 2502 Biel</h6>
+      <h8 class="text-blue h8">Kontakt: dumig1@bfh.ch</h8>
+      <h8 class="text-blue h8">Adresse: Quellgasse 21, 2502 Biel</h8>
     </nav>
 
  
 {% endblock %}
- 
+</body>
+</html>

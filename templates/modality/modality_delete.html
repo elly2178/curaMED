@@ -2,11 +2,10 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-<h2>Modalität löschen</h2>
+<h2>Modalität entfernen</h2>
 <br>
 <form method='POST'> {% csrf_token %}
-    <h4> Möchten Sie die Modalität "
-        {{ object.ae_title}}" löschen?</h4>
+    <h4> Möchten Sie die Modalität {{ object.ae_title}} entfernen?</h4>
     <div class="card border-info mb-3 w-100" >
         <div class="card-body">
         <div class="container">
@@ -17,16 +16,16 @@
             </div>
           </div>
           <div class="col-15">
-            <h5 class="card-title">AE-Title: {{object.ae_title}} </h5>
+            <h5 class="card-title">AE-Titel: {{object.ae_title}} </h5>
           </div>
           </div>
         </div>
           
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Title: {{ object.title }}</li>
+              <li class="list-group-item">Typ: {{ object.title }}</li>
               <li class="list-group-item">Beschreibung: {{ object.description }}</li>
-              <li class="list-group-item">IP: {{ object.ip }}, Port: {{ object.port }}</li>
-              <li class="list-group-item"> Standort: {{ object.associate_location.get_location_representation }}</li>
+              <li class="list-group-item">IP Adresse: {{ object.ip }}, Port Nummer: {{ object.port }}</li>
+              <li class="list-group-item">Standort: {{ object.associate_location.get_location_representation }}</li>
     
             </ul>  
            <input type='submit' class="btn btn-outline-primary"  value ='Ja'/>

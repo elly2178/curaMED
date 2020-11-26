@@ -8,6 +8,7 @@ from django.shortcuts import (
 import datetime
 
 
+
 class WorklistCreateView(View):
     template_name = 'worklists/worklist_create.html'
     def get(self, request, *args, **kwargs):
@@ -26,12 +27,10 @@ class WorklistCreateView(View):
 
     def post(self, request, *args, **kwargs):        
         form = WorklistInformationForm(request.POST)
-        print('somethign wong'+ str(form))
         if form.is_valid():
-            print('you are in the if')
             form.save()
+            #### call the curapacs worklist API to create a new worklist with the information from "form"
             return redirect('patients')
-            print('worklist erstellt')
         context = { 'form':form }
         return render(request, self.template_name, context)
 

@@ -12,7 +12,7 @@ class PatientInformation(models.Model):
     number = models.CharField(max_length=10)
     city = models.CharField(max_length=25)
     code = models.CharField(max_length=4)
-    language = models.CharField(max_length=10)
+    language = models.CharField(max_length=50)
    
     
 

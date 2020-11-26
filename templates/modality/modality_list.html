@@ -2,7 +2,7 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-<h2>Modalitäten liste</h2>
+<h2>Konfigurierte Modalitäten</h2>
 
 <br>
 
@@ -18,7 +18,7 @@
       </div>
        
         <div class="col-15">
-          <h5 class="card-title">AE-Title: {{instance.ae_title}} </h5>
+          <h5 class="card-title" title="Der DICOM AE-Titel ist eine kurze, eindeutige Bezeichnung für ein Gerät">AE-Titel: {{instance.ae_title}} </h5>
         </div>
       </div>
     </div>
@@ -26,10 +26,10 @@
         
          
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">Title: {{ instance.title }}</li>
+          <li class="list-group-item">Typ: {{ instance.get_title_display }}</li>
           <li class="list-group-item">Beschreibung: {{ instance.description }}</li>
-          <li class="list-group-item">IP: {{ instance.ip }}</li>
-          <li class="list-group-item">Port: {{ instance.port }}</li>
+          <li class="list-group-item">IP Adresse: {{ instance.ip }}</li>
+          <li class="list-group-item">Port Nummer: {{ instance.port }}</li>
          
           <li class="list-group-item" > Standort: {{ instance.associate_location.get_location_representation }} </li>
            

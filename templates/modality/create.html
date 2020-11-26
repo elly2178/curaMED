@@ -23,8 +23,8 @@
                         </div>
                     </div>
                     <div class="col-15">
-                        <h5 class="card-title">Neue Gerät einfügen</h5>
-                        <h6 class="card-subtitle"> Bitte beachten Sie, dass der AETitle einzigartig sein muss.</h6>
+                        <h5 class="card-title">Bitte Informationen der neuen Modalität einfügen.</h5>
+                        <h6 class="card-subtitle">Bitte beachten Sie, dass der AETitle einzigartig sein muss. Der AETitle muss zuerst auf der Modalität konfiguriert werden.</h6>
                       </div>
                 </div>
 
@@ -37,7 +37,7 @@
 
                     <div class="row">
                         <div class="col">
-                            <label>AETitle: </label>
+                            <label title="Der DICOM AE-Titel ist eine kurze, eindeutige Bezeichnung für ein Gerät.">AE-Titel: </label>
                         </div>
 
                         <div class="col">
@@ -47,7 +47,7 @@
                     <br>
                     <div class="row">
                         <div class="col">
-                            <label>Title: </label>
+                            <label>Typ: </label>
                         </div>
                         <div class="col">
                             {{form.title}}
@@ -65,7 +65,7 @@
                     <br>
                     <div class="row">
                         <div class="col">
-                            <label>IP: </label>
+                            <label>IP Adresse: </label>
                         </div>
                         <div class="col">
                             {{form.ip}}
@@ -74,7 +74,7 @@
                     <br>
                     <div class="row">
                         <div class="col">
-                            <label>Port: </label>
+                            <label>Port Nummer: </label>
                         </div>
                         <div class="col">
                             {{form.port}}

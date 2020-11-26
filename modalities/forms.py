@@ -6,13 +6,22 @@ from django.core.exceptions import ValidationError
  
 
 class ModalitiesInformationForm(forms.ModelForm):
+    types = [('CR','Computerradiografie'),
+    ('CT','Computertomografie'),
+    ('US','Ultraschall'),
+    ('ES','Endoskopie'),
+    ('DX','Digitale Radiografie'),
+    ('MG','Mammografie')    
+    ]
+    # more titles under: http://dicomlookup.com/modalities.asp
     ae_title = forms.CharField(
-        widget=forms.TextInput(attrs={"placeholder": "ae23456jdmglo_01"}))
-    title =  forms.CharField(
-        widget=forms.TextInput(attrs={"placeholder": "Ultraschall"}))
+        widget=forms.TextInput(attrs={"placeholder": "MTX203"}))
+    
+    title =  forms.ChoiceField(choices=types, label='Typ')
+     
     description = forms.CharField(required=False, label="Beschreibung")
     ip = forms.GenericIPAddressField(label="IP Adresse")
-    port = forms.CharField()
+    port = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "104"}))
     associate_location = LocationModelChoiceField(label="Standort",
                                                   queryset=AdministrationInformation.objects.all(),
                                                   to_field_name='id',

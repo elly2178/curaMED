@@ -10,10 +10,9 @@
             <div class="container">
                 <div class="row">
                     <div class="card w-2 border-0">
-                        <div class="col">
-
+                        <div class="col"> 
                             <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
-                        </div>
+                                               </div>
                     </div>
 
                 </div>
@@ -73,7 +72,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-                            <label>Nr.: </label>
+                            <label>Hausnummer: </label>
                         </div>
                         <div class="col">
                             {{form.number}}
@@ -83,7 +82,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-                            <label>Stadt: </label>
+                            <label>Ort: </label>
                         </div>
                         <div class="col">
                             {{form.city}}
@@ -111,9 +110,10 @@
                     </div>
                 </li>
             </ul>
+            <input type='submit' value='Speichern' class="btn btn-outline-primary" />
+    <a href="{% url 'patients' %}" class="btn btn-outline-primary" >Abbrechen</a>
         </div>
     </div>
-    <input type='submit' value='Speichern' class="btn btn-outline-primary" />
-    <a href="{% url 'patients' %}" class="btn btn-outline-primary" >Abbrechen</a>
+    
 </form>
 {% endblock %}

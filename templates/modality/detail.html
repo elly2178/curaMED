@@ -29,7 +29,9 @@
                             <label>AETitle: </label>
                         </div>
                         <div class="col">
-                            <input type="text" name="ae_title" id="id_ae_title" value='{{ object.ae_title }}' readonly>
+                            <input type="text" name="ae_title" id="id_ae_title"
+                            title= "Der AE-Titel kann nicht bearbeitet werden. Bitte hierfür die Modalität neu erstellen."
+                             value='{{ object.ae_title }}' readonly>
                         </div>
 
                     </div>
@@ -80,7 +82,7 @@
                             <label>Standort: </label>
                         </div>
 
-                        <div class="col" id="associate_location">{{ object.associate_location.get_location_representation }}
+                        <div class="col" id="associate_location">
                             <select name = 'associate_location' id = 'id_associate_location'  >
                                               
                              {% for dropdown in AdministrationInformation %}

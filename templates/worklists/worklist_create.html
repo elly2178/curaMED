@@ -16,7 +16,7 @@
 -->
  
 <form action='.' method='POST'> {% csrf_token %}
-
+    <input type="hidden" name="patient_id" id="id_patient_id" value='{{ patient.id }}' readonly>
     <div class="card border-info mb-3">
         <div class="card-body">
             <div class="container">
@@ -84,7 +84,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-                            <label>Patient Name: </label>
+                            <label>Patient: </label>
                         </div>
                         
                         <div class="col">
@@ -92,18 +92,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col">
-                        <label>Patient ID: </label>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="patient_id" id="id_patient_id" value='{{ patient.id }}' readonly>
-                            
-                        </div>
-                       
-                    </div>
-                </li>
+                
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">

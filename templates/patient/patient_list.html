@@ -25,7 +25,12 @@
     <div class="row">
       <div class = "card w-2 border-0">
       <div class="col ">
-        <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
+        {% if instance.title == "male" %}
+          <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
+        {% else %}
+        <img src="/static/images/marilyn_monroe.png" class="card-img-top" width="55" height="45">
+        {% endif %}
+                  
       </div>
     </div>
       <div class="col-15">
@@ -36,14 +41,15 @@
      
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Geburtstag: {{ instance.birthdate }}</li>
-        <li class="list-group-item">Addresse: {{ instance.address }}, {{ instance.number }},
+        <li class="list-group-item">Adresse: {{ instance.address }}, {{ instance.number }},
            {{ instance.city }}, {{ instance.code }}</li>
         <li class="list-group-item">Sprache: {{ instance.language }}</li>
       </ul>  
       <!-- aici ai eroarea cu reverse for patients detail with no argument pattern-->
+      
+      <a href="{% url 'worklistCreate' %}?patient-id={{ instance.id }}" class="btn btn-outline-primary">Auftrag erstellen</a>
       <a href="{% url 'patientDetail' instance.id %}" 
        class="btn btn-outline-primary">Patient bearbeiten</a>
-      <a href="{% url 'worklistCreate' %}?patient-id={{ instance.id }}" class="btn btn-outline-primary">Worklist erstellen</a>
       <a href="{% url 'patientDelete' instance.id %}" 
        class="btn btn-outline-primary">Patient löschen</a>
     </div>

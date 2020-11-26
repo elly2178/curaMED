@@ -30,7 +30,8 @@
         <li class="list-group-item">Time: {{ instance.scheduled_procedure_step_start_time }}</li>
         <li class="list-group-item">Modality.: {{ instance.modality.get_modality_representation}}</li>
         <li class="list-group-item">Doctor name: {{ instance.get_scheduled_performing_physician_s_name_display }}</li>
-        <li class="list-group-item" >Patient name: {{ instance.patient_s_name }}</li>
+        <li class="list-group-item">Patient: {{ instance.patient_s_name }}</li>
+      
         <li class="list-group-item">Patient id: {{ instance.patient_id}}</li>
         <li class="list-group-item">Patient geburtsdatum: {{ instance.patient_s_birth_date}}</li>
         <li class="list-group-item">Patient geschlecht: {{ instance.patient_s_sex }}</li>

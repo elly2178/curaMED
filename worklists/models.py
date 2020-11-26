@@ -10,7 +10,9 @@ class WorklistInformation(models.Model):
 
     modality = models.ForeignKey('modalities.ModalitiesInformation', on_delete=models.CASCADE)
 
-    doctor_list = [('dr1', 'Dr. Thomas Bürkle'), ('dr2','Dr. Michael Lehmann'),('dr3', 'Dr. Stephan Nüssli')]
+    doctor_list = [('dr1', 'Dr. Thomas Bürkle'), 
+                    ('dr2','Dr. Michael Lehmann'),
+                    ('dr3', 'Dr. Stephan Nüssli')]
     scheduled_performing_physician_s_name = models.CharField(max_length=80,choices=doctor_list)
     patient_s_name = models.CharField(max_length=100) 
     patient_id = models.CharField(max_length= 64) 
@@ -19,5 +21,6 @@ class WorklistInformation(models.Model):
     patient_s_sex = models.CharField(max_length=4)
     
     scheduled_procedure_step_description =  models.CharField(max_length=64)
+    
     def get_absolute_url(self):
         return reverse("worklists", kwargs={"id":self.id})
