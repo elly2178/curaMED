@@ -1,16 +1,31 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-import datetime
+from datetime import datetime
 from modalities.models import ModalitiesInformation
- 
+from django.core.exceptions import ValidationError
+
+def validate_date(somedate):
+    try:
+        retval = datetime.strptime(somedate, "%d. %B %Y")
+    except ValueError:
+        raise ValidationError("Datumsangabe nicht valide.")
+    return retval
+
+def validate_time(sometime):
+    try:
+        retval = datetime.strptime(sometime, "%H:%M")
+    except ValidationError:
+        raise ValidationError("Zeitangabe nicht valide.")
+    return retval
+        
 class WorklistInformation(models.Model):
-    scheduled_procedure_step_start_date = models.CharField(max_length=100)
-    scheduled_procedure_step_start_time = models.CharField(max_length=12)
+    scheduled_procedure_step_start_date = models.CharField(max_length=100, validators=[validate_date])
+    scheduled_procedure_step_start_time = models.CharField(max_length=12, validators=[validate_time])
 
     modality = models.ForeignKey('modalities.ModalitiesInformation', on_delete=models.CASCADE)
 
-    doctor_list = [('dr1', 'Dr. Thomas Bürkle'), 
+    doctor_list = [('dr1', 'Thomas Burkle'), 
                     ('dr2','Dr. Michael Lehmann'),
                     ('dr3', 'Dr. Stephan Nüssli')]
     scheduled_performing_physician_s_name = models.CharField(max_length=80,choices=doctor_list)

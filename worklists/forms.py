@@ -15,7 +15,7 @@ class WorklistInformationForm(forms.ModelForm):
         to_field_name='ae_title', 
         initial=0)
    
-    doctor_list = [('dr1', 'Dr. Thomas Bürkle'), ('dr2','Dr. Michael Lehmann'),('dr3', 'Dr. Stephan Nüssli')]
+    doctor_list = [('dr1', 'Thomas Burkle'), ('dr2','Dr. Michael Lehmann'),('dr3', 'Dr. Stephan Nüssli')]
     scheduled_performing_physician_s_name = forms.ChoiceField(choices=doctor_list,label='Zuständiger Arzt')
     patient_s_name = forms.CharField()
     patient_id = forms.CharField(required = False,label='Patient ID')

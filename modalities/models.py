@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.core.exceptions import ValidationError
 from django.forms import ModelChoiceField
 
-
 class ModalityModelChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
         return f"{obj.title}, {obj.description} [{obj.ae_title}]"  
@@ -13,8 +12,7 @@ def validate_port(value):
     if 0 <= value <= 65535:
         return value
     else:
-        raise ValidationError('Port value out of range')
-
+        raise ValidationError("Port Nummer muss zwischen 0 und 65535 liegen.")
 
 class ModalitiesInformation(models.Model):
     types = [('CR','Computerradiografie'),
