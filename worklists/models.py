@@ -25,9 +25,9 @@ class WorklistInformation(models.Model):
 
     modality = models.ForeignKey('modalities.ModalitiesInformation', on_delete=models.CASCADE)
 
-    doctor_list = [('dr1', 'Thomas Burkle'), 
+    doctor_list = [('dr1', 'Dr. Thomas Burkle'), 
                     ('dr2','Dr. Michael Lehmann'),
-                    ('dr3', 'Dr. Stephan Nüssli')]
+                    ('dr3', 'Dr. Stephan Nuessli')]
     scheduled_performing_physician_s_name = models.CharField(max_length=80,choices=doctor_list)
     patient_s_name = models.CharField(max_length=100) 
     patient_id = models.CharField(max_length= 64) 

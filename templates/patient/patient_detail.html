@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<br>
 <h2>Patient bearbeiten</h2>
 
 <form action='.' method='POST'>
@@ -14,6 +15,7 @@
                         <div class="col"> <label>Geschlecht: </label> </div>
                         <div class="col"> <select name='title' id='id_title'>
                                 <option value='{{object.get_title_display}}'>{{object.get_title_display}}</option>
+                                <option disabled>────</option>
                                 <option value='male '> Herr </option>
                                 <option value='female '> Frau</option> 
                             </select></div>

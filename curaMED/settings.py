@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
-    #own
-    'pages', 
+    #own 
     'patients',
     'administration',
     'modalities',

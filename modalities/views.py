@@ -52,6 +52,7 @@ def modality_detail_view(request,id):
     else:
         if request.POST:
             try:
+                print("you are in the try", str(form))
                 form.clean_ae_title()
             except (ValidationError, KeyError):
                 del form.errors["ae_title"]

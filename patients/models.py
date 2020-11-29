@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from django.forms import ModelChoiceField
+ 
 
 class PatientInformation(models.Model):
     sex=[('male','Herr'),('female','Frau')]
@@ -18,4 +18,3 @@ class PatientInformation(models.Model):
 
     def get_absolute_url(self):
         return reverse("patients", kwargs={"id":self.id})
-

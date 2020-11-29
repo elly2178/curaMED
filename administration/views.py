@@ -6,7 +6,11 @@ from django.views.generic import (
     UpdateView )
 
 # Create your views here.
- 
+
+
+def homepage_view(request,*args, **kwargs):
+    return render(request, 'home.html',{})
+
 def location_view(request):
     queryset = AdministrationInformation.objects.all()
     context = {

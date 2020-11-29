@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<br>
 <h2> Neue Modalität hinzufügen</h2>
 
 <form method='POST'> {% csrf_token %}
@@ -88,6 +89,7 @@
                         </div>
                         <div class="col" id="associate_location">
                             {{form.associate_location }}
+                            
                         </div>
                     </div>
 
