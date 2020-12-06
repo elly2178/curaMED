@@ -3,19 +3,11 @@ from .models import WorklistInformation
 from patients.models import PatientInformation
 from .forms import WorklistInformationForm
 from django.views import View
-from django.shortcuts import (
-    render, get_object_or_404, redirect)
+from django.shortcuts import (render, get_object_or_404, redirect)
 from datetime import datetime,date
 import json
 import requests
-
-
-with open("/home/schumi/Bachelor/secrets/orthanc-secret.json","r") as secretstore:
-    data = json.load(secretstore)
-    http_credentials = data.get("c0100-orthanc.curapacs.ch",None)
-    http_hostname = "https://c0100-orthanc.curapacs.ch/worklists"
-    http_username = http_credentials.get("user")
-    http_password = http_credentials.get("password")
+from curaMED import helpers
 
 class WorklistCreateView(View):
     template_name = 'worklists/worklist_create.html'
@@ -39,7 +31,9 @@ class WorklistCreateView(View):
             form.save() 
             data_dict = create_curapacs_worklist_request(form.cleaned_data)
             #add error handling
-            response = requests.post(http_hostname, json=data_dict, auth=(http_username, http_password))
+            response = requests.post(helpers.orthanc.get_url_for_path("worklists"),
+                                     json=data_dict,
+                                     auth=(helpers.orthanc.username, helpers.orthanc.password))
             print("Response was: " + str(response.status_code))
             return redirect('patients')
         context = {'form':form}
@@ -54,7 +48,6 @@ def get_doctors_name(some_short_name):
 def create_curapacs_worklist_request(form_cleaned_data):
     physician_name = get_doctors_name(form_cleaned_data.get("scheduled_performing_physician_s_name"))
     physician_name = physician_name.replace(" ", "^")
-    print("éLKJLéJ" + physician_name)
     worklist_datetime = datetime.strptime(f"{form_cleaned_data.get('scheduled_procedure_step_start_date')}\
          {form_cleaned_data.get('scheduled_procedure_step_start_time')}", "%d. %B %Y %H:%M")
     return {

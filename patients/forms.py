@@ -22,7 +22,7 @@ class PatientInformationForm(forms.ModelForm):
     city = forms.CharField(label='Stadt')
     code = forms.CharField(label='PLZ')
     language = forms.CharField(required=False, label='Sprache')
-        
+       
     class Meta: 
         model = PatientInformation
         fields = [

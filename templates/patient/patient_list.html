@@ -44,6 +44,19 @@
         <li class="list-group-item">Adresse: {{ instance.address }}, {{ instance.number }},
            {{ instance.city }}, {{ instance.code }}</li>
         <li class="list-group-item">Sprache: {{ instance.language }}</li>
+        <li class="list-group-item">Studien: {% for study in instance.studies reversed %} 
+          <ul> 
+            {% if study.study_description %}
+            <li class="list-group-item">Date: {{ study.study_date }}</li>
+            <li class="list-group-item">Time: {{ study.study_time }}</li>
+            <li class="list-group-item">Description: {{ study.study_description }}</li>
+            {% else %}
+            <li class="list-group-item">Studie mit ID {{ study.study_id }} ohne Beschreibung gefunden.</li>
+            {% endif %}
+         
+        </ul>
+          {% endfor %}
+        </li>
       </ul>  
       <!-- aici ai eroarea cu reverse for patients detail with no argument pattern-->
       
@@ -52,6 +65,9 @@
        class="btn btn-outline-primary">Patient bearbeiten</a>
       <a href="{% url 'patientDelete' instance.id %}" 
        class="btn btn-outline-primary">Patient löschen</a>
+       <a href=" # patient zusammenführen  " 
+       class="btn btn-outline-primary">Patient Zusammenführen</a>
+        
     </div>
   </div>
 

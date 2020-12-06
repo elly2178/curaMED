@@ -13,8 +13,7 @@ class WorklistInformationForm(forms.ModelForm):
     modality = ModalityModelChoiceField(
         queryset=ModalitiesInformation.objects.all(), 
         to_field_name='ae_title', 
-        initial=0)
-   
+        initial=0)   
     doctor_list = [('dr1', 'Dr. Thomas Buerkle'), ('dr2','Dr. Michael Lehmann'),('dr3', 'Dr. Stephan Nuessli')]
     scheduled_performing_physician_s_name = forms.ChoiceField(choices=doctor_list,label='Zuständiger Arzt')
     patient_s_name = forms.CharField()
@@ -22,14 +21,10 @@ class WorklistInformationForm(forms.ModelForm):
     patient_s_birth_date = forms.CharField(required = False,label='Patient Geburtstag') 
     patient_s_sex = forms.CharField(required = False, label='Patient Geschlecht')
     scheduled_procedure_step_description =  forms.CharField(required = False, label='Auftragsdeskription')
-    
-
-    
-    
+   
     class Meta: 
         model = WorklistInformation
-        fields = [
-            #'scheduled_station_ae_title',
+        fields = [ 
             'scheduled_procedure_step_start_date',
             'scheduled_procedure_step_start_time',
             'modality',
@@ -39,7 +34,6 @@ class WorklistInformationForm(forms.ModelForm):
             'patient_s_birth_date',
             'patient_s_sex',
             'scheduled_procedure_step_description'
-        
         ]
         
     

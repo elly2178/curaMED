@@ -34,14 +34,27 @@
          
           <li class="list-group-item" > Standort: {{ instance.associate_location.get_location_representation }} </li>
            
-        </ul>  
- 
+        </ul>                                
         <a href="{% url 'modalityDetail' instance.id %}" 
          class="btn btn-outline-primary">Modalität bearbeiten</a>
         <a href="{% url 'modalityDelete' instance.id %}" class="btn btn-outline-primary">Modalität entfernen</a>
+        <button type="button" id="btn-connect" class="btn btn-outline-primary"> Verbunden</button>
       </div>
     </div>
- 
+    <script>
+      $('#btn-connect').click(function() {
+$('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
+var $ti = $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
+setTimeout(function() {
+    $ti.html('Modalität Online');
+    
+     }, 1000);
+startup(); 
+});
+</script>
 {% endfor %}
 
 {% endblock %}
+
+ 
+   

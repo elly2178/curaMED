@@ -5,14 +5,14 @@
 <h2> Neue Modalität hinzufügen</h2>
 
 <form method='POST'> {% csrf_token %}
-   {% if messages %}
-   {% for message in messages %}
+    {% if messages %}
+    {% for message in messages %}
     <div class="alert alert-warning 
         {% if message.tags %} alert-{{ message.tags }}{% endif %}" role="alert">
-         {{ message }} 
-        </div>
+        {{ message }}
+    </div>
     {% endfor %}
-   {% endif %}
+    {% endif %}
     <div class="card border-info mb-3">
         <div class="card-body">
             <div class="container">
@@ -25,20 +25,19 @@
                     </div>
                     <div class="col-15">
                         <h5 class="card-title">Bitte Informationen der neuen Modalität einfügen.</h5>
-                        <h6 class="card-subtitle">Bitte beachten Sie, dass der AETitle einzigartig sein muss. Der AETitle muss zuerst auf der Modalität konfiguriert werden.</h6>
-                      </div>
+                        <h6 class="card-subtitle">Bitte beachten Sie, dass der AETitle einzigartig sein muss. Der
+                            AETitle muss zuerst auf der Modalität konfiguriert werden.</h6>
+                    </div>
                 </div>
 
             </div>
             <div class="card-body ">
                 <div class="container">
-
-
-
-
                     <div class="row">
                         <div class="col">
-                            <label title="Der DICOM AE-Titel ist eine kurze, eindeutige Bezeichnung für ein Gerät.">AE-Titel: </label>
+                            <label
+                                title="Der DICOM AE-Titel ist eine kurze, eindeutige Bezeichnung für ein Gerät.">AE-Titel:
+                            </label>
                         </div>
 
                         <div class="col">
@@ -89,21 +88,50 @@
                         </div>
                         <div class="col" id="associate_location">
                             {{form.associate_location }}
-                            
                         </div>
                     </div>
 
-
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <label>Verbindungstest: </label>
+                        </div>
+                        <div class="col" id="connetion-button-div">
+                            <button type="button" id="btn-connect" class="btn btn-outline-primary">Verbinden</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
- <input type='submit' class="btn btn-outline-primary" value='Speichern'/>
-    <a href="{% url 'modalities' %}" class="btn btn-outline-primary">Abbrechen</a>
+            <input type='submit' class="btn btn-outline-primary" value='Speichern' />
+            <a href="{% url 'modalities' %}" class="btn btn-outline-primary">Abbrechen</a>
 
         </div>
     </div>
+</form>
+<script>
+    $('#btn-connect').click(function () {
+        $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
+        var $ti = $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
 
-   </form>
+              
+        setTimeout(function () {
+            //dont remove.. 
+        }, 1000);
+        
+        var jqxhr = jQuery.get("https://httpbin.org/status/200", function () {
+            alert("success");
+            //var $cols = $('#btn-connect').html('<button type="button" id="btn-connect" class="btn btn-outline-success">Verbinden</button>');
+            $ti.html('<button type="button" id="btn-connect" class="btn btn-outline-success"> Modalität Online</button>');
+
+        })
+            .fail(function () {
+                alert("error");
+                $ti.html('Modalität Offline');
+            });
+
+    });
+
+
+</script>
 {% endblock %}
-
- 

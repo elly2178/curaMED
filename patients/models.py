@@ -14,7 +14,6 @@ class PatientInformation(models.Model):
     code = models.CharField(max_length=4)
     language = models.CharField(max_length=50)
    
-    
 
     def get_absolute_url(self):
         return reverse("patients", kwargs={"id":self.id})
