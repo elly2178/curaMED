@@ -34,7 +34,8 @@ from modalities.views import(
     modality_create_view, 
     modality_detail_view, 
     modality_delete_view, 
-    modality_list_view
+    modality_list_view,
+    modality_connection_test_view
 )
 from administration.views import(
     homepage_view,
@@ -66,6 +67,7 @@ urlpatterns = [
     path('modalities/<int:id>/delete/', modality_delete_view, name ='modalityDelete'),
     path('modalities/<int:id>/detail/', modality_detail_view, name ='modalityDetail'),
     path('modalities/list/', modality_list_view, name ='modalities'),
+    path('modalities/echo/', modality_connection_test_view, name ='modalityEcho'),
 
     path('administration/create/', location_create_view, name ='locationCreate'),
     path('administration/<int:id>/delete/', location_delete_view, name ='locationDelete'),

@@ -97,13 +97,18 @@
                             <label>Verbindungstest: </label>
                         </div>
                         <div class="col" id="connetion-button-div">
-                            <button type="button" id="btn-connect" class="btn btn-outline-primary">Verbinden</button>
+                            <!-- <input type="submit" id="btn-connect" class="btn btn-outline-primary" name='action' value="Verbinden"> -->
+                            <button type="button" id="btn-connect" class="btn btn-outline-primary" name='echo'>
+                                Verbinden</button>
+
+                            <img id="statuts-btn" src="/static/images/cancel.png" width="45" height="45" value="hidden">
+
                         </div>
                     </div>
                 </div>
             </div>
 
-            <input type='submit' class="btn btn-outline-primary" value='Speichern' />
+            <input type='submit' class="btn btn-outline-primary" name='action' value='Speichern' />
             <a href="{% url 'modalities' %}" class="btn btn-outline-primary">Abbrechen</a>
 
         </div>
@@ -111,25 +116,27 @@
 </form>
 <script>
     $('#btn-connect').click(function () {
+        $.ajaxSetup({ timeout: 6001 })
+        var ae_title = $("#id_ae_title").val();
+        var ip = $("#id_ip").val();
+        var port = $("#id_port").val();
+        var location = $("#id_associate_location").val();
         $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
         var $ti = $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
 
-              
         setTimeout(function () {
             //dont remove.. 
         }, 1000);
-        
-        var jqxhr = jQuery.get("https://httpbin.org/status/200", function () {
-            alert("success");
-            //var $cols = $('#btn-connect').html('<button type="button" id="btn-connect" class="btn btn-outline-success">Verbinden</button>');
-            $ti.html('<button type="button" id="btn-connect" class="btn btn-outline-success"> Modalität Online</button>');
 
+        var jqxhr = jQuery.get("{%url 'modalityEcho'%}?ip-address=" + ip + "&port-address=" + port + "&ae-title=" + ae_title + "&location-id=" + location, function () {
+            $ti.html('Modalität Online');
+            $("img").attr("src", "/static/images/check.png");
         })
             .fail(function () {
-                alert("error");
                 $ti.html('Modalität Offline');
-            });
+                $stat.html('<img src="/static/images/cancel.png" width="45" height="45">');
 
+            });
     });
 
 

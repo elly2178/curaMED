@@ -26,7 +26,9 @@ def modality_delete_view(request,id):
     return render(request, 'modality/modality_delete.html', context)
 
 def modality_create_view(request):
-    form = ModalitiesInformationForm(request.POST or None) 
+    #oh, the user jst wants a connetion test (because the "action" attribute is set to Verbindungstest)
+    #lets cann helpers.orthanc.post(/locations/{location-id}/modalities/echo)
+    form = ModalitiesInformationForm(request.POST or None)
     if form.is_valid():        
         form.save()
         form = ModalitiesInformationForm()        
@@ -39,7 +41,6 @@ def modality_create_view(request):
         'form':form 
     }
     return render(request, 'modality/create.html', context)
-
  
 def modality_detail_view(request,id): 
     obj = ModalitiesInformation.objects.get(id=id)
@@ -65,3 +66,27 @@ def modality_detail_view(request,id):
         'object':obj
     }
     return render(request, 'modality/detail.html', context)
+
+def modality_connection_test_view(request):
+    ip = request.GET.get('ip-address')
+    port = request.GET.get('port-address')
+    aetitle = request.GET.get('ae-title')
+    location = request.GET.get('location-id')
+    bad_parameters = []
+    if not ip:
+        bad_parameters.append("IP Address")
+    if not port:
+        bad_parameters.append("Port")
+    if not aetitle:
+        bad_parameters.append("AETitle")
+    if not location:
+        bad_parameters.append("Standort")
+    if bad_parameters:
+        return HttpResponse(status=400, reason=f"Ungültig: {', '.join(bad_parameters)}")
+    
+    import time
+    time.sleep(3)
+    return HttpResponse(status=200, reason=f"Modalität gefunden")
+             
+    #Client (clicks on Verbindungstest) -> jQuery sendet Request zu curaMED mit Infos zu Standort der Modalität und IPAdresse und Port und AETitle
+    #POST c0100-orthanc.curapacs.ch/locations/{location-id}/modalities/echo (body: {ipaddress: 10.1.43.5, port: 104, aetitle: PHILIPSFUBAR}

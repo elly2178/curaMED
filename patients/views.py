@@ -69,11 +69,7 @@ def patient_search_result_view(request):
  
 def patient_list_view(request):
     queryset = PatientInformation.objects.all()
-    # for every patient object in queryset
-    # get orthanc patient id
-    # get study ids for patient in orthanc
-    # get details for every study in study ids
-    #patient_studies_dict = {"3": [{"study_date": "20201911", "description": "xray"}]}
+   
     for patient in queryset:
         curamed_patient_id = patient.id
         patient.studies = []
