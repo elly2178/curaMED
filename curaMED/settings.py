@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import locale
 # own imports
 import os 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -120,6 +121,7 @@ DATE_INPUT_FORMATS = ['%d-%m-%Y', '%Y-%m-%d', '%d. %B %Y' ]
 
 
 LANGUAGE_CODE = 'de'
+locale.setlocale(locale.LC_ALL, "de_DE")
 
 TIME_ZONE = 'Europe/Berlin'
 

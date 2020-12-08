@@ -1,5 +1,5 @@
 from operator import attrgetter
-
+from datetime import datetime
 from django.shortcuts import (
     render, get_object_or_404, redirect)
 from django.urls import reverse
@@ -7,7 +7,6 @@ from .models import PatientInformation
 from .forms import PatientInformationForm
 from django.db.models import Q
 from django.views.generic import DetailView
-
 from django.views import View
 from curaMED import helpers
 
@@ -77,18 +76,23 @@ def patient_list_view(request):
         studies_response, status = helpers.orthanc.get_request(f"/patients/{orthanc_patient_id}")
         
         if not studies_response:
-            print(f"No content found for patient with id {curamed_patient_id}, requested helpers.orthanc.get_url_for_path('/patients/{orthanc_patient_id}'")
             continue
         for orthanc_study_id in studies_response.get("Studies", []):
             study_response, status = helpers.orthanc.get_request(f"/studies/{orthanc_study_id}")
-            study_date = study_response.get("MainDicomTags",{}).get("StudyDate"," ")
-            study_time = study_response.get("MainDicomTags",{}).get("StudyTime"," ")
-            study_description = study_response.get("MainDicomTags",{}).get("StudyDescription"," ") 
+            study_date = study_response.get("MainDicomTags",{}).get("StudyDate","Keine Angaben")
+            study_time = study_response.get("MainDicomTags",{}).get("StudyTime","Keine Angaben")
+            try:
+                nice_date_time = datetime.strptime(study_date + "-" + study_time, "%Y%m%d-%H%M%S")
+            except ValueError:
+                study_date, study_time = "Keine Angaben","Keine Angaben"
+            else:
+                study_date = nice_date_time.strftime("%d. %B %Y")
+                study_time = nice_date_time.strftime("%H:%M")
+            study_description = study_response.get("MainDicomTags",{}).get("StudyDescription","Keine Angaben") 
             patient.studies.append({"study_date": study_date,
                                     "study_time": study_time,
                                     "study_description": study_description,
                                     "study_id": orthanc_study_id})
-            print(f"Patient {curamed_patient_id} has studies:  {patient.studies}")
     
     context ={
         'object_list': queryset
