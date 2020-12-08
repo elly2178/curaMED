@@ -3,10 +3,7 @@ from.models import WorklistInformation
 from modalities.models import ModalitiesInformation
 from modalities.models import ModalityModelChoiceField
 from patients.models import PatientInformation
-from django.utils import timezone
-import datetime
-
-
+ 
 class WorklistInformationForm(forms.ModelForm):
     scheduled_procedure_step_start_date = forms.CharField(label='Auftragsdatum') 
     scheduled_procedure_step_start_time  = forms.CharField(label='Auftragszeit')

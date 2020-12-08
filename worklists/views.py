@@ -16,10 +16,11 @@ class WorklistCreateView(View):
         patient = get_object_or_404(PatientInformation, id=patient_id)
         form = WorklistInformationForm(request.POST)
         current_date = date.today()
+        print("YOUR DATE IS: " + str(current_date))
         current_time = datetime.today()       
         context = {
             'time': current_time,
-            'date':current_date,
+            'date':current_date, 
             'patient': patient,
             'form': form
         }
@@ -36,6 +37,7 @@ class WorklistCreateView(View):
                                      auth=(helpers.orthanc.username, helpers.orthanc.password))
             print("Response was: " + str(response.status_code))
             return redirect('patients')
+        print("FORM ERRORS: " + str(form.errors))
         context = {'form':form}
         return render(request, self.template_name, context)
 
@@ -57,7 +59,7 @@ def create_curapacs_worklist_request(form_cleaned_data):
             {
                 "Modality": str(form_cleaned_data.get("modality").title),
                 "ScheduledStationAETitle": str(form_cleaned_data.get("modality").ae_title),
-                "ScheduledProcedureStepStartDate": worklist_datetime.strftime("%Y%m%d"),
+                "ScheduledProcedureStepStartDate": worklist_datetime.strftime("%Y%m%d"), 
                 "ScheduledProcedureStepStartTime": worklist_datetime.strftime("%H%M%S"),
                 "ScheduledPerformingPhysicianName": physician_name
             }

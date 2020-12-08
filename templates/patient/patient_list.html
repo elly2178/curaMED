@@ -1,81 +1,91 @@
-
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 
 <nav class="navbar navbar-light bg-light">
-   
-    <form class="form-inline " action ="{% url 'searchResult' %}" method="GET">
-      <input class="form-control mr-sm-2" type="text" 
-      name ='q' id= 'id_q' placeholder="Patient suchen" aria-label="Search">
-      <script type="text/javascript">
-      document.getElementById("id_q").value="{{query}}"
-      </script>       
-      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Suchen</button>
-    </form>
+
+  <form class="form-inline " action="{% url 'searchResult' %}" method="GET">
+    <input class="form-control mr-sm-2" type="text" name='q' id='id_q' placeholder="Patient suchen" aria-label="Search">
+    <script type="text/javascript">
+      document.getElementById("id_q").value = "{{query}}"
+    </script>
+    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Suchen</button>
+  </form>
 </nav>
 <br>
 <h2>Patientenliste</h2>
-<br> 
+<br>
 {% for instance in object_list reversed %}
-<div class="card border-info mb-3 w-100" >
+<div class="card border-info mb-3 w-100">
   <div class="card-body">
-  <div class="container">
-    <div class="row">
-      <div class = "card w-2 border-0">
-      <div class="col ">
-        {% if instance.title == "male" %}
-          <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
-        {% else %}
-        <img src="/static/images/marilyn_monroe.png" class="card-img-top" width="55" height="45">
-        {% endif %}                   
-      </div>
-    </div>
-      <div class="col">
-        <div class="row">
-          <div class="col"> 
-            <h5 class="card-title">{{instance.first_name}} {{ instance.second_name}}</h5>
-          </div>
-          
+    <div class="container">
+      <div class="row">
+        <div class="card w-2 border-0">
           <div class="col">
-          <a href="{% url 'patientDetail' instance.id %}" class="btn btn-outline-primary">Patient bearbeiten</a>
-          <a href="{% url 'patientDelete' instance.id %}" class="btn btn-outline-primary">Patient löschen</a>
-        </div>
-         
-        </div>   
-      </div>
-    </div>
-  </div>
-     
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Geburtstag: {{ instance.birthdate }}</li>
-        <li class="list-group-item">Adresse: {{ instance.address }}, {{ instance.number }},
-           {{ instance.city }}, {{ instance.code }}</li>
-        <li class="list-group-item">Sprache: {{ instance.language }}</li>
-        <li class="list-group-item">Studien: {% for study in instance.studies reversed %} 
-          <ul> 
-            {% if study.study_description %}
-            <li class="list-group-item">Date: {{ study.study_date }}</li>
-            <li class="list-group-item">Time: {{ study.study_time }}</li>
-            <li class="list-group-item">Description: {{ study.study_description }}</li>
+            {% if instance.title == "male" %}
+            <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
             {% else %}
-            <li class="list-group-item">Studie mit ID {{ study.study_id }} ohne Beschreibung gefunden.</li>
+            <img src="/static/images/marilyn_monroe.png" class="card-img-top" width="55" height="45">
             {% endif %}
-         
-        </ul>
-          {% endfor %}
-        </li>
-      </ul>  
-      <div class="row"> 
+          </div>
+        </div>
         <div class="col">
-        <a href="{% url 'worklistCreate' %}?patient-id={{ instance.id }}" class="btn btn-outline-primary">Auftrag erstellen</a>
-        <a href=" # patient zusammenführen  " 
-           class="btn btn-outline-primary">Patient Zusammenführen</a>
-        </div>        
+          <div class="row">
+            <div class="col">
+              <h5 class="card-title">{{instance.first_name}} {{ instance.second_name}}</h5>
+            </div>
+            <div class="col-md-auto">
+              <a href="{% url 'patientDetail' instance.id %}" class="btn btn-outline-primary">Patient bearbeiten</a>
+              <a href="{% url 'patientDelete' instance.id %}" class="btn btn-outline-primary">Patient löschen</a>
+            </div>
+
+          </div>
+        </div>
       </div>
-       
     </div>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">ID: {{ instance.id }}</li>
+      <li class="list-group-item">Geburtsdatum: {{ instance.birthdate }}</li>
+      <li class="list-group-item">Adresse: {{ instance.address }} {{ instance.number }},
+        {{ instance.city }} {{ instance.code }}</li>
+      <li class="list-group-item">Sprache: {{ instance.language }}</li>
+      <li class="list-group-item">Studien: {% for study in instance.studies reversed %}
+        <ul>
+          {% if study.study_description %}
+
+          <div class="list-group">
+            <a href="https://c0100-orthanc.curapacs.ch/studies/{{ study.study_id }}"
+              class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} beinhält:</a>
+            <li class="list-group-item">Datum: {{ study.study_date }}</li>
+            <li class="list-group-item">Uhrzeit: {{ study.study_time }}</li>
+            <li class="list-group-item">Beschreibung: {{ study.study_description }}</li>
+          </div>
+          <br>
+          {% else %}
+          <div class="list-group">
+            <a href="https://c0100-orthanc.curapacs.ch/studies/{{ study.study_id }}"
+              class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} ohne Beschreibung
+              gefunden.</a>
+          </div>
+
+
+          {% endif %}
+
+        </ul>
+        {% endfor %}
+      </li>
+    </ul>
+    <div class="row">
+      <div class="col">
+        <a href="{% url 'worklistCreate' %}?patient-id={{ instance.id }}" class="btn btn-outline-primary">Auftrag
+          erstellen</a>
+        <a href=" # patient zusammenführen  " class="btn btn-outline-primary">Zusammenführen</a>
+      </div>
+    </div>
+
   </div>
+</div>
 
 
 {% endfor %}

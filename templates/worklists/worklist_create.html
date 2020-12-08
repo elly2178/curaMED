@@ -40,11 +40,10 @@
                         </div>
                         
                         <div class="col">
-                            <input type="text" name="scheduled_procedure_step_start_date" 
+                            <input type="text" class="font-italic" name="scheduled_procedure_step_start_date" 
                             id="id_scheduled_procedure_step_start_date" 
-                            value='{{ date }}' readonly>
-                              <!--
-                             {{ form.scheduled_procedure_step_start_date }}-->
+                            value='{{ date  }}' readonly>
+                                
                         </div>  
                     </div>
                 </li>
@@ -54,11 +53,10 @@
                             <label>Auftragszeit: </label>
                         </div>
                          <div class="col" >
-                            <input type="text" name="scheduled_procedure_step_start_time" 
+                            <input type="text" class="font-italic" name="scheduled_procedure_step_start_time" 
                             id="id_scheduled_procedure_step_start_time" 
-                            value='{{ time|time }}' readonly>
-                            <!-- 
-                             {{form.scheduled_procedure_step_start_time}}-->
+                            value='{{ time|time}}' readonly>
+                            
                         </div>  
                     </div>
                 </li>
@@ -89,7 +87,7 @@
                         </div>
                         
                         <div class="col">
-                            <input type="text" name="patient_s_name" id="id_patient_s_name" value='{{ patient.first_name }} {{ patient.second_name }}' readonly>
+                            <input type="text" class="font-italic" name="patient_s_name" id="id_patient_s_name" value='{{ patient.first_name }} {{ patient.second_name }}' readonly>
                         </div>
                     </div>
                 </li>
@@ -97,10 +95,10 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-                            <label>Patient Geburtsdatum: </label>
+                            <label>Geburtsdatum: </label>
                         </div>
                         <div class="col">
-                            <input type="text" name="patient_s_birth_date" id="id_patient_s_birth_date" value='{{ patient.birthdate }}' readonly>
+                            <input type="text" class="font-italic" name="patient_s_birth_date" id="id_patient_s_birth_date" value='{{ patient.birthdate }}' readonly>
                              
                         </div>
                     </div>
@@ -110,10 +108,10 @@
                         <div class="col">
 
 
-                            <label>Patient Geschlecht: </label>
+                            <label>Geschlecht: </label>
                         </div>
                         <div class="col">
-                            <input type="text" name="patient_s_sex" id="id_patient_s_sex" value='{{ patient.get_title_display}}' readonly>
+                            <input type="text" class="font-italic" name="patient_s_sex" id="id_patient_s_sex" value='{{ patient.get_title_display}}' readonly>
                             
                         </div>
                     </div>

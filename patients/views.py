@@ -69,7 +69,7 @@ def patient_search_result_view(request):
  
 def patient_list_view(request):
     queryset = PatientInformation.objects.all()
-   
+    
     for patient in queryset:
         curamed_patient_id = patient.id
         patient.studies = []
@@ -81,9 +81,9 @@ def patient_list_view(request):
             continue
         for orthanc_study_id in studies_response.get("Studies", []):
             study_response, status = helpers.orthanc.get_request(f"/studies/{orthanc_study_id}")
-            study_date = study_response.get("MainDicomTags",{}).get("StudyDate","")
-            study_time = study_response.get("MainDicomTags",{}).get("StudyTime","")
-            study_description = study_response.get("MainDicomTags",{}).get("StudyDescription","")
+            study_date = study_response.get("MainDicomTags",{}).get("StudyDate"," ")
+            study_time = study_response.get("MainDicomTags",{}).get("StudyTime"," ")
+            study_description = study_response.get("MainDicomTags",{}).get("StudyDescription"," ") 
             patient.studies.append({"study_date": study_date,
                                     "study_time": study_time,
                                     "study_description": study_description,

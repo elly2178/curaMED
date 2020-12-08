@@ -6,6 +6,9 @@ from modalities.models import ModalitiesInformation
 from django.core.exceptions import ValidationError
 
 def validate_date(somedate):
+    import locale
+    print("DATE BEFORE VALIDATION IS:" + str(somedate) + " locale is " + str(locale.getlocale()) + " default locale is " + str(locale.getdefaultlocale()) )
+    #for fmt in ["%d. %B %Y", "%d-%m-%Y", "%Y-%m-%d"]
     try:
         retval = datetime.strptime(somedate, "%d. %B %Y")
     except ValueError:

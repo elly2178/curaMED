@@ -100,8 +100,7 @@
                             <!-- <input type="submit" id="btn-connect" class="btn btn-outline-primary" name='action' value="Verbinden"> -->
                             <button type="button" id="btn-connect" class="btn btn-outline-primary" name='echo'>
                                 Verbinden</button>
-
-                            <img id="statuts-btn" src="/static/images/cancel.png" width="45" height="45" value="hidden">
+                            <img id="status-icon" src="/static/images/cancel.png" width="45" height="45">
 
                         </div>
                     </div>
@@ -115,6 +114,7 @@
     </div>
 </form>
 <script>
+    $("#status-icon").hide();
     $('#btn-connect').click(function () {
         $.ajaxSetup({ timeout: 6001 })
         var ae_title = $("#id_ae_title").val();
@@ -130,11 +130,12 @@
 
         var jqxhr = jQuery.get("{%url 'modalityEcho'%}?ip-address=" + ip + "&port-address=" + port + "&ae-title=" + ae_title + "&location-id=" + location, function () {
             $ti.html('Modalität Online');
-            $("#statuts-btn").prop("src", "/static/images/check.png");
+            $("#status-icon").prop("src", "/static/images/check.png");
+            $("#status-icon").show();
         })
             .fail(function () {
                 $ti.html('Modalität Offline');
-                
+                $("#status-icon").show();
             }); 
     });
 

@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 # own imports
 import os 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -113,7 +112,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-DATE_INPUT_FORMATS = ['%d/%m/%Y']
+DATE_INPUT_FORMATS = ['%d-%m-%Y', '%Y-%m-%d', '%d. %B %Y' ]
+
+#DATE_FORMAT = '%d-%m-%y'
+
+# DATE_FORMAT = '%d. %B %Y'
+
 
 LANGUAGE_CODE = 'de'
 
