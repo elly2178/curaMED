@@ -1,5 +1,4 @@
-
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 <br>
@@ -8,53 +7,65 @@
 <br>
 
 {% for instance in object_list reversed %}
-<div class="card border-info mb-3 w-100" >
-    <div class="card-body">
+<div class="card border-info mb-3 w-100">
+  <div class="card-body">
     <div class="container">
       <div class="row">
-        <div class = "card w-2 border-0">
-        <div class="col">
-          <img src="/static/images/mri.png" class="card-img-top" width="55" height="45">
+        <div class="card w-2 border-0">
+          <div class="col">
+            <img src="/static/images/mri.png" class="card-img-top" width="55" height="45">
+          </div>
         </div>
-      </div>
-       
+
         <div class="col-15">
-          <h5 class="card-title" title="Der DICOM AE-Titel ist eine kurze, eindeutige Bezeichnung für ein Gerät">AE-Titel: {{instance.ae_title}} </h5>
+          <h5 class="card-title" title="Der DICOM AE-Titel ist eine kurze, eindeutige Bezeichnung für ein Gerät">
+            AE-Titel: {{instance.ae_title}} </h5>
         </div>
       </div>
     </div>
-      
-        
-         
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Typ: {{ instance.get_title_display }}</li>
-          <li class="list-group-item">Beschreibung: {{ instance.description }}</li>
-          <li class="list-group-item">IP Adresse: {{ instance.ip }}</li>
-          <li class="list-group-item">Port Nummer: {{ instance.port }}</li>
-         
-          <li class="list-group-item" > Standort: {{ instance.associate_location.get_location_representation }} </li>
+
+
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Typ: {{ instance.get_title_display }}</li>
+      <li class="list-group-item">Beschreibung: {{ instance.description }}</li>
+      <li class="list-group-item">IP Adresse: {{ instance.ip }}</li>
+      <li class="list-group-item">Port Nummer: {{ instance.port }}</li>
+
+      <li class="list-group-item"> Standort: {{ instance.associate_location.get_location_representation }} </li>
+
+    </ul>
+    <a href="{% url 'modalityDetail' instance.id %}" class="btn btn-outline-primary">Modalität bearbeiten</a>
+    <a href="{% url 'modalityDelete' instance.id %}" class="btn btn-outline-primary">Modalität entfernen</a>
+    <button type="button" id="btn-connect" class="btn btn-outline-primary"> Verbinden</button>
+  </div>
+</div>
+<script>
+  $('#btn-connect').click(function () {
+     $.ajaxSetup({ timeout: 6001 })
+        var ae_title = $("#id_ae_title").val();
+        var ip = $("#id_ip").val();
+        var port = $("#id_port").val();
+        var location = $("#id_associate_location").val();
+    $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
+    var $ti = $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
+   
+    setTimeout(function () {
+       
+    }, 1000);
+   
+   var jqxhr = jQuery.get("{%url 'modalityEcho'%}?ip-address=" + ip + "&port-address=" + port + "&ae-title=" + ae_title + "&location-id=" + location, function () {
+            $ti.html('Modalität Online');
            
-        </ul>                                
-        <a href="{% url 'modalityDetail' instance.id %}" 
-         class="btn btn-outline-primary">Modalität bearbeiten</a>
-        <a href="{% url 'modalityDelete' instance.id %}" class="btn btn-outline-primary">Modalität entfernen</a>
-        <button type="button" id="btn-connect" class="btn btn-outline-primary"> Verbunden</button>
-      </div>
-    </div>
-    <script>
-      $('#btn-connect').click(function() {
-$('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
-var $ti = $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
-setTimeout(function() {
-    $ti.html('Modalität Online');
-    
-     }, 1000);
-startup(); 
-});
+        })
+            .fail(function () {
+                $ti.html('Modalität Offline');
+               
+
+            });
+  });
+   
 </script>
 {% endfor %}
 
 {% endblock %}
-
- 
-   

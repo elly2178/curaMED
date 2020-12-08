@@ -10,8 +10,7 @@
       name ='q' id= 'id_q' placeholder="Patient suchen" aria-label="Search">
       <script type="text/javascript">
       document.getElementById("id_q").value="{{query}}"
-      </script>
-       
+      </script>       
       <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Suchen</button>
     </form>
 </nav>
@@ -29,12 +28,21 @@
           <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
         {% else %}
         <img src="/static/images/marilyn_monroe.png" class="card-img-top" width="55" height="45">
-        {% endif %}
-                   
+        {% endif %}                   
       </div>
     </div>
-      <div class="col-15">
-        <h5 class="card-title">{{instance.first_name}} {{ instance.second_name}}</h5>
+      <div class="col">
+        <div class="row">
+          <div class="col"> 
+            <h5 class="card-title">{{instance.first_name}} {{ instance.second_name}}</h5>
+          </div>
+          
+          <div class="col">
+          <a href="{% url 'patientDetail' instance.id %}" class="btn btn-outline-primary">Patient bearbeiten</a>
+          <a href="{% url 'patientDelete' instance.id %}" class="btn btn-outline-primary">Patient löschen</a>
+        </div>
+         
+        </div>   
       </div>
     </div>
   </div>
@@ -58,16 +66,14 @@
           {% endfor %}
         </li>
       </ul>  
-      <!-- aici ai eroarea cu reverse for patients detail with no argument pattern-->
-      
-      <a href="{% url 'worklistCreate' %}?patient-id={{ instance.id }}" class="btn btn-outline-primary">Auftrag erstellen</a>
-      <a href="{% url 'patientDetail' instance.id %}" 
-       class="btn btn-outline-primary">Patient bearbeiten</a>
-      <a href="{% url 'patientDelete' instance.id %}" 
-       class="btn btn-outline-primary">Patient löschen</a>
-       <a href=" # patient zusammenführen  " 
-       class="btn btn-outline-primary">Patient Zusammenführen</a>
-        
+      <div class="row"> 
+        <div class="col">
+        <a href="{% url 'worklistCreate' %}?patient-id={{ instance.id }}" class="btn btn-outline-primary">Auftrag erstellen</a>
+        <a href=" # patient zusammenführen  " 
+           class="btn btn-outline-primary">Patient Zusammenführen</a>
+        </div>        
+      </div>
+       
     </div>
   </div>
 

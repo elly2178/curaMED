@@ -123,20 +123,19 @@
         var location = $("#id_associate_location").val();
         $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
         var $ti = $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
-
+        
         setTimeout(function () {
             //dont remove.. 
         }, 1000);
 
         var jqxhr = jQuery.get("{%url 'modalityEcho'%}?ip-address=" + ip + "&port-address=" + port + "&ae-title=" + ae_title + "&location-id=" + location, function () {
             $ti.html('Modalität Online');
-            $("img").attr("src", "/static/images/check.png");
+            $("#statuts-btn").prop("src", "/static/images/check.png");
         })
             .fail(function () {
                 $ti.html('Modalität Offline');
-                $stat.html('<img src="/static/images/cancel.png" width="45" height="45">');
-
-            });
+                
+            }); 
     });
 
 
