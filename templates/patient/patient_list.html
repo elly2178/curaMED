@@ -51,10 +51,11 @@
         {{ instance.city }} {{ instance.code }}</li>
       <li class="list-group-item">Sprache: {{ instance.language }}</li>
       <li class="list-group-item">Studien: {% for study in instance.studies reversed %}
-        <ul>
+        <ul >
+         
           {% if study.study_description %}
 
-          <div class="list-group">
+          <div class="list-group" >
             <a href="https://c0100-orthanc.curapacs.ch/studies/{{ study.study_id }}"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} beinhält:</a>
             <li class="list-group-item">Datum: {{ study.study_date }}</li>
@@ -62,18 +63,28 @@
             <li class="list-group-item">Beschreibung: {{ study.study_description }}</li>
           </div>
           <br>
+
           {% else %}
           <div class="list-group">
             <a href="https://c0100-orthanc.curapacs.ch/studies/{{ study.study_id }}"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} ohne Beschreibung
               gefunden.</a>
           </div>
-
-
           {% endif %}
+       
 
         </ul>
         {% endfor %}
+
+
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col-md-auto" >
+            <button id="show-all-studies" type="button" class="btn btn-link">Alle Studien zeigen</button>
+            </div>
+        </div>
+
       </li>
     </ul>
     <div class="row">
