@@ -79,12 +79,20 @@ class Orthanc:
         else:
             return response.json(), response.status_code
        
+try:
+    with open("/home/schumi/Bachelor/secrets/orthanc-secret.json","r") as secretstore:
+        data = json.load(secretstore)
+        http_credentials = data.get("c0100-orthanc.curapacs.ch",None)
+        http_hostname = "https://c0100-orthanc.curapacs.ch"
+        http_username = http_credentials.get("user")
+        http_password = http_credentials.get("password")
+except FileNotFoundError:
+    with open("C:/Users/taadrar1/Documents/secrets.txt","r") as secretstore:
+        data = json.load(secretstore)
+        http_credentials = data.get("c0100-orthanc.curapacs.ch",None)
+        http_hostname = "https://c0100-orthanc.curapacs.ch"
+        http_username = http_credentials.get("user")
+        http_password = http_credentials.get("password")
 
-with open("/home/schumi/Bachelor/secrets/orthanc-secret.json","r") as secretstore:
-    data = json.load(secretstore)
-    http_credentials = data.get("c0100-orthanc.curapacs.ch",None)
-    http_hostname = "https://c0100-orthanc.curapacs.ch"
-    http_username = http_credentials.get("user")
-    http_password = http_credentials.get("password")
 
 orthanc = Orthanc(http_hostname, http_username, http_password)
