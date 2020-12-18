@@ -5,9 +5,9 @@ from .forms import AdministrationInformationForm
 from django.views.generic import (     
     UpdateView )
 
+from curaMED import helpers
+import json
 # Create your views here.
-
-
 def homepage_view(request,*args, **kwargs):
     return render(request, 'home.html',{})
 
@@ -44,9 +44,7 @@ def location_create_view(request):
 def location_detail_view(request, id):
     obj = get_object_or_404(AdministrationInformation, id=id)
     form = AdministrationInformationForm(request.POST or None, instance=obj)
-    print("REQUEST is " + str(dir(request)))
     if form.is_valid():
-        print("FORM is valid")
         form.save()
         form = AdministrationInformationForm()
         return redirect('administration')
@@ -55,4 +53,16 @@ def location_detail_view(request, id):
     }
     return render(request, 'administration/detail.html', context)
 
- 
+
+def location_status_view(request, id):
+    location_id = id   
+    response_dict, status_code = helpers.orthanc.get_request(f"/locations/{location_id}", timeout=10)
+    if response_dict.get('status') == 'success':
+        return HttpResponse(status=200,
+                            content=json.dumps(response_dict),
+                            content_type="application/json")
+    else: 
+        return HttpResponse(status=200,  
+                            content=json.dumps(response_dict),
+                            content_type="application/json")
+                            

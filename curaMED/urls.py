@@ -42,7 +42,8 @@ from administration.views import(
      location_create_view, 
      location_detail_view, 
      location_delete_view, 
-     location_view 
+     location_view,
+     location_status_view
 )
 
 from worklists.views import (
@@ -70,9 +71,10 @@ urlpatterns = [
     path('modalities/echo/', modality_connection_test_view, name ='modalityEcho'),
 
     path('administration/create/', location_create_view, name ='locationCreate'),
-    path('administration/<int:id>/delete/', location_delete_view, name ='locationDelete'),
+    path('administration/<int:id>/delete/', location_delete_view, name ='locationDelete'),    
     path('administration/list/', location_view, name ='administration'),
     path('administration/list/<int:id>/detail/', location_detail_view, name ='locationDetail'),
+    path('administration/<int:id>/status/', location_status_view, name ='locationStatus'),
    
     path('worklists/create/', WorklistCreateView.as_view(), name ='worklistCreate'),
     path('worklists/list/', worklist_list_view, name ='worklistList'),

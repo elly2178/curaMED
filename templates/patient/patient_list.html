@@ -45,44 +45,39 @@
     </div>
 
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">ID: {{ instance.id }}</li>
       <li class="list-group-item">Geburtsdatum: {{ instance.birthdate }}</li>
       <li class="list-group-item">Adresse: {{ instance.address }} {{ instance.number }},
         {{ instance.city }} {{ instance.code }}</li>
       <li class="list-group-item">Sprache: {{ instance.language }}</li>
-      <li class="list-group-item">Studien: {% for study in instance.studies reversed %}
-        <ul >
-         
+      <li class="list-group-item">Studien: 
+        <ul id="patient-{{ instance.id }}-studylist">
+        {% for study in instance.studies reversed %}  
           {% if study.study_description %}
-
-          <div class="list-group" >
+          <div id="{{ study.study_id }}" class="list-group">
             <a href="https://c0100-orthanc.curapacs.ch/studies/{{ study.study_id }}"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} beinhält:</a>
             <li class="list-group-item">Datum: {{ study.study_date }}</li>
             <li class="list-group-item">Uhrzeit: {{ study.study_time }}</li>
             <li class="list-group-item">Beschreibung: {{ study.study_description }}</li>
           </div>
-          <br>
-
+           
           {% else %}
-          <div class="list-group">
+          <div id="{{ study.study_id }}" class="list-group">
             <a href="https://c0100-orthanc.curapacs.ch/studies/{{ study.study_id }}"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} ohne Beschreibung
               gefunden.</a>
           </div>
           {% endif %}
-       
-
-        </ul>
+          <br>
         {% endfor %}
-
+        </ul>
 
         <div class="row">
           <div class="col">
           </div>
-          <div class="col-md-auto" >
-            <button id="show-all-studies" type="button" class="btn btn-link">Alle Studien zeigen</button>
-            </div>
+          <div class="col-md-auto">
+            <button id="show-all-studies" name="show-all-studies" corresponding-patient="{{ instance.id }}"  type="button" class="btn btn-link">Alle Studien zeigen</button>
+          </div>
         </div>
 
       </li>
@@ -100,5 +95,33 @@
 
 
 {% endfor %}
+<script>
+  var showAllStudiesState = false;
+  function changeStudiesVisibility(i) {
+    if (i == 0) {
+      return;
+    }
+      if (showAllStudiesState == true){
+        $(this).show();
+        $("#show-all-studies").html("Minimieren");
+      } else {
+        $(this).hide();
+        $("#show-all-studies").html("Alle Studien zeigen");
+    }
+  }
+  //on page load, for every button (and therefore every patient): 
+  //run the changevisibility function on all the divs (studies), so we only show the first study on page load
+  $("button[name='show-all-studies']").each(function(i){
+    var patientId = $(this).attr("corresponding-patient");
+    $("#patient-" + patientId + "-studylist").children("div").each(changeStudiesVisibility);
+   
+  });
+
+  $("button[name='show-all-studies']").click(function () {
+   showAllStudiesState = !showAllStudiesState;
+   var patientId = $(this).attr("corresponding-patient");
+   $("#patient-" + patientId + "-studylist").children("div").each(changeStudiesVisibility);
+  });
+</script>
 
 {% endblock %}

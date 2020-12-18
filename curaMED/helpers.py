@@ -26,8 +26,9 @@ class Orthanc:
             path = "/" + path
         return self.host + path
 
-    def get_request(self, path, timeout=2, retries=1):
+    def get_request(self, path, timeout=3, retries=1):
         url = self.get_url_for_path(path)
+        response = None
         for _ in range(retries + 1):
             try:
                 response = requests.get(url,
@@ -38,13 +39,46 @@ class Orthanc:
                 break
             except requests.Timeout:
                 continue
-        if not response:
+        if response is None:
             raise ValueError(f"Failed to retrieve resource for GET request to {url}")
         else:
             return response.json(), response.status_code
-        
+    
 
+    def post_request(self, path: str, body: dict, timeout=2, retries=1):
+        """
+        Do a post request to this orthanc instance
 
+        Args:
+            path (str): path of the resource to send the request to
+            body (dict): json serializable dict
+            timeout (int, optional): [Time in seconds until request is considered as timed out]. Defaults to 2.
+            retries (int, optional): [Nr of times to retry the post request, 0 retries means exactly one try]. Defaults to 1.
+
+        Raises:
+            ValueError: [Gets thrown if the User tries to access a false url, port, unexisting location ]
+
+        Returns:
+            [Tuple]: [Item0: Response content as a dictionary, Item1: HTTP status code as int]
+        """
+        url = self.get_url_for_path(path)
+        response = None
+        for _ in range(retries + 1):
+            try:
+                response = requests.post(url,
+                                        json=body,
+                                        auth=(self.username, self.password),
+                                        timeout=timeout)
+                if response.status_code == 404:
+                    return {}, response.status_code
+                break
+            except requests.Timeout:
+                continue
+        if response is None:
+            raise ValueError(f"Failed to POST request to {url}")
+        else:
+            return response.json(), response.status_code
+       
 
 with open("/home/schumi/Bachelor/secrets/orthanc-secret.json","r") as secretstore:
     data = json.load(secretstore)

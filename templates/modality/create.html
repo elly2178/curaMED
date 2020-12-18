@@ -96,13 +96,13 @@
                         <div class="col">
                             <label>Verbindungstest: </label>
                         </div>
-                        <div class="col" id="connetion-button-div">
-                            <!-- <input type="submit" id="btn-connect" class="btn btn-outline-primary" name='action' value="Verbinden"> -->
+                        <div class="col" id="connetion-button-div">              
                             <button type="button" id="btn-connect" class="btn btn-outline-primary" name='echo'>
                                 Verbinden</button>
-                            <img id="status-icon" src="/static/images/cancel.png" width="45" height="45">
-
+                            <img id="status-icon" src="/static/images/cancel.png" width="35" height="35" >
                         </div>
+                        <button type="button" id="post-btn" class="btn btn-outline-primary" name='echo'>
+                            post me</button>
                     </div>
                 </div>
             </div>
@@ -128,7 +128,7 @@
             //dont remove.. 
         }, 1000);
 
-        var jqxhr = jQuery.get("{%url 'modalityEcho'%}?ip-address=" + ip + "&port-address=" + port + "&ae-title=" + ae_title + "&location-id=" + location, function () {
+        var jqxhr = jQuery.post("{%url 'modalityEcho'%}?ip-address=" + ip + "&port-address=" + port + "&ae-title=" + ae_title + "&location-id=" + location, function () {
             $ti.html('Modalität Online');
             $("#status-icon").prop("src", "/static/images/check.png");
             $("#status-icon").show();
@@ -137,8 +137,27 @@
                 $ti.html('Modalität Offline');
                 $("#status-icon").show();
             }); 
+
     });
 
+    $('#post-btn').click(function () {
+      
+        var ip = $("#id_ip").val();
+        var port = $("#id_port").val();
+        var location = $("#id_associate_location").val();
+       
+         
+        
+        $.post("{%url 'modalityEcho'%}", { field1: "hello", field2 : "hello2"}, 
+    function(returnedData){
+         console.log(returnedData);
+    }).fail(function(){
+      console.log("error");
 
+    });
+
+    
+});
+     
 </script>
 {% endblock %}

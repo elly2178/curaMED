@@ -1,48 +1,88 @@
-{% extends 'base.html' %} 
-
-{% block content %}
-<br>
+{% extends 'base.html' %}
+{% block content %}<br>
 
 <h2>Standortliste</h2>
 <br>
 
 {% for object in object_list reversed %}
-<div class="card border-info mb-3 w-100" >
-    <div class="card-body">
+<div class="card border-info mb-3 w-100">
+  <div class="card-body">
     <div class="container">
       <div class="row">
-        <div class = "card w-2 border-0">
-        <div class="col">
-          <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
+        <div class="card w-2 border-0">
+          <div class="col">
+            <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
+          </div>
         </div>
-      </div>
-        <div class="col-15">
+        <div class="col">
           <h5 class="card-title"> {{ object.name}}</h5>
         </div>
-      </div>
-    </div>
+
      
-        
-            <div class = "card-body"> 
-              <div class="container">
-                <ul class="list-group list-group-flush"> 
-                <li class="list-group-item">Adresse: {{ object.street }},  {{ object.number }}</li>
-                <li class="list-group-item">Ort: {{ object.city }}, {{ object.plz }}</li>
-                <li class="list-group-item">Telefonnummer: {{ object.telefon_number }}</li>
-              </ul>
-              </div>
-            </div>
-          
-       
-        
-        <a href="{% url 'locationDetail' object.id %}" 
-         class="btn btn-outline-primary">Standort bearbeiten</a>
-         <a href="{% url 'locationDelete' object.id %}" 
-         class="btn btn-outline-primary">Standort löschen</a>
+
+        <div class="row">
+         
+
+          <div class="col" id="connetion-button-div">
+            <button type="button" id="btn-connect" corresponding-location="{{ object.id }}"
+              class="btn btn-outline-primary" name='get-location-status'>
+              Verfügbarkeit prüfen</button>
+            <img id="status-icon" corresponding-location="{{ object.id }}" name ='get-location-status-icon'
+             src="/static/images/cancel.png" width="35" height="35" style="display: none;">
+          </div>
+        </div>
       </div>
     </div>
+
+    <div class="card-body">
+      <div class="container">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Adresse: {{ object.street }}, {{ object.number }}</li>
+          <li class="list-group-item">Ort: {{ object.city }}, {{ object.plz }}</li>
+          <li class="list-group-item">Telefonnummer: {{ object.telefon_number }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <a href="{% url 'locationDetail' object.id %}" class="btn btn-outline-primary">Standort bearbeiten</a>
+    <a href="{% url 'locationDelete' object.id %}" class="btn btn-outline-primary">Standort löschen</a>
+  </div>
+</div>
 
 
 {% endfor %}
+<script>
+  $("#status-icon").hide();
+  
+  $("button[name='get-location-status']").click(function () {
+    $.ajaxSetup({ timeout: 6001 })
 
+    $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
+    var $ti = $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
+ // corresponding-stauts="{{ object.id }}" name ='get-location-status-icon'
+    setTimeout(function () {
+      //dont remove.. 
+    }, 1000);
+
+    var locationId = $(this).attr("corresponding-location"); 
+             
+    var jqxhr = jQuery.get("/administration/" + locationId + "/status", function(data) {
+    
+      console.log(data.status); 
+      if (data.status === 'success') {
+       $ti.html('Gateway Online'); 
+      $("img[corresponding-location=" + locationId + "]").prop("src", "/static/images/check.png");
+      $("img[corresponding-location=" + locationId + "]").show();
+      }else{
+        $ti.html('Gateway Offline');
+        $("img[corresponding-location=" + locationId + "]").show();
+      }
+      
+    })
+      .fail(function () { 
+        $ti.html('Server Offline');
+        $("img[corresponding-location=" + locationId + "]").show();
+      });
+  });
+</script>
 {% endblock %}

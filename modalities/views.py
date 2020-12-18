@@ -7,6 +7,8 @@ from django.core.exceptions import ValidationError
 
 
 from django.contrib import messages
+from curaMED import helpers
+import json
 
 def modality_list_view(request):
     queryset = ModalitiesInformation.objects.all()
@@ -68,25 +70,33 @@ def modality_detail_view(request,id):
     return render(request, 'modality/detail.html', context)
 
 def modality_connection_test_view(request):
-    ip = request.GET.get('ip-address')
-    port = request.GET.get('port-address')
-    aetitle = request.GET.get('ae-title')
-    location = request.GET.get('location-id')
-    bad_parameters = []
-    if not ip:
-        bad_parameters.append("IP Address")
-    if not port:
-        bad_parameters.append("Port")
-    if not aetitle:
-        bad_parameters.append("AETitle")
-    if not location:
-        bad_parameters.append("Standort")
-    if bad_parameters:
-        return HttpResponse(status=400, reason=f"Ungültig: {', '.join(bad_parameters)}")
+    #add here the post request from the helpers
+    #checks if the user has inputted the fields
+    # makes a post request at the url "https://c0100-orthanc.curapacs.ch/locations/0/echo" with the inputted fields that the user typed in
     
-    import time
-    time.sleep(3)
-    return HttpResponse(status=200, reason=f"Modalität gefunden")
-             
-    #Client (clicks on Verbindungstest) -> jQuery sendet Request zu curaMED mit Infos zu Standort der Modalität und IPAdresse und Port und AETitle
-    #POST c0100-orthanc.curapacs.ch/locations/{location-id}/modalities/echo (body: {ipaddress: 10.1.43.5, port: 104, aetitle: PHILIPSFUBAR}
+    if request.method == 'POST':
+        request_body = json.loads(request.body)
+        ip_address = request_body.get("ip-address")
+        port = request_body.get("port-address")
+        location = request_body.get("location-id")
+        #ae_title = request_body.get("ae-title") ae title should not be in post
+        bad_parameters = []
+        if not ip_address:
+            bad_parameters.append("IP Address")
+        if not port:
+            bad_parameters.append("Port")
+        if not location:
+            bad_parameters.append("Standort")
+        if bad_parameters:
+            return HttpResponse(status=400, reason=f"Ungültig: {', '.join(bad_parameters)}")
+
+        response_dict, response_status = helpers.orthanc.post_request(f"/locations/{location}/echo",
+                                                                      request_body,
+                                                                      timeout=8)
+        return HttpResponse(content=json.dumps(response_dict),
+                            content_type="application/json")         
+    else:
+        return HttpResponse(status=405,
+                            content=json.dumps({'error': 'Methode nicht unterstützt'}),
+                            content_type="application/json")
+    

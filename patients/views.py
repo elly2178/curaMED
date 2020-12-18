@@ -79,16 +79,16 @@ def patient_list_view(request):
             continue
         for orthanc_study_id in studies_response.get("Studies", []):
             study_response, status = helpers.orthanc.get_request(f"/studies/{orthanc_study_id}")
-            study_date = study_response.get("MainDicomTags",{}).get("StudyDate","Keine Angaben")
-            study_time = study_response.get("MainDicomTags",{}).get("StudyTime","Keine Angaben")
+            study_date = study_response.get("MainDicomTags",{}).get("StudyDate","")
+            study_time = study_response.get("MainDicomTags",{}).get("StudyTime","")
             try:
                 nice_date_time = datetime.strptime(study_date + "-" + study_time, "%Y%m%d-%H%M%S")
             except ValueError:
-                study_date, study_time = "Keine Angaben","Keine Angaben"
+                study_date, study_time = "",""
             else:
                 study_date = nice_date_time.strftime("%d. %B %Y")
                 study_time = nice_date_time.strftime("%H:%M")
-            study_description = study_response.get("MainDicomTags",{}).get("StudyDescription","Keine Angaben") 
+            study_description = study_response.get("MainDicomTags",{}).get("StudyDescription","") 
             patient.studies.append({"study_date": study_date,
                                     "study_time": study_time,
                                     "study_description": study_description,
