@@ -96,13 +96,12 @@
                         <div class="col">
                             <label>Verbindungstest: </label>
                         </div>
-                        <div class="col" id="connetion-button-div">              
+                        <div class="col" id="connetion-button-div">
                             <button type="button" id="btn-connect" class="btn btn-outline-primary" name='echo'>
                                 Verbinden</button>
-                            <img id="status-icon" src="/static/images/cancel.png" width="35" height="35" >
+                            <img id="status-icon" src="/static/images/cancel.png" width="35" height="35">
                         </div>
-                        <button type="button" id="post-btn" class="btn btn-outline-primary" name='echo'>
-                            post me</button>
+
                     </div>
                 </div>
             </div>
@@ -116,19 +115,33 @@
 <script>
     $("#status-icon").hide();
     $('#btn-connect').click(function () {
-        $.ajaxSetup({ timeout: 6001 })
         var ae_title = $("#id_ae_title").val();
         var ip = $("#id_ip").val();
         var port = $("#id_port").val();
         var location = $("#id_associate_location").val();
+        var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+
+        $.ajaxSetup({
+            timeout: 10001,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRFToken': csrfmiddlewaretoken
+            }
+        });
+
         $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
         var $ti = $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
-        
+
         setTimeout(function () {
             //dont remove.. 
         }, 1000);
 
-        var jqxhr = jQuery.post("{%url 'modalityEcho'%}?ip-address=" + ip + "&port-address=" + port + "&ae-title=" + ae_title + "&location-id=" + location, function () {
+        var jqxhr = jQuery.post("{%url 'modalityEcho'%}", JSON.stringify({
+            ip_address: ip,
+            port: port,
+            location_id: location
+        }), function () {
             $ti.html('Modalität Online');
             $("#status-icon").prop("src", "/static/images/check.png");
             $("#status-icon").show();
@@ -136,28 +149,34 @@
             .fail(function () {
                 $ti.html('Modalität Offline');
                 $("#status-icon").show();
-            }); 
+            });
 
     });
-
     $('#post-btn').click(function () {
-      
         var ip = $("#id_ip").val();
         var port = $("#id_port").val();
         var location = $("#id_associate_location").val();
-       
-         
-        
-        $.post("{%url 'modalityEcho'%}", { field1: "hello", field2 : "hello2"}, 
-    function(returnedData){
-         console.log(returnedData);
-    }).fail(function(){
-      console.log("error");
+        var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
 
+        $.ajaxSetup({
+            timeout: 10001,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRFToken': csrfmiddlewaretoken
+            }
+        });
+
+        $.post("{%url 'modalityEcho'%}", JSON.stringify({
+            ip_address: ip,
+            port: port,
+            location_id: location
+        }),
+            function (returnedData) {
+                console.log(returnedData);
+            }).fail(function () {
+                console.log("error");
+            });
     });
-
-    
-});
-     
 </script>
 {% endblock %}

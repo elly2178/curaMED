@@ -73,13 +73,12 @@ def modality_connection_test_view(request):
     #add here the post request from the helpers
     #checks if the user has inputted the fields
     # makes a post request at the url "https://c0100-orthanc.curapacs.ch/locations/0/echo" with the inputted fields that the user typed in
-    
-    if request.method == 'POST':
-        request_body = json.loads(request.body)
-        ip_address = request_body.get("ip-address")
-        port = request_body.get("port-address")
-        location = request_body.get("location-id")
-        #ae_title = request_body.get("ae-title") ae title should not be in post
+     
+    if request.method == 'POST':        
+        request_body = json.loads(request.body)       
+        ip_address = request_body.get("ip_address")
+        port = request_body.get("port")
+        location = request_body.get("location_id")
         bad_parameters = []
         if not ip_address:
             bad_parameters.append("IP Address")

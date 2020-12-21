@@ -1,7 +1,6 @@
 from operator import attrgetter
 from datetime import datetime
-from django.shortcuts import (
-    render, get_object_or_404, redirect)
+from django.shortcuts import (render, get_object_or_404, redirect)
 from django.urls import reverse
 from .models import PatientInformation
 from .forms import PatientInformationForm
@@ -9,7 +8,9 @@ from django.db.models import Q
 from django.views.generic import DetailView
 from django.views import View
 from curaMED import helpers
-
+import requests
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseBadRequest, HttpResponseServerError
+import json
 
 def patient_update_view(request, id= id):
     obj = get_object_or_404(PatientInformation, id= id)
@@ -20,7 +21,6 @@ def patient_update_view(request, id= id):
         'form' : form
     }
     return render(request, 'patient/patient_create.html', context)
-
 
 def patient_detail_view(request, id):
     obj = get_object_or_404(PatientInformation, id=id)
@@ -74,12 +74,13 @@ def patient_list_view(request):
         patient.studies = []
         orthanc_patient_id = helpers.orthanc.get_orthanc_id(curamed_patient_id)
         studies_response, status = helpers.orthanc.get_request(f"/patients/{orthanc_patient_id}")
-        
+        print(f"PATIEND BIRTHDATE: {patient.birthdate}")
         if not studies_response:
             continue
         for orthanc_study_id in studies_response.get("Studies", []):
             study_response, status = helpers.orthanc.get_request(f"/studies/{orthanc_study_id}")
-            study_date = study_response.get("MainDicomTags",{}).get("StudyDate","")
+            study_instance_uid = study_response.get("MainDicomTags",{}).get("StudyInstanceUID", "")
+            study_date = study_response.get("MainDicomTags",{}).get("StudyDate","")     
             study_time = study_response.get("MainDicomTags",{}).get("StudyTime","")
             try:
                 nice_date_time = datetime.strptime(study_date + "-" + study_time, "%Y%m%d-%H%M%S")
@@ -92,13 +93,13 @@ def patient_list_view(request):
             patient.studies.append({"study_date": study_date,
                                     "study_time": study_time,
                                     "study_description": study_description,
-                                    "study_id": orthanc_study_id})
+                                    "study_id": orthanc_study_id,
+                                    "study_instance_uid": study_instance_uid})
     
     context ={
         'object_list': queryset
     }
     return render(request, 'patient/patient_list.html', context)
-
    
 def patient_delete_view(request,id):
     obj = get_object_or_404(PatientInformation, id=id)
@@ -109,6 +110,105 @@ def patient_delete_view(request,id):
         'object':obj
     }
     return render(request,'patient/patient_delete.html', context)
+
+def patient_import_view(request):    
+    if request.method == "POST":
+        patient_ids_to_be_imported = request.body
+        http_response = import_patients_in_curapacs(patient_ids_to_be_imported)
+        return http_response
+
+    queryset = PatientInformation.objects.all() 
+    patients_to_be_imported = []
+    for patient in queryset:
+        curamed_patient_id = patient.id
+        orthanc_patient_id = helpers.orthanc.get_orthanc_id(curamed_patient_id)
+        patient_response, status_code = helpers.orthanc.get_request(f"/patients/{orthanc_patient_id}")
+        if status_code == 404:
+            patients_to_be_imported.append(patient)
+        else:
+            continue
+    context ={
+        'object_list': patients_to_be_imported
+    }
+    return render(request, 'patient/patient_import.html', context)
+
+def import_patients_in_curapacs(patient_ids):  
+    queryset = PatientInformation.objects.filter(pk__in=patient_ids)
+    
+    request_body = []
+    for patient in queryset:
+        request_body.append({"id": patient.id,
+                             "first_name": patient.first_name,
+                             "last_name": patient.last_name,
+                             "sex": patient.title,
+                             "birthdate": patient.birthdate
+                             })
+    try:
+        response_dict, response_status = helpers.orthanc.post_request(f"/import_patients",
+                                                                  request_body)
+    except ValueError as err:
+        return HttpResponseServerError(f"Import failed: {err}")
+    if response_status != 200:
+        return HttpResponseBadRequest(f"Import failed ({response_status}): {response_dict}")
+
+    imported_patients = response_dict.get("content",{}).get("imported")
+    failed_patients = response_dict.get("content",{}).get("failed")
+    
+    results_dict = {"imported": imported_patients, "failed": failed_patients}
+    #if response_dict.get("status") == "success":
+    return HttpResponse(content=json.dumps(results_dict), content_type="application/json") 
+
+ 
+    #check the response
+    #if response body contains "status": "success":
+    # body "content" key contains "imported" key, value is list of patient_ids which where successfully imported
+    #else response body contains "status": "error":
+    # body "content" key contains "imported" key, value is list of patient_ids which where successfully imported
+    # body "content" key contains "failed" key, value is list of patient_ids which where not imported successfully
+    #  --> return HttpResponse()
+     
+    
+
+#def meddream_token():
+    # Integration with MedDream TokenService for token generation;
+    #n token is generated after view study request from the use
+    
+    #Integration with MedDream WEB DICOM viewer.  ---> pag 8
+
+def fetch_meddream_token(request):
+    #Take the request from the django user
+    #Find out which study the django user wants to access
+    #We do this by parsing the query string of the GET request sent by our users
+    #the query string contains a key called "study-instanc-uid" which contains the dicom study id 
+    # that the users want to access
+    #
+    if not request.method == 'GET':
+        return HttpResponseNotAllowed(('GET',))    
+
+    study_instance_uid = request.GET.get('study-instance-uid')
+    if study_instance_uid is None:
+        return HttpResponseBadRequest(content="Missing query string key and value for study-instance-uid")
+
+    body = { "items": [
+            {"studies": {
+                "study": study_instance_uid,
+                "storage": "Orthanc"}
+            } ]
+            }       
+    try:
+        response_dict, response_status = helpers.orthanc.post_request("/generate-meddream-token", body)
+    except ValueError as err:
+        return HttpResponseServerError(content=f"Failed to fetch Token from Token Service: {err}")
+
+    if response_dict.get("status") == "success":
+        return redirect(f"https://c0100-meddream.curapacs.ch/?token={response_dict.get('content')}&add=true")
+    else:
+        return HttpResponseBadRequest(content="Failed beacause {response_dict.get('reason')}")
+ 
+
+def execute_meddream_url(request):
+    url_with_token_generated = fetch_meddream_token #+ "your url" --> 18
+    return url_with_token_generated
 
 
 class PatientCreateView(View):
@@ -124,11 +224,8 @@ class PatientCreateView(View):
     def post(self, request, *args, **kwargs):
         #post method 
         form = PatientInformationForm(request.POST)
-        print(str(form))
         if form.is_valid():
             form.save()
             return redirect('patients')
         context = { 'form':form }
         return render(request, self.template_name, context)
-
- 

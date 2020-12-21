@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h2>Liste der Patienten die Importiert werden sollte</h2>
+  <br>
+  {% for instance in object_list reversed %}
+  <div class="card border-info mb-3 w-100">
+    <div class="card-body">
+      <div class="container">
+        <div class="row">
+          <div class="card w-2 border-0">
+            <div class="col">
+              {% if instance.title == "male" %}
+              <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
+              {% else %}
+              <img src="/static/images/marilyn_monroe.png" class="card-img-top" width="55" height="45">
+              {% endif %}
+            </div>
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <h5 class="card-title">{{instance.first_name}} {{ instance.second_name}}</h5>
+              </div>
+
+              <div class="toast" id="import-toast-{{ instance.id }}" data-autohide="false" 
+              role="alert" aria-live="assertive" aria-atomic="true" style="display: none">
+                <div class="toast-header">
+                  <img src="/static/images/cancel.png" class="rounded mr-2" width="15" height="15">
+                  <strong class="mr-auto">Fehler</strong>
+                  <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="toast-body">
+                 Der Patient konnte nicht in curaPACS importiert werden.
+                 </div>                                           
+              </div>  
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <ul class="list-group list-group-flush"> 
+        <li class="list-group-item">Geburtsdatum: {{ instance.birthdate }}</li>
+        <li class="list-group-item">Adresse: {{ instance.address }} {{ instance.number }},
+          {{ instance.city }} {{ instance.code }}</li>
+       
+      </ul>
+      <div class="row">
+        <div class="col">
+        
+          <a href="{% url 'patientsImport' %}" class="btn btn-outline-primary" id ="show-import-for-patient-{{ instance.id }}"
+          name="show-import" corresponding-patient="{{ instance.id }}">Importieren</a>
+         </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  {% endfor %}
+  <script>
+    var showAllToastsState = true;
+  function changeToastVisibility(i) {
+    if (i == 0) {
+      return;
+    }
+      if (showAllToastsState == true){
+        $(this).show();        
+      } else {
+        $(this).hide();
+    }
+  }
+   //on page load, for every button (and therefore every patient): 
+  //run the changevisibility function on all the divs (studies), so we only show the first study on page load
+  $("button[name='show-import']").each(function(i){
+    var patientId = $(this).attr("corresponding-patient");
+    $("#import-toast-"+ patientId).children("div").each(changeToastVisibility);
+   
+  });
+
+  $(document).ready(function(){
+    $(".toast").toast("hide");
+  $("button[name='show-import']").click(function () {
+    var patientId = $(this).attr("corresponding-patient");
+    $("#import-toast-"+ patientId).toast("show");   
+  });
+});
+   
+  </script>
+  
+{% endblock %}

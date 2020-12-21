@@ -50,11 +50,12 @@
         {{ instance.city }} {{ instance.code }}</li>
       <li class="list-group-item">Sprache: {{ instance.language }}</li>
       <li class="list-group-item">Studien: 
+        
         <ul id="patient-{{ instance.id }}-studylist">
-        {% for study in instance.studies reversed %}  
+        {% for study in instance.studies reversed %}         
           {% if study.study_description %}
-          <div id="{{ study.study_id }}" class="list-group">
-            <a href="https://c0100-orthanc.curapacs.ch/studies/{{ study.study_id }}"
+          <div id="{{ study.study_id }}" class="list-group"> 
+            <a href="{% url 'fetchToken' %}?study-instance-uid={{ study.study_instance_uid }}" target ="_blank"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} beinhält:</a>
             <li class="list-group-item">Datum: {{ study.study_date }}</li>
             <li class="list-group-item">Uhrzeit: {{ study.study_time }}</li>
@@ -63,7 +64,7 @@
            
           {% else %}
           <div id="{{ study.study_id }}" class="list-group">
-            <a href="https://c0100-orthanc.curapacs.ch/studies/{{ study.study_id }}"
+            <a href="{% url 'fetchToken' %}?study-instance-uid={{ study.study_instance_uid }}"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} ohne Beschreibung
               gefunden.</a>
           </div>
@@ -76,7 +77,7 @@
           <div class="col">
           </div>
           <div class="col-md-auto">
-            <button id="show-all-studies" name="show-all-studies" corresponding-patient="{{ instance.id }}"  type="button" class="btn btn-link">Alle Studien zeigen</button>
+            <button id="show-all-studies-for-patient-{{ instance.id }}" name="show-all-studies" corresponding-patient="{{ instance.id }}"  type="button" class="btn btn-link">Alle Studien zeigen</button>
           </div>
         </div>
 
@@ -102,11 +103,9 @@
       return;
     }
       if (showAllStudiesState == true){
-        $(this).show();
-        $("#show-all-studies").html("Minimieren");
+        $(this).show();        
       } else {
         $(this).hide();
-        $("#show-all-studies").html("Alle Studien zeigen");
     }
   }
   //on page load, for every button (and therefore every patient): 
@@ -120,6 +119,12 @@
   $("button[name='show-all-studies']").click(function () {
    showAllStudiesState = !showAllStudiesState;
    var patientId = $(this).attr("corresponding-patient");
+   if (showAllStudiesState == true) {
+    $("#show-all-studies-for-patient-" + patientId).html("Minimieren");
+   } else {
+    $("#show-all-studies-for-patient-" + patientId).html("Alle Studien zeigen");
+   }  
+
    $("#patient-" + patientId + "-studylist").children("div").each(changeStudiesVisibility);
   });
 </script>

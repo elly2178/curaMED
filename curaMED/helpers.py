@@ -42,7 +42,10 @@ class Orthanc:
         if response is None:
             raise ValueError(f"Failed to retrieve resource for GET request to {url}")
         else:
-            return response.json(), response.status_code
+            if response.status_code != 200:
+                return {"error": f"Request to {url} failed.", "status": f"{response.status_code}"}, response.status_code
+            else:
+                return response.json(), response.status_code
     
 
     def post_request(self, path: str, body: dict, timeout=2, retries=1):

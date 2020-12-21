@@ -20,15 +20,15 @@ from django.urls import path
 from django.views.generic import RedirectView
 
 from patients.views import(
-    
+    patient_import_view, 
     patient_delete_view, 
     patient_list_view, 
     patient_search_view,
     patient_search_result_view,
     patient_detail_view,
     PatientCreateView,
-    patient_delete_view
-     
+    patient_delete_view,
+    fetch_meddream_token     
 )
 from modalities.views import(
     modality_create_view, 
@@ -54,21 +54,24 @@ urlpatterns = [
     path('favicon.ico',RedirectView.as_view(url='/static/images/favicon.ico')),
     path('admin/', admin.site.urls),
     path('', homepage_view, name = 'home'),
- 
+  
     path('patients/list/create/', PatientCreateView.as_view(), name ='patientCreate'),
     path('patients/list/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
    
     path('patients/list/', patient_list_view, name ='patients'),
+    path('patients/import/', patient_import_view, name ='patientsImport'),
     path('patients/search/', patient_search_view, name = 'patientSearch'),
     path('patients/search/result/', patient_search_result_view, name = 'searchResult'),
     path('patients/<int:id>/detail/', patient_detail_view, name ='patientDetail'),
     path('patients/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
+    path('patients/meddreamtoken', fetch_meddream_token, name ='fetchToken'),
+    
 
     path('modalities/create/', modality_create_view, name ='modalityCreate'),
     path('modalities/<int:id>/delete/', modality_delete_view, name ='modalityDelete'),
     path('modalities/<int:id>/detail/', modality_detail_view, name ='modalityDetail'),
     path('modalities/list/', modality_list_view, name ='modalities'),
-    path('modalities/echo/', modality_connection_test_view, name ='modalityEcho'),
+    path('modalities/echo/', modality_connection_test_view, name ='modalityEcho'),    
 
     path('administration/create/', location_create_view, name ='locationCreate'),
     path('administration/<int:id>/delete/', location_delete_view, name ='locationDelete'),    
