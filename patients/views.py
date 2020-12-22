@@ -80,6 +80,9 @@ def patient_list_view(request):
         for orthanc_study_id in studies_response.get("Studies", []):
             study_response, status = helpers.orthanc.get_request(f"/studies/{orthanc_study_id}")
             study_instance_uid = study_response.get("MainDicomTags",{}).get("StudyInstanceUID", "")
+            study_description = study_response.get("MainDicomTags",{}).get("StudyDescription","") 
+            if study_description == "curaPACS Patient Import":
+                continue
             study_date = study_response.get("MainDicomTags",{}).get("StudyDate","")     
             study_time = study_response.get("MainDicomTags",{}).get("StudyTime","")
             try:
@@ -88,8 +91,7 @@ def patient_list_view(request):
                 study_date, study_time = "",""
             else:
                 study_date = nice_date_time.strftime("%d. %B %Y")
-                study_time = nice_date_time.strftime("%H:%M")
-            study_description = study_response.get("MainDicomTags",{}).get("StudyDescription","") 
+                study_time = nice_date_time.strftime("%H:%M")            
             patient.studies.append({"study_date": study_date,
                                     "study_time": study_time,
                                     "study_description": study_description,
@@ -113,7 +115,10 @@ def patient_delete_view(request,id):
 
 def patient_import_view(request):    
     if request.method == "POST":
-        patient_ids_to_be_imported = request.body
+        try:
+            patient_ids_to_be_imported = json.loads(request.body)
+        except json.JSONDecodeError:
+            return HttpResponseBadRequest(f"Failed to decode request")
         http_response = import_patients_in_curapacs(patient_ids_to_be_imported)
         return http_response
 
@@ -132,25 +137,28 @@ def patient_import_view(request):
     }
     return render(request, 'patient/patient_import.html', context)
 
-def import_patients_in_curapacs(patient_ids):  
-    queryset = PatientInformation.objects.filter(pk__in=patient_ids)
-    
+def import_patients_in_curapacs(patient_ids):
+    print(f"Gathering queryset for patients with ids {[int(patient_id) for patient_id in patient_ids]}")
+    queryset = PatientInformation.objects.filter(pk__in=[int(patient_id) for patient_id in patient_ids])
     request_body = []
     for patient in queryset:
-        request_body.append({"id": patient.id,
+        request_body.append({"id": str(patient.id),
                              "first_name": patient.first_name,
-                             "last_name": patient.last_name,
+                             "last_name": patient.second_name,
                              "sex": patient.title,
-                             "birthdate": patient.birthdate
+                             "birthdate": patient.birthdate.strftime("%Y-%m-%d")
                              })
     try:
-        response_dict, response_status = helpers.orthanc.post_request(f"/import_patients",
-                                                                  request_body)
+        print(f"POSTING TO /import-patients: {request_body}")
+        response_dict, response_status = helpers.orthanc.post_request(f"/import-patients",
+                                                                      request_body,
+                                                                      timeout=12)
     except ValueError as err:
         return HttpResponseServerError(f"Import failed: {err}")
     if response_status != 200:
         return HttpResponseBadRequest(f"Import failed ({response_status}): {response_dict}")
 
+    print(f"Response dict is: {response_dict}")
     imported_patients = response_dict.get("content",{}).get("imported")
     failed_patients = response_dict.get("content",{}).get("failed")
     

@@ -2,8 +2,17 @@
 
 {% block content %}
 
-  <h2>Liste der Patienten die Importiert werden sollte</h2>
+  <h2>Patienten in curaPACS importieren</h2>
   <br>
+  {% csrf_token %}
+  {% if object_list|length == 0 %}
+  <div class="card border-info" style="width: 30rem;">
+    <div class="card-body">
+      Alle Patienten bereits importiert.
+    </div>
+  </div>
+  
+  {% endif %}
   {% for instance in object_list reversed %}
   <div class="card border-info mb-3 w-100">
     <div class="card-body">
@@ -25,7 +34,7 @@
               </div>
 
               <div class="toast" id="import-toast-{{ instance.id }}" data-autohide="false" 
-              role="alert" aria-live="assertive" aria-atomic="true" style="display: none">
+              role="alert" aria-live="assertive" aria-atomic="true" style="display: none"> 
                 <div class="toast-header">
                   <img src="/static/images/cancel.png" class="rounded mr-2" width="15" height="15">
                   <strong class="mr-auto">Fehler</strong>
@@ -50,9 +59,9 @@
       </ul>
       <div class="row">
         <div class="col">
-        
-          <a href="{% url 'patientsImport' %}" class="btn btn-outline-primary" id ="show-import-for-patient-{{ instance.id }}"
-          name="show-import" corresponding-patient="{{ instance.id }}">Importieren</a>
+          <button id="show-import-for-patient-{{ instance.id }}" name="show-import" 
+          corresponding-patient="{{ instance.id }}" type="button" class="btn btn-outline-primary">
+          Importieren</button>           
          </div>
       </div>
     </div>
@@ -76,18 +85,52 @@
   //run the changevisibility function on all the divs (studies), so we only show the first study on page load
   $("button[name='show-import']").each(function(i){
     var patientId = $(this).attr("corresponding-patient");
-    $("#import-toast-"+ patientId).children("div").each(changeToastVisibility);
-   
+    $("#import-toast-"+ patientId).children("div").each(changeToastVisibility);  
   });
 
   $(document).ready(function(){
     $(".toast").toast("hide");
-  $("button[name='show-import']").click(function () {
-    var patientId = $(this).attr("corresponding-patient");
-    $("#import-toast-"+ patientId).toast("show");   
-  });
-});
-   
-  </script>
+
+    $("button[name='show-import']").click(function () {
+      var patientId = $(this).attr("corresponding-patient");      
+      var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val(); 
+      
+      $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
+      var $ti = $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
+  
+      $.ajaxSetup({
+            timeout: 10001,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRFToken': csrfmiddlewaretoken
+            }
+        }); 
+      
+      $.post("{%url 'patientsImport' %}", JSON.stringify([patientId]),
+              function (returnedData){
+               //for patient in failed:
+               // $("#import-toast-" + patient.id).toast("show")
+               //for patient in imported
+               //  $("#show-import-for-patient-" + patient.id ).html('Patient erfolgreich importiert');
+               //  $("#show-import-for-patient-" + patient.id ).prop('disabled', true);   
+                returnedData["failed"].forEach(function (patient, index) {
+                  console.log("Showing TOAST :  import-toast-" + patient.id)
+                  $("#import-toast-" + patient.id).removeAttr("style").css("display","inline");
+                  $("#import-toast-" + patient.id).toast("show");
+                  $("#show-import-for-patient-" + patient.id ).html('Erneut versuchen');
+                  console.log("PATIENT ID IS " + patient.id); 
+                });
+                returnedData["imported"].forEach(function (patient, index) {
+                  console.log("PATIENT ID IS " + patient.id); 
+                  $("#show-import-for-patient-" + patient.id ).html('Patient erfolgreich importiert');
+                  $("#show-import-for-patient-" + patient.id ).prop('disabled', true);   
+                });
+              }).fail(function (){
+                 console.log("error");
+              });
+    });
+  });   
+</script>
   
 {% endblock %}
