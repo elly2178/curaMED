@@ -13,6 +13,13 @@
   </div>
   
   {% endif %}
+
+  {% if object_list|length > 1 %}
+  <div style="padding-bottom: 35px;"> 
+  <button id="btn-import-all-patients" name="show-import" type="button" class="btn btn-outline-info">Alle Patienten importieren</button>
+  </div>
+  {% endif %}
+
   {% for instance in object_list reversed %}
   <div class="card border-info mb-3 w-100">
     <div class="card-body">
@@ -92,7 +99,16 @@
     $(".toast").toast("hide");
 
     $("button[name='show-import']").click(function () {
-      var patientId = $(this).attr("corresponding-patient");      
+      var patientIds = [];
+      if ($(this).attr('id') == "btn-import-all-patients") {
+          $("button[name='show-import']").each(function(i){
+              if ($(this).attr("corresponding-patient")) {
+                  patientIds.push($(this).attr("corresponding-patient"));
+              }
+          });
+      } else {
+        patientIds.push($(this).attr("corresponding-patient"));
+      }
       var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val(); 
       
       $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
@@ -106,29 +122,24 @@
                 'X-CSRFToken': csrfmiddlewaretoken
             }
         }); 
-      
-      $.post("{%url 'patientsImport' %}", JSON.stringify([patientId]),
-              function (returnedData){
-               //for patient in failed:
-               // $("#import-toast-" + patient.id).toast("show")
-               //for patient in imported
-               //  $("#show-import-for-patient-" + patient.id ).html('Patient erfolgreich importiert');
-               //  $("#show-import-for-patient-" + patient.id ).prop('disabled', true);   
+
+      $.post("{%url 'patientsImport' %}", JSON.stringify(patientIds),
+              function (returnedData){ 
                 returnedData["failed"].forEach(function (patient, index) {
-                  console.log("Showing TOAST :  import-toast-" + patient.id)
                   $("#import-toast-" + patient.id).removeAttr("style").css("display","inline");
                   $("#import-toast-" + patient.id).toast("show");
                   $("#show-import-for-patient-" + patient.id ).html('Erneut versuchen');
-                  console.log("PATIENT ID IS " + patient.id); 
                 });
                 returnedData["imported"].forEach(function (patient, index) {
-                  console.log("PATIENT ID IS " + patient.id); 
                   $("#show-import-for-patient-" + patient.id ).html('Patient erfolgreich importiert');
                   $("#show-import-for-patient-" + patient.id ).prop('disabled', true);   
                 });
               }).fail(function (){
                  console.log("error");
-              });
+              }).always(function() {
+                  $("#btn-import-all-patients").html("Alle Patienten importieren");
+                }
+              );
     });
   });   
 </script>
