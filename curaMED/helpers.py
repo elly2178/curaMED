@@ -62,7 +62,7 @@ class Orthanc:
             ValueError: [Gets thrown if the User tries to access a false url, port, unexisting location ]
 
         Returns:
-            [Tuple]: [Item0: Response content as a dictionary, Item1: HTTP status code as int]
+            [Tuple]: [Item0: Response content as a dictionary or a list, Item1: HTTP status code as int]
         """
         url = self.get_url_for_path(path)
         response = None

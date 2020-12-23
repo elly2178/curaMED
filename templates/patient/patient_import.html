@@ -16,7 +16,7 @@
 
   {% if object_list|length > 1 %}
   <div style="padding-bottom: 35px;"> 
-  <button id="btn-import-all-patients" name="show-import" type="button" class="btn btn-outline-info">Alle Patienten importieren</button>
+  <button id="btn-import-all-patients" name="show-import" type="button" class="btn btn-outline-primary">Alle Patienten importieren</button>
   </div>
   {% endif %}
 
@@ -103,7 +103,9 @@
       if ($(this).attr('id') == "btn-import-all-patients") {
           $("button[name='show-import']").each(function(i){
               if ($(this).attr("corresponding-patient")) {
-                  patientIds.push($(this).attr("corresponding-patient"));
+                  if (!$(this).prop('disabled')) {
+                    patientIds.push($(this).attr("corresponding-patient"));
+                  }     
               }
           });
       } else {

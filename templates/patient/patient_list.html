@@ -87,7 +87,7 @@
       <div class="col">
         <a href="{% url 'worklistCreate' %}?patient-id={{ instance.id }}" class="btn btn-outline-primary">Auftrag
           erstellen</a>
-        <a href=" # patient zusammenführen  " class="btn btn-outline-primary">Zusammenführen</a>
+        <a href="{% url 'patientMerge' instance.id %} " class="btn btn-outline-primary">Zusammenführen</a>
       </div>
     </div>
 

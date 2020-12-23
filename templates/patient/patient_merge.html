@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Patient Zusammenführen</h2>{% csrf_token %}
+<div class="card-deck" style="width:auto">
+    <div class="card border-info">
+        <div class="card-body">
+            <p> Der Patient {{ object.id }} scheint in curaPACS mit einen anderen ID vorhanden zu sein.</p>
+            <div class="row">
+                <div class="col">
+                    <div class="card border-info">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <img src="/static/images/favicon.ico" width="30" height="30" alt="" loading="lazy">
+                                curaMED</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">ID: {{ object.id }} </li>
+                                <li class="list-group-item">Name: {{ object.first_name }} {{ object.second_name }}</li>
+                                <li class="list-group-item">Geschlecht: {{ object.title}} </li>
+                                <li class="list-group-item">Geburtsdatum: {{ object.birthdate }} </li>
+                                <li class="list-group-item">Strasse: {{ object.address}}</li>
+                                <li class="list-group-item">Hausnummer: {{ object.number }}</li>
+                                <li class="list-group-item">Ort: {{ object.city }}</li>
+                                <li class="list-group-item">PLZ: {{ object.code }}</li>
+                                <li class="list-group-item">Sprache: {{ object.language }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-info">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <img src="/static/images/curaPacs.png" width="30" height="35" alt=""
+                                    loading="lazy">curaPACS</h5>
+                            <nav class="navbar navbar-light ">
+
+                                <input class="form-control mr-sm-2" type="text" id='patient_id_query'
+                                    placeholder="Nach ID suchen" aria-label="Search">
+                                <input class="form-control mr-sm-2" type="text" id='patient_name_query'
+                                    placeholder="Nach Name suchen" aria-label="Search">
+                                <button class="btn btn-outline-primary my-2 my-sm-0" id="search-btn">Suchen</button>
+                            </nav>
+                            <ul class="list-group list-group-flush" id="result-list" style="display: none">
+                                <li class="list-group-item">ID: </li>
+                                <li class="list-group-item">Name: </li>
+                                <li class="list-group-item">Studienanzahl: </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <a href="#Patient Zusammenführen" button type="button" class="btn btn-outline-primary">Patient
+                        Zusammenführen</a>
+
+
+                    <a href="{% url 'patients' %}" button type="button" class="btn btn-outline-primary">Abbrechen</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $("#search-btn").click(function () {
+        console.log("im berfore the id and the name")
+        $.ajaxSetup({
+            timeout: 10001,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRFToken': csrfmiddlewaretoken
+            }
+        });
+        
+        var id = $("#patient_id_query").val();
+        var name = $("patient_name_query").val();
+        var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+        if (id === undefined) { id = "*"; }
+        if (name === undefined) { name = "*"; }
+        console.log("{%url 'curapacsSearchPatients'%}?patient-id=" + id + "%patient-name=" + name)
+        $.get("{%url 'curapacsSearchPatients'%}?patient-id=" + id + "%patient-name=" + name,
+            function (returnedData) {
+                $("#result-list").removeAttr("style").css("display", "inline");
+                console.log(returnedData);
+                console.log("poop");
+
+
+            });
+        });
+</script>
+{% endblock %}

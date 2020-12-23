@@ -12,16 +12,6 @@ import requests
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseBadRequest, HttpResponseServerError
 import json
 
-def patient_update_view(request, id= id):
-    obj = get_object_or_404(PatientInformation, id= id)
-    form = PatientInformationForm(request.POST or None, instance =obj)
-    if form.is_valid():
-        form.save()
-    context = {
-        'form' : form
-    }
-    return render(request, 'patient/patient_create.html', context)
-
 def patient_detail_view(request, id):
     obj = get_object_or_404(PatientInformation, id=id)
     form = PatientInformationForm(request.POST or None, instance=obj)
@@ -41,7 +31,7 @@ def patient_detail_view(request, id):
     }
     return render(request, 'patient/patient_detail.html', context)
 
-def patient_search_view(query=None):    
+def patient_search_view(query=None):
     queryset= []
     queries = []
     if query is not None:
@@ -74,7 +64,6 @@ def patient_list_view(request):
         patient.studies = []
         orthanc_patient_id = helpers.orthanc.get_orthanc_id(curamed_patient_id)
         studies_response, status = helpers.orthanc.get_request(f"/patients/{orthanc_patient_id}")
-        print(f"PATIEND BIRTHDATE: {patient.birthdate}")
         if not studies_response:
             continue
         for orthanc_study_id in studies_response.get("Studies", []):
@@ -164,9 +153,7 @@ def import_patients_in_curapacs(patient_ids):
     
     results_dict = {"imported": imported_patients, "failed": failed_patients}
     #if response_dict.get("status") == "success":
-    return HttpResponse(content=json.dumps(results_dict), content_type="application/json") 
-
- 
+    return HttpResponse(content=json.dumps(results_dict), content_type="application/json")  
     #check the response
     #if response body contains "status": "success":
     # body "content" key contains "imported" key, value is list of patient_ids which where successfully imported
@@ -174,14 +161,6 @@ def import_patients_in_curapacs(patient_ids):
     # body "content" key contains "imported" key, value is list of patient_ids which where successfully imported
     # body "content" key contains "failed" key, value is list of patient_ids which where not imported successfully
     #  --> return HttpResponse()
-     
-    
-
-#def meddream_token():
-    # Integration with MedDream TokenService for token generation;
-    #n token is generated after view study request from the use
-    
-    #Integration with MedDream WEB DICOM viewer.  ---> pag 8
 
 def fetch_meddream_token(request):
     #Take the request from the django user
@@ -213,12 +192,52 @@ def fetch_meddream_token(request):
     else:
         return HttpResponseBadRequest(content="Failed beacause {response_dict.get('reason')}")
  
+def patient_merge_view(request,id):
+    obj = PatientInformation.objects.get(id=id)
+    
+    context = {
+        "object": obj
+    }
+    return render(request, 'patient/patient_merge.html', context)
 
-def execute_meddream_url(request):
-    url_with_token_generated = fetch_meddream_token #+ "your url" --> 18
-    return url_with_token_generated
-
-
+def curapacs_search_patients_view(request):
+    if request.method != "GET":
+        return HttpResponseNotAllowed(('GET',))
+    patient_id_query = str(request.GET.get("patient-id", "*"))
+    patient_name_query = str(request.GET.get("patient-name", "*"))
+    max_results_count = str(request.GET.get("max-results-count", "10"))
+    if patient_id_query is None and patient_name_query is None:
+        return HttpResponseBadRequest(f"Need at least patient-id or patient-name")
+    
+    request_body = {"Level": "Patient",
+                    "Limit": max_results_count,
+                    "Query": {                           
+                        "PatientID": patient_id_query,
+                        "PatientName": patient_name_query,
+                        }
+                    }
+    try:
+        curapacs_search_response, status_code = helpers.orthanc.post_request(f"/tools/find",
+                                                                             request_body,
+                                                                             timeout=12)
+    except ValueError:
+        return HttpResponseServerError(f"Failed to connect to curaPACS")
+    if status_code != 200:
+        return HttpResponseServerError(f"curaPACS failed to handle search request ({status_code})")
+    results_list = []
+    for orthanc_uid in curapacs_search_response:        
+        patient_information_response, status_code = helpers.orthanc.get_request(f"/patients/{orthanc_uid}")
+        given_patient_id = patient_information_response.get("MainDicomTags",{}).get("PatientID","") 
+        given_patient_name = patient_information_response.get("MainDicomTags",{}).get("PatientName","")  
+        existing_patient_study_uids = patient_information_response.get("Studies",[])
+        study_uids_nr = len(existing_patient_study_uids)
+        results_list.append({"id": given_patient_id,
+                             "name": given_patient_name,
+                             "study-count": study_uids_nr
+                             })        
+    
+    return HttpResponse(content=json.dumps(results_list), content_type="application/json")
+ 
 class PatientCreateView(View):
     template_name = 'patient/patient_create.html'
     def get(self, request, *args, **kwargs):
