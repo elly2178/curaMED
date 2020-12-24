@@ -36,61 +36,65 @@
                             <nav class="navbar navbar-light ">
 
                                 <input class="form-control mr-sm-2" type="text" id='patient_id_query'
-                                    placeholder="Nach ID suchen" aria-label="Search">
+                                    placeholder="Nach ID suchen" aria-label="Search" style="padding-bottom: 5px;">
                                 <input class="form-control mr-sm-2" type="text" id='patient_name_query'
-                                    placeholder="Nach Name suchen" aria-label="Search">
+                                    placeholder="Nach Name suchen" aria-label="Search" style="padding-bottom: 5px;">
                                 <button class="btn btn-outline-primary my-2 my-sm-0" id="search-btn">Suchen</button>
                             </nav>
-                            <ul class="list-group list-group-flush" id="result-list" style="display: none">
-                                <li class="list-group-item">ID: </li>
-                                <li class="list-group-item">Name: </li>
-                                <li class="list-group-item">Studienanzahl: </li>
-                            </ul>
+                            <div class="list-group " id="result-list" style="display: none">
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col">
-                    <a href="#Patient Zusammenführen" button type="button" class="btn btn-outline-primary">Patient
-                        Zusammenführen</a>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <a href="#Patient Zusammenführen" button type="button" class="btn btn-outline-primary">Patient
+                            Zusammenführen</a>
 
 
-                    <a href="{% url 'patients' %}" button type="button" class="btn btn-outline-primary">Abbrechen</a>
+                        <a href="{% url 'patients' %}" button type="button"
+                            class="btn btn-outline-primary">Abbrechen</a>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
-</div>
-
-<script>
-    $("#search-btn").click(function () {
-        console.log("im berfore the id and the name")
-        $.ajaxSetup({
-            timeout: 10001,
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRFToken': csrfmiddlewaretoken
-            }
-        });
-        
-        var id = $("#patient_id_query").val();
-        var name = $("patient_name_query").val();
-        var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
-        if (id === undefined) { id = "*"; }
-        if (name === undefined) { name = "*"; }
-        console.log("{%url 'curapacsSearchPatients'%}?patient-id=" + id + "%patient-name=" + name)
-        $.get("{%url 'curapacsSearchPatients'%}?patient-id=" + id + "%patient-name=" + name,
-            function (returnedData) {
-                $("#result-list").removeAttr("style").css("display", "inline");
-                console.log(returnedData);
-                console.log("poop");
-
-
+    <script>
+        $("#search-btn").click(function () {
+            console.log("im berfore the id and the name")
+            $.ajaxSetup({
+                timeout: 10001,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRFToken': csrfmiddlewaretoken
+                }
             });
+
+            var patient_id = $("#patient_id_query").val();
+            var patient_name = $("#patient_name_query").val();
+            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+            if (patient_id === undefined || patient_id == "") { patient_id = "*"; }
+            if (patient_name === undefined || patient_name == "") { patient_name = "*"; }
+            var encoded_patient_id = encodeURIComponent(patient_id)
+            var encoded_patient_name = encodeURIComponent(patient_name)
+
+            console.log("{%url 'curapacsSearchPatients'%}?patient-id=" + encoded_patient_id + "&patient-name=" + encoded_patient_name)
+            $.get("{%url 'curapacsSearchPatients'%}?patient-id=" + encoded_patient_id + "&patient-name=" + encoded_patient_name,
+                function (returnedData) {
+                    $("#result-list").removeAttr("style").css("display", "inline");
+                    console.log(returnedData);
+                    $("#result-list").html = ""
+                    var result_list_content = "";
+                    returnedData.forEach(function (patient, index) {
+                        result_list_content = result_list_content + '<label class="list-group-item"><input class="form-check-input me-1" type="checkbox" style="padding-left: 5px;" corresponding-patient="' + patient.id + '" value="">'+ patient.name +' (DICOM ID: ' + patient.id + ') mit ' + patient.study_count + ' Studie(n)</label>';
+                    });
+                    $("#result-list").html(result_list_content)
+                });
         });
-</script>
-{% endblock %}
+    </script>
+    {% endblock %}

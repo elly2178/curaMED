@@ -205,7 +205,7 @@ def curapacs_search_patients_view(request):
         return HttpResponseNotAllowed(('GET',))
     patient_id_query = str(request.GET.get("patient-id", "*"))
     patient_name_query = str(request.GET.get("patient-name", "*"))
-    max_results_count = str(request.GET.get("max-results-count", "10"))
+    max_results_count = request.GET.get("max-results-count", 10)
     if patient_id_query is None and patient_name_query is None:
         return HttpResponseBadRequest(f"Need at least patient-id or patient-name")
     
@@ -213,7 +213,7 @@ def curapacs_search_patients_view(request):
                     "Limit": max_results_count,
                     "Query": {                           
                         "PatientID": patient_id_query,
-                        "PatientName": patient_name_query,
+                        "PatientName": patient_name_query
                         }
                     }
     try:
@@ -224,6 +224,7 @@ def curapacs_search_patients_view(request):
         return HttpResponseServerError(f"Failed to connect to curaPACS")
     if status_code != 200:
         return HttpResponseServerError(f"curaPACS failed to handle search request ({status_code})")
+    
     results_list = []
     for orthanc_uid in curapacs_search_response:        
         patient_information_response, status_code = helpers.orthanc.get_request(f"/patients/{orthanc_uid}")
@@ -233,7 +234,7 @@ def curapacs_search_patients_view(request):
         study_uids_nr = len(existing_patient_study_uids)
         results_list.append({"id": given_patient_id,
                              "name": given_patient_name,
-                             "study-count": study_uids_nr
+                             "study_count": study_uids_nr
                              })        
     
     return HttpResponse(content=json.dumps(results_list), content_type="application/json")
