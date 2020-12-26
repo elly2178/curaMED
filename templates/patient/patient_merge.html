@@ -1,27 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Patient Zusammenführen</h2>{% csrf_token %}
+<br>
+<h2>Patient zusammenführen</h2>{% csrf_token %}
 <div class="card-deck" style="width:auto">
     <div class="card border-info">
         <div class="card-body">
-            <p> Der Patient {{ object.id }} scheint in curaPACS mit einen anderen ID vorhanden zu sein.</p>
-            <div class="row">
-                <div class="col">
+            <p> Mit dieser Funktion können die DICOM Studien von verdoppelten oder fehlerhaften Patienten in einem
+                Patienten zusammengeführt werden.
+                Die entsprechenden Patienten werden im Anschluss entfernt.</p>
+            <div class="row ">
+                <div class="col col-lg-5">
                     <div class="card border-info">
                         <div class="card-body">
-                            <h5 class="card-title">
-                                <img src="/static/images/favicon.ico" width="30" height="30" alt="" loading="lazy">
-                                curaMED</h5>
+                            <h5 class="card-title"><img src="/static/images/favicon.ico" width="30" height="30" alt=""
+                                    loading="lazy">curaMED</h5>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">ID: {{ object.id }} </li>
                                 <li class="list-group-item">Name: {{ object.first_name }} {{ object.second_name }}</li>
                                 <li class="list-group-item">Geschlecht: {{ object.title}} </li>
                                 <li class="list-group-item">Geburtsdatum: {{ object.birthdate }} </li>
-                                <li class="list-group-item">Strasse: {{ object.address}}</li>
-                                <li class="list-group-item">Hausnummer: {{ object.number }}</li>
-                                <li class="list-group-item">Ort: {{ object.city }}</li>
-                                <li class="list-group-item">PLZ: {{ object.code }}</li>
+                                <li class="list-group-item">Strasse: {{ object.address}}, {{ object.number }}, {{ object.city }}, {{ object.code }}</li>
                                 <li class="list-group-item">Sprache: {{ object.language }}</li>
                             </ul>
                         </div>
@@ -30,71 +28,179 @@
                 <div class="col">
                     <div class="card border-info">
                         <div class="card-body">
-                            <h5 class="card-title">
-                                <img src="/static/images/curaPacs.png" width="30" height="35" alt=""
+                            <h5 class="card-title"><img src="/static/images/curaPacs.png" width="30" height="35" alt=""
                                     loading="lazy">curaPACS</h5>
-                            <nav class="navbar navbar-light ">
+                            <div class="row">
+                                <div class="col">
+                                    <nav class="navbar navbar-light ">
+                                        <div class="row">
+                                            <div class="col" style="padding-bottom: 5px;">
+                                                <input class="form-control mr-sm-2" type="text" id='patient_id_query'
+                                                    placeholder="Nach ID suchen" aria-label="Search">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col" style="padding-bottom: 5px;">
+                                                <input class="form-control mr-sm-2" type="text" id='patient_name_query'
+                                                    placeholder="Nach Name suchen" aria-label="Search">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col" style="padding-bottom: 5px;">
+                                                <button class="btn btn-outline-primary my-2 my-sm-0"
+                                                    id="search-btn">Suchen</button>
+                                            </div>
+                                        </div>
 
-                                <input class="form-control mr-sm-2" type="text" id='patient_id_query'
-                                    placeholder="Nach ID suchen" aria-label="Search" style="padding-bottom: 5px;">
-                                <input class="form-control mr-sm-2" type="text" id='patient_name_query'
-                                    placeholder="Nach Name suchen" aria-label="Search" style="padding-bottom: 5px;">
-                                <button class="btn btn-outline-primary my-2 my-sm-0" id="search-btn">Suchen</button>
-                            </nav>
-                            <div class="list-group " id="result-list" style="display: none">
+                                    </nav>
+                                    <ul class="list-group" id="result-list" style="display: none"></ul>
+                                </div>
                             </div>
                         </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col">
-                        <a href="#Patient Zusammenführen" button type="button" class="btn btn-outline-primary">Patient
-                            Zusammenführen</a>
-
-
-                        <a href="{% url 'patients' %}" button type="button"
-                            class="btn btn-outline-primary">Abbrechen</a>
                     </div>
                 </div>
             </div>
+
+
+
+            <br>
+            <div class="row">
+                <div class="col">
+
+                    <button id="merge-btn" class="btn btn-outline-primary">Patienten zusammenführen</button>
+
+                    <div class="modal fade" id="patientDoesNotExistInCuraPacsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Fehler</h5>
+                                    
+                                </div>
+                                <div class="modal-body">
+                                    Der Patient ist noch nicht in curaPACS vorhanden. Bitte zuerst einen Import vornehmen.
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'patientsImport' %}" button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
+                                        Zum Importmenü wechseln
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="noMergeTargetsSelectedModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Fehler</h5>
+                                    
+                                </div>
+                                <div class="modal-body">
+                                    Bitte mindestens einen Patienten auswählen.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" id="closeNoMergeTargetsSelectedModal"
+                                        data-bs-dismiss="modal">Schliessen</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'patients' %}" button type="button" class="btn btn-outline-primary">Abbrechen</a>
+                </div>
+            </div>
         </div>
-
     </div>
+</div>
 
-    <script>
-        $("#search-btn").click(function () {
-            console.log("im berfore the id and the name")
-            $.ajaxSetup({
-                timeout: 10001,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRFToken': csrfmiddlewaretoken
+
+<script>
+    const original_patient_id = "{{ object.id }}"
+    $.get("{%url 'curapacsSearchPatients'%}?patient-id=" + original_patient_id,
+            function (responseData) {
+                console.log(responseData)
+                var list_of_dicts_with_patient_ids = responseData;
+                if (list_of_dicts_with_patient_ids.length == 0) {
+                    $("#patientDoesNotExistInCuraPacsModal").modal("show");
+
                 }
             });
-
-            var patient_id = $("#patient_id_query").val();
-            var patient_name = $("#patient_name_query").val();
-            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
-            if (patient_id === undefined || patient_id == "") { patient_id = "*"; }
-            if (patient_name === undefined || patient_name == "") { patient_name = "*"; }
-            var encoded_patient_id = encodeURIComponent(patient_id)
-            var encoded_patient_name = encodeURIComponent(patient_name)
-
-            console.log("{%url 'curapacsSearchPatients'%}?patient-id=" + encoded_patient_id + "&patient-name=" + encoded_patient_name)
-            $.get("{%url 'curapacsSearchPatients'%}?patient-id=" + encoded_patient_id + "&patient-name=" + encoded_patient_name,
-                function (returnedData) {
-                    $("#result-list").removeAttr("style").css("display", "inline");
-                    console.log(returnedData);
-                    $("#result-list").html = ""
-                    var result_list_content = "";
-                    returnedData.forEach(function (patient, index) {
-                        result_list_content = result_list_content + '<label class="list-group-item"><input class="form-check-input me-1" type="checkbox" style="padding-left: 5px;" corresponding-patient="' + patient.id + '" value="">'+ patient.name +' (DICOM ID: ' + patient.id + ') mit ' + patient.study_count + ' Studie(n)</label>';
-                    });
-                    $("#result-list").html(result_list_content)
-                });
+    $("#search-btn").click(function () {
+        console.log("im berfore the id and the name")
+        $.ajaxSetup({
+            timeout: 10001,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRFToken': csrfmiddlewaretoken
+            }
         });
-    </script>
-    {% endblock %}
+
+        var patient_id = $("#patient_id_query").val();
+        var patient_name = $("#patient_name_query").val();
+        var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+        if (patient_id === undefined || patient_id == "") { patient_id = "*"; }
+        if (patient_name === undefined || patient_name == "") { patient_name = "*"; }
+        var encoded_patient_id = encodeURIComponent(patient_id)
+        var encoded_patient_name = encodeURIComponent(patient_name)
+
+        console.log("{%url 'curapacsSearchPatients'%}?patient-id=" + encoded_patient_id + "&patient-name=" + encoded_patient_name)
+        $.get("{%url 'curapacsSearchPatients'%}?patient-id=" + encoded_patient_id + "&patient-name=" + encoded_patient_name,
+            function (returnedData) {
+                $("#result-list").removeAttr("style").css("display", "inline");
+                console.log(returnedData);
+                $("#result-list").html = ""
+                var result_list_content = "";
+                returnedData.forEach(function (patient, index) {
+                    result_list_content = result_list_content + '<li class="list-group-item" style="padding-left: 25px;" ><input class="form-check-input me-1" type="checkbox" corresponding-patient="' + patient.id + '" value="">' + patient.name + ' (DICOM ID: ' + patient.id + ') mit ' + patient.study_count + ' Studie(n)</li>';
+                });
+                $("#result-list").html(result_list_content)
+            });
+    });
+    $("#merge-btn").click(function () {
+        var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+        $.ajaxSetup({
+            timeout: 10000,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRFToken': csrfmiddlewaretoken
+            }
+        });
+
+        var patient_dicom_uid_list = [];
+        $("input[type=checkbox]").each(function (i) {
+            if ($(this).prop('checked')) {
+                patient_dicom_uid_list.push($(this).attr("corresponding-patient"));
+               
+            }
+        });
+        if (patient_dicom_uid_list.length == 0) {
+            $("#noMergeTargetsSelectedModal").modal("show");
+        } else {
+            $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> In Bearbeitung...').addClass('disabled');
+            var $ti = $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> In Bearbeitung...');
+            $.post("{% url 'patientMerge' object.id %}", JSON.stringify(patient_dicom_uid_list), function(responseData) {
+                var parsed_response = jQuery.parseJSON(responseData)
+                console.log(parsed_response);
+                if (parsed_response["failed"].length != 0) {
+                    var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
+                    var button_text = "Vorgang fehlgeschlagen";
+                } else {
+                    var button_icon = '<img id="status-icon" src="/static/images/check.png" width="25" height="25">';
+                    var button_text = "Vorgang erfolgreich";
+                }
+                $('#merge-btn').addClass('enabled');
+                $('#merge-btn').html(button_text + " " + button_icon);
+            }); 
+        }
+    });
+
+    $("#closeNoMergeTargetsSelectedModal").click(function() {
+        $("#noMergeTargetsSelectedModal").modal("hide");
+    });
+
+</script>
+{% endblock %}

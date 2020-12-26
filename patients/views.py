@@ -191,8 +191,35 @@ def fetch_meddream_token(request):
         return redirect(f"https://c0100-meddream.curapacs.ch/?token={response_dict.get('content')}&add=true")
     else:
         return HttpResponseBadRequest(content="Failed beacause {response_dict.get('reason')}")
- 
+
+def do_patient_merge(original_dicom_patient_uid: str, duplicate_dicom_patient_uids: list):
+    original_dicom_patient_orthanc_uid = helpers.orthanc.get_orthanc_id(original_dicom_patient_uid)
+    duplicate_orthanc_patient_uids = []
+    for uid in duplicate_dicom_patient_uids:
+        duplicate_orthanc_patient_uids.append(helpers.orthanc.get_orthanc_id(uid))
+    body = duplicate_orthanc_patient_uids
+    try:
+        response_dict, response_status = helpers.orthanc.post_request(f"/merge-patients/{original_dicom_patient_orthanc_uid}", body)
+    except ValueError as err:
+        return HttpResponseServerError(content=f"Failed to merge patients: {err}")
+    if response_status == 200:
+        merge_status = response_dict.get("status")
+        if merge_status == "error":
+            print(f"Merge failed, reason {response_dict.get('reason')}: {response_dict.get('content')}")
+        return HttpResponse(content=json.dumps(response_dict.get("content")))
+    else:
+        return HttpResponse(content=json.dumps({"merged": [], "failed": duplicate_dicom_patient_uids}))
+
 def patient_merge_view(request,id):
+    if request.method == "POST":
+        #return HttpResponse(content=json.dumps({"merged": [], "failed": ["3","4"]}))
+        try:
+            duplicate_dicom_patient_uids = json.loads(request.body)            
+        except json.JSONDecodeError:
+            return HttpResponseBadRequest(f"Failed to decode request")
+        http_response = do_patient_merge(id, duplicate_dicom_patient_uids)
+        return http_response
+
     obj = PatientInformation.objects.get(id=id)
     
     context = {
@@ -238,7 +265,8 @@ def curapacs_search_patients_view(request):
                              })        
     
     return HttpResponse(content=json.dumps(results_list), content_type="application/json")
- 
+
+
 class PatientCreateView(View):
     template_name = 'patient/patient_create.html'
     def get(self, request, *args, **kwargs):

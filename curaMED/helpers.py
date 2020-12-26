@@ -81,6 +81,7 @@ class Orthanc:
             raise ValueError(f"Failed to POST request to {url}")
         else:
             return response.json(), response.status_code
+
        
 try:
     with open("/home/schumi/Bachelor/secrets/orthanc-secret.json","r") as secretstore:

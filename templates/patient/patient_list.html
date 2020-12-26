@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-light">
 
   <form class="form-inline " action="{% url 'searchResult' %}" method="GET">
     <input class="form-control mr-sm-2" type="text" name='q' id='id_q' placeholder="Patient suchen" aria-label="Search">
@@ -64,7 +64,7 @@
            
           {% else %}
           <div id="{{ study.study_id }}" class="list-group">
-            <a href="{% url 'fetchToken' %}?study-instance-uid={{ study.study_instance_uid }}"
+            <a href="{% url 'fetchToken' %}?study-instance-uid={{ study.study_instance_uid }}" target ="_blank"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} ohne Beschreibung
               gefunden.</a>
           </div>
@@ -85,8 +85,7 @@
     </ul>
     <div class="row">
       <div class="col">
-        <a href="{% url 'worklistCreate' %}?patient-id={{ instance.id }}" class="btn btn-outline-primary">Auftrag
-          erstellen</a>
+        <a href="{% url 'worklistCreate' %}?patient-id={{ instance.id }}" class="btn btn-outline-primary">Auftrag erstellen</a>
         <a href="{% url 'patientMerge' instance.id %} " class="btn btn-outline-primary">Zusammenführen</a>
       </div>
     </div>
