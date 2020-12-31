@@ -50,13 +50,14 @@ from administration.views import(
 
 from worklists.views import (
     WorklistCreateView,
-    worklist_list_view
+    worklist_list_view,
+    get_curapacs_worklists_by_location_request
 )
 urlpatterns = [
     path('favicon.ico',RedirectView.as_view(url='/static/images/favicon.ico')),
     path('admin/', admin.site.urls),
     path('', homepage_view, name = 'home'),
-  
+   
     path('patients/list/create/', PatientCreateView.as_view(), name ='patientCreate'),
     path('patients/list/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
    
@@ -84,4 +85,8 @@ urlpatterns = [
    
     path('worklists/create/', WorklistCreateView.as_view(), name ='worklistCreate'),
     path('worklists/list/', worklist_list_view, name ='worklistList'),
+    path('curapacs/locations/<int:location_id>/worklists/',get_curapacs_worklists_by_location_request, name ='locationsWorklists'),
+    
+    
+
 ]

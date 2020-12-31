@@ -16,7 +16,7 @@
     # standort/ raumnr/modalität
 -->
  
-<form action='.' method='POST'> {% csrf_token %}
+<form id='worklist-form' method='POST'> {% csrf_token %}
     <input type="hidden" name="patient_id" id="id_patient_id" value='{{ patient.id }}' readonly>
     <div class="card border-info mb-3">
         <div class="card-body">
@@ -24,13 +24,10 @@
                 <div class="row">
                     <div class="card w-2 border-0">
                         <div class="col">
-
                             <img src="/static/images/file-hosting.png" class="card-img-top" width="55" height="45">
                         </div>
                     </div>
-
                 </div>
-
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
@@ -106,14 +103,11 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col">
-
-
                             <label>Geschlecht: </label>
                         </div>
                         <div class="col">
                             <input type="text" class="font-italic" name="patient_s_sex" id="id_patient_s_sex" value='{{ patient.get_title_display}}' readonly>
-                            
-                        </div>
+                                           </div>
                     </div>
                 </li>
 
@@ -129,11 +123,44 @@
                     </div>
                 </li>
             </ul>
-                <input type='submit' value='Speichern' class="btn btn-outline-primary" />
-    <a href="{% url 'patients' %}" class="btn btn-outline-primary">Abbrechen</a>
+        <button id="submit-btn" value='Speichern' class="btn btn-outline-primary"> Speichern</button>
+        <a href="{% url 'patients' %}" class="btn btn-outline-primary">Abbrechen</a>
 
         </div>
     </div>
 </form>
+<script>
+    $("#submit-btn").click(function( event ) {
+        event.preventDefault();
+        var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+        $.ajaxSetup({
+            timeout: 15000,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json',
+                'X-CSRFToken': csrfmiddlewaretoken
+            }
+        });
+        $("#submit-btn").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> In Bearbeitung...').addClass('disabled');
+        var $ti = $("#submit-btn").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> In Bearbeitung...');
+        $.post("{% url 'worklistCreate' %}", $("#worklist-form").serialize(), function(responseData) {
+            console.log(responseData);
+            if (responseData["status"] == "error") {
+                var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
+                var button_text = "Vorgang fehlgeschlagen";
+            } else {
+                var button_icon = '<img id="status-icon" src="/static/images/check.png" width="25" height="25">';
+                var button_text = "Vorgang erfolgreich";
+                setTimeout(function () {
+                window.location.replace("{%url 'patients'%}"); //will redirect to your blog page (an ex: blog.html)
+                }, 2000); 
+            }
+            $('#submit-btn').addClass('enabled');
+            $('#submit-btn').html(button_text + " " + button_icon);
+        }).fail(function() {
+            console.log("failed...");
+        }); 
+});
+</script>
  
 {% endblock %}

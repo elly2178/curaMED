@@ -141,14 +141,29 @@
             ip_address: ip,
             port: port,
             location_id: location
-        }), function () {
-            $ti.html('Modalität Online');
-            $("#status-icon").prop("src", "/static/images/check.png");
-            $("#status-icon").show();
+        }), function (responseData) {
+            //var parsed_response = jQuery.parseJSON(responseData)
+            var parsed_response = responseData
+            console.log(parsed_response);
+            if (parsed_response["status"] == "error") {
+                var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
+                var button_text = "Modalität Offline";
+            } else {
+                var button_icon = '<img id="status-icon" src="/static/images/check.png" width="25" height="25">';
+                var button_text = "Modalität Online";
+            }
+            $('#btn-connect').addClass('enabled');
+            $('#btn-connect').html(button_text + " " + button_icon);
+
+            //$ti.html('Modalität Online');
+            //$("#status-icon").prop("src", "/static/images/check.png");
+            //$("#status-icon").show();
         })
             .fail(function () {
-                $ti.html('Modalität Offline');
-                $("#status-icon").show();
+                var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
+                var button_text = "Modalität Offline";
+                $('#btn-connect').addClass('enabled');
+                $('#btn-connect').html(button_text + " " + button_icon);
             });
 
     });

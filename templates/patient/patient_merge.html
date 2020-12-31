@@ -120,7 +120,6 @@
     const original_patient_id = "{{ object.id }}"
     $.get("{%url 'curapacsSearchPatients'%}?patient-id=" + original_patient_id,
             function (responseData) {
-                console.log(responseData)
                 var list_of_dicts_with_patient_ids = responseData;
                 if (list_of_dicts_with_patient_ids.length == 0) {
                     $("#patientDoesNotExistInCuraPacsModal").modal("show");
@@ -148,9 +147,8 @@
 
         console.log("{%url 'curapacsSearchPatients'%}?patient-id=" + encoded_patient_id + "&patient-name=" + encoded_patient_name)
         $.get("{%url 'curapacsSearchPatients'%}?patient-id=" + encoded_patient_id + "&patient-name=" + encoded_patient_name,
-            function (returnedData) {
+            function (returnedData) { 
                 $("#result-list").removeAttr("style").css("display", "inline");
-                console.log(returnedData);
                 $("#result-list").html = ""
                 var result_list_content = "";
                 returnedData.forEach(function (patient, index) {
@@ -158,7 +156,7 @@
                 });
                 $("#result-list").html(result_list_content)
             });
-    });
+    }); 
     $("#merge-btn").click(function () {
         var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
         $.ajaxSetup({

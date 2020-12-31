@@ -1,48 +1,104 @@
-
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 <br>
 <h2>Worklist liste</h2>
+{% for location in location_list %}
 
-{% for instance in object_list reversed %}
-<div class="card border-info mb-3 w-100" >
+<div class="card border-info mb-3 w-100" corresponding-location="{{ location.id }}">
   <div class="card-body">
-  <div class="container">
-    <div class="row">
-      <div class = "card w-2 border-0">
-      <div class="col">
-        <img src="/static/images/file-hosting.png" class="card-img-top" width="55" height="45">
+    <div class="container">
+      <div class="row">
+        <div class="card w-2 border-0">
+          <div class="col">             
+            <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">          
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <h5 class="card-title">{{location.name}} {{ location.id}}</h5>
+            </div>       
+
+          </div>
+        </div>
       </div>
     </div>
-      <div class="col-15">
+{% for modality in modality_list %}
+{% if modality.associate_location.id == location.id %}
+    <div class="accordion" id="accordion-{{ modality.id }}">
+      <div class="card">
+        <div class="card-header" id="heading-{{ modality.id }}">
+          <h2 class="mb-0">
              
-        <h5 class="card-title">{{instance.modality.get_modality_representation}} {{instance.id}}</h5>
+            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#wl-{{modality.id}}" aria-expanded="true" aria-controls="wl-{{modality.id}}">
+              {{ modality.ae_title}}
+            </button>
+          </h2>
+        </div>
+        <div class="modality-worklist-list" corresponding-modality-aetitle="{{ modality.ae_title }}" corresponding-modality="{{ modality.id }}">
+        <!-- <div id="wl-{{modality.id}}" class="collapse show" aria-labelledby="heading-{{ modality.id }}" data-parent="#accordion-{{ modality.id }}">
+          <div class="card-body">
+            <ul>
+              <li> the existing worlists for this ae title</li>
+            </ul>
+          </div>
+        </div> -->
+        </div>
       </div>
     </div>
-  </div>
-     
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Date: {{ instance.scheduled_procedure_step_start_date}}</li>
-        <li class="list-group-item">Time: {{ instance.scheduled_procedure_step_start_time }}</li>
-        <li class="list-group-item">Modality.: {{ instance.modality.get_modality_representation}}</li>
-        <li class="list-group-item">Doctor name: {{ instance.get_scheduled_performing_physician_s_name_display }}</li>
-        <li class="list-group-item">Patient: {{ instance.patient_s_name }}</li>
-      
-        <li class="list-group-item">Patient id: {{ instance.patient_id}}</li>
-        <li class="list-group-item">Patient geburtsdatum: {{ instance.patient_s_birth_date}}</li>
-        <li class="list-group-item">Patient geschlecht: {{ instance.patient_s_sex }}</li>
-        <li class="list-group-item">Beschreibung: {{ instance.scheduled_procedure_step_description }}</li>
-
-      </ul>  
-     
-        
-      <a href="#{% url 'patientDelete' instance.id %}" 
-       class="btn btn-outline-primary">Worklist löschen</a>
-    </div>
-  </div>
-
-
+{% endif %}
 {% endfor %}
+  </div>
+  </div>
+{% endfor %}
+
+
+<!-- 
+[{"PatientName": "ljg",
+  "PatientID": "37",
+  "ScheduledProcedureStepSequence": [{'Modality': 'US',
+                                      'ScheduledStationAETitle': 'aq_235',
+                                      'ScheduledProcedureStepStartDate': '20201230',
+                                      'ScheduledProcedureStepStartTime': '215300',
+                                      'ScheduledPerformingPhysicianName': 'Dr.^Thomas^Burkle'}]
+
+  "AccessionNumber": "3434",      
+     -->
+<script>
+$(document).ready(function(){
+  //for each div with class "card border-info mb-3 w-100":
+    //get location id from $this.attr.corresponding-location
+    //GET all worklists for location with id == location.id 
+    //$.get("/{ procent url " procent})
+  // make post request to curapacs
+  $("div[class='card border-info mb-3 w-100']").each(function (i) {  
+      var location_id = $(this).attr("corresponding-location");
+      console.log("Iterating in location " + location_id);
+      $.get("/curapacs/locations/" + location_id + "/worklists/",
+            function (returnedData) {
+              if (returnedData["status"] == "success") {
+                console.log("Worklist for location " + location_id + " received with status success")
+                var list_of_worklists = returnedData["content"];
+                list_of_worklists.forEach(function( worklist, index){
+                    var accession_number = worklist["AccessionNumber"];
+                    var patient_id = worklist["PatientID"];
+                    var patient_name = worklist["PatientName"];
+                    var study_id = worklist["StudyID"];
+                    console.log("Iterating over worklist_entries for worklist with accession_number " + accession_number)
+                    worklist["ScheduledProcedureStepSequence"].forEach(function(worklist_entry, index){
+                      var ae_title =  worklist_entry["ScheduledStationAETitle"];
+                      var worklist_body_div = $("div[corresponding-modality-aetitle=" + ae_title + "]");
+                      var modality_id = worklist_body_div.attr("corresponding-modality");
+                      var insert_html = '<div id="wl-' + modality_id + '" class="collapse show" aria-labelledby="heading-' + modality_id + '" data-parent="#accordion-' + modality_id + '"> <div class="card-body"> <ul> <li>'+ accession_number + '</li> </ul> </div> </div>';
+                      $("div[corresponding-modality-aetitle=" + ae_title + "]").append(insert_html);
+                    });
+                });
+              }
  
+            });
+          });
+});
+
+</script>
 {% endblock %}

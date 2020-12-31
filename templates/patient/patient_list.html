@@ -50,7 +50,7 @@
         {{ instance.city }} {{ instance.code }}</li>
       <li class="list-group-item">Sprache: {{ instance.language }}</li>
       <li class="list-group-item">Studien: 
-        
+         
         <ul id="patient-{{ instance.id }}-studylist">
         {% for study in instance.studies reversed %}         
           {% if study.study_description %}

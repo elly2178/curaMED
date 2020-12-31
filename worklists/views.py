@@ -4,9 +4,12 @@ from patients.models import PatientInformation
 from .forms import WorklistInformationForm
 from django.views import View
 from django.shortcuts import (render, get_object_or_404, redirect)
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError
 from datetime import datetime,date
 import json
 import requests
+from administration.models import AdministrationInformation
+from modalities.models import ModalitiesInformation
 from curaMED import helpers
 
 class WorklistCreateView(View):
@@ -16,7 +19,7 @@ class WorklistCreateView(View):
         patient = get_object_or_404(PatientInformation, id=patient_id)
         form = WorklistInformationForm(request.POST)
         current_date = date.today()
-        print("YOUR DATE IS: " + str(current_date))
+        
         current_time = datetime.today()       
         context = {
             'time': current_time,
@@ -31,15 +34,20 @@ class WorklistCreateView(View):
         if form.is_valid():
             form.save() 
             data_dict = create_curapacs_worklist_request(form.cleaned_data)
-            #add error handling
-            response = requests.post(helpers.orthanc.get_url_for_path("worklists"),
-                                     json=data_dict,
-                                     auth=(helpers.orthanc.username, helpers.orthanc.password))
-            print("Response was: " + str(response.status_code))
-            return redirect('patients')
+            location_id = form.cleaned_data.get("modality").associate_location.id
+            print(f"Doing POST at path " + helpers.orthanc.get_url_for_path(f'locations/{location_id}/worklists') + f" with body {data_dict}")
+            try:
+                response, status_code = helpers.orthanc.post_request(f"/locations/{location_id}/worklists/",
+                                                                 data_dict,
+                                                                 timeout=5)
+            except ValueError as err:
+                print("RETURNING SERVER ERROR")
+                return HttpResponse(json.dumps({"status": "error","reason": "Location not found"}),
+                                    content_type="application/json")
+            print("Response was: " + str(status_code) + "  " +str(response))
+            return HttpResponse(json.dumps(response), content_type="application/json")
         print("FORM ERRORS: " + str(form.errors))
-        context = {'form':form}
-        return render(request, self.template_name, context)
+        return HttpResponseBadRequest({"status": "error", "reason": str(form.errors)})
 
 def get_doctors_name(some_short_name):
     for short_name, long_name in WorklistInformation.doctor_list:
@@ -52,7 +60,7 @@ def create_curapacs_worklist_request(form_cleaned_data):
     physician_name = physician_name.replace(" ", "^")
     worklist_datetime = datetime.strptime(f"{form_cleaned_data.get('scheduled_procedure_step_start_date')}\
          {form_cleaned_data.get('scheduled_procedure_step_start_time')}", "%d. %B %Y %H:%M")
-    return {
+    worklist_dict = {
         "PatientID": form_cleaned_data.get("patient_id"),
         "PatientName": form_cleaned_data.get("patient_s_name").replace(" ","^"),
         "ScheduledProcedureStepSequence": [
@@ -65,10 +73,27 @@ def create_curapacs_worklist_request(form_cleaned_data):
             }
         ]
         }
+    return worklist_dict
+
+def get_curapacs_worklists_by_location_request(request, location_id):
+    """
+    Takes a request including a location_id and queries curapacs with a GET at /locations/{location_id}/worklists
+    Args:
+        request (request): django request object
+    """
+    worklists_response, status_code = helpers.orthanc.get_request(f"/locations/{location_id}/worklists")
+
+    return HttpResponse(content=json.dumps(worklists_response), content_type="application/json")
 
 def worklist_list_view(request):
-    queryset = WorklistInformation.objects.all()
+    # form = WorklistInformationForm(request.GET)
+    # location_id = form.cleaned_data.get("modality").associate_location.id
+    queryset = AdministrationInformation.objects.all()
+    queryModalitySet = ModalitiesInformation.objects.all()
+    queryWorklistSet = WorklistInformation.objects.all()
     context ={
-        'object_list': queryset        
+        'location_list': queryset,
+        'modality_list': queryModalitySet,
+        'worklist_list': queryWorklistSet        
     }
     return render(request, 'worklists/worklist_list.html', context)
