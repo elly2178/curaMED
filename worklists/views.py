@@ -81,9 +81,16 @@ def get_curapacs_worklists_by_location_request(request, location_id):
     Args:
         request (request): django request object
     """
-    worklists_response, status_code = helpers.orthanc.get_request(f"/locations/{location_id}/worklists")
-
+    try:
+        worklists_response, status_code = helpers.orthanc.get_request(f"/locations/{location_id}/worklists")
+    except ValueError:
+        worklists_response = {"status": "error"}
     return HttpResponse(content=json.dumps(worklists_response), content_type="application/json")
+
+def get_curapacs_statistics(request, accession_number):   
+    statistics_response, status_code = helpers.orthanc.get_request(f"/study-by-accession-number/{accession_number}/statistics")
+    print(f"Got statistics response {str(statistics_response)[:30]} with status {status_code}")
+    return HttpResponse(content=json.dumps(statistics_response), content_type="application/json")
 
 def worklist_list_view(request):
     # form = WorklistInformationForm(request.GET)
