@@ -29,8 +29,9 @@ SECRET_KEY =  os.environ.get("DJANGO_SECRET_KEY") or '+s%61&_fzua$w$w$(m9_jkeor@
 _DEBUG = os.environ.get("DJANGO_DEBUG")
 if _DEBUG is not None:
     _DEBUG = bool(int(_DEBUG))
-DEBUG = _DEBUG or True
-
+    DEBUG = _DEBUG
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = [os.environ.get("DJANGO_ALLOWED_HOSTS")] or []
 
