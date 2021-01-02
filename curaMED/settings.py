@@ -32,7 +32,7 @@ if _DEBUG:
 DEBUG = _DEBUG or True
 
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS") or []
+ALLOWED_HOSTS = [os.environ.get("DJANGO_ALLOWED_HOSTS")] or []
 
 
 # Application definition
