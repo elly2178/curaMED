@@ -42,9 +42,8 @@
       <div class="accordion" id="accordion-{{ modality.id }}" style="margin-bottom:15px;">
         <div class="card">
           <div class="card-header" id="heading-{{ modality.id }}">
-            <h2 class="mb-0">
-
-              <button class="btn btn-block text-left" type="button" data-toggle="collapse"
+            <h2 class="mb-0"> 
+              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
                 data-target="#wl-{{modality.id}}" aria-expanded="true" aria-controls="wl-{{modality.id}}">
                 Aufträge für Modalität {{ modality.ae_title}}:
               </button>
@@ -52,12 +51,12 @@
           </div>
           <div id="wl-{{modality.id}}" class="collapse show" aria-labelledby="heading-{{ modality.id }}" data-parent="#accordion-{{ modality.id }}">
 
-            <div class="card-body">
+            <div class="card-body" style="display: none" id="card-body-{{ modality.id }}">
               <div class="modality-worklist-list" corresponding-modality-aetitle="{{ modality.ae_title }}"
                 corresponding-modality="{{ modality.id }}">
                 <div id="wl-{{modality.id}}" class="collapse show" aria-labelledby="heading-{{ modality.id }}"
                   data-parent="accordion-{{ modality.id }}">
-                  <table class="table table-hover" id="table-head-{{ modality.id }}" style="display: none">
+                  <table class="table table-striped" id="table-head-{{ modality.id }}" >
                     <thead>
                       <tr>
                         <th scope="col">#</th>
@@ -134,26 +133,26 @@
               var patient_id = worklist["PatientID"];
               var patient_name = worklist["PatientName"];
               var study_id = worklist["StudyID"];
-              var found_study_for_accession_number = false;
               console.log("Iterating over worklist_entries for worklist with accession_number " + accession_number)
               //Check if curapacs has a study with the accession number we found in the worklist
               $.get("/curapacs/study-by-accession-number/" + accession_number + "/statistics/", function (statisticsData) {
                 console.log("Statistics Data received " + statisticsData);
                 if (statisticsData["status"] == "success") {
-                  var found_study_for_accession_number = true;
                   var resource_uid = statisticsData["content"]["resource_uid"];
                   var statistics_count_instances = statisticsData["content"]["statistics"]["CountInstances"];
                   var statistics_count_series = statisticsData["content"]["statistics"]["CountSeries"];
-                  $("div[class=modality-container][corresponding-location=" + location_id + "]").html();
-                  //  "Anzahl Instanzen " + statistics_count_instances +
-                  //  "Anzahl Serien " + statistics_count_series + 
-                  //  "Resourcen UID " + resource_uid);
+                  var study_instance_uid = statisticsData["content"]["MainDicomTags"]["StudyInstanceUID"];
+                  $("#table-data-instance-msg-" + accession_number).html(statistics_count_instances +
+                                                " <a href='{% url 'fetchToken' %}?study-instance-uid=" +
+                                                study_instance_uid +
+                                                "' target='_blank' class='btn btn-link btn-sm'>\
+                                                Betrachten</a>");
+                  $("#table-data-series-msg-" + accession_number).html(statistics_count_series);
                 }
               });
               //iterate over each entry in the ScheduledProcedureStepSequence (contains modality, repsonsible doc etc.)
               //a worklist must have at least one of these entries
               worklist["ScheduledProcedureStepSequence"].forEach(function (worklist_entry, index) {
-                console.log("---- you are in the for each worklists ----");
                 var physicians_name = worklist_entry["ScheduledPerformingPhysicianName"];
                 var creation_date = worklist_entry["ScheduledProcedureStepStartDate"];
                 var creation_hour = worklist_entry["ScheduledProcedureStepStartTime"];
@@ -163,12 +162,9 @@
                 if (modality_id) {
                   worklist_entries_counter = worklist_entries_counter + 1;
                 }
-                if (!found_study_for_accession_number == true) {
-                  var statistics_count_instances = "0";
-                  var statistics_count_series = "0";
-                }
+                var statistics_count_instances_message = "0";
+                var statistics_count_series_message = "0";
                 //prepare a table with all the information we could gather from the worklist
-
                 var rows_html = '<tr>\
                                     <th scope="row">'+ worklist_entries_counter + '</th>\
                                     <td>'+ accession_number + '</td>\
@@ -176,10 +172,10 @@
                                     <td>'+ creation_date + '</td>\
                                     <td>'+ creation_hour + '</td>\
                                     <td>'+ patient_name + '</td>\
-                                    <td>'+ statistics_count_series + '</td>\
-                                    <td>'+ statistics_count_instances + '</td>\
-                                    </tr>';
-                $("#table-head-" + modality_id).show();
+                                    <td id="table-data-series-msg-' + accession_number + '" >'+ statistics_count_series_message + '</td>\
+                                    <td id="table-data-instance-msg-' + accession_number + '" >'+ statistics_count_instances_message + '</td>\
+                                    </tr>';                                    
+                $("#card-body-" + modality_id).show();
                 $("#table-rows-" + modality_id).append(rows_html);
 
               });
