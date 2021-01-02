@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br>
-<h2>Patient zusammenführen</h2>{% csrf_token %}
+<div style="margin-top:15px;">  
+<h2 class="text-center">Patient zusammenführen</h2>{% csrf_token %}
+</div>
+
 <div class="card-deck" style="width:auto">
     <div class="card border-info">
         <div class="card-body">
             <p> Mit dieser Funktion können die DICOM Studien von verdoppelten oder fehlerhaften Patienten in einem
                 Patienten zusammengeführt werden.
                 Die entsprechenden Patienten werden im Anschluss entfernt.</p>
+                <div style="margin-bottom:15px;"> 
             <div class="row ">
                 <div class="col col-lg-5">
                     <div class="card border-info">
@@ -16,11 +19,11 @@
                             <h5 class="card-title"><img src="/static/images/favicon.ico" width="30" height="30" alt=""
                                     loading="lazy">curaMED</h5>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Name: {{ object.first_name }} {{ object.second_name }}</li>
-                                <li class="list-group-item">Geschlecht: {{ object.title}} </li>
-                                <li class="list-group-item">Geburtsdatum: {{ object.birthdate }} </li>
-                                <li class="list-group-item">Strasse: {{ object.address}}, {{ object.number }}, {{ object.city }}, {{ object.code }}</li>
-                                <li class="list-group-item">Sprache: {{ object.language }}</li>
+                                <li class="list-group-item py-1">Name: {{ object.first_name }} {{ object.second_name }}</li>
+                                <li class="list-group-item py-1">Geschlecht: {{ object.title}} </li>
+                                <li class="list-group-item py-1">Geburtsdatum: {{ object.birthdate }} </li>
+                                <li class="list-group-item py-1">Strasse: {{ object.address}}, {{ object.number }}, {{ object.city }}, {{ object.code }}</li>
+                                <li class="list-group-item py-1">Sprache: {{ object.language }}</li>
                             </ul>
                         </div>
                     </div>
@@ -60,10 +63,8 @@
                     </div>
                 </div>
             </div>
-
-
-
-            <br>
+        </div>
+ 
             <div class="row">
                 <div class="col">
 

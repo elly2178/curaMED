@@ -33,7 +33,7 @@ if _DEBUG is not None:
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = [os.environ.get("DJANGO_ALLOWED_HOSTS")] or []
+ALLOWED_HOSTS = [os.environ.get("DJANGO_ALLOWED_HOSTS"), 'localhost'] or []
 
 
 # Application definition

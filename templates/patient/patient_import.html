@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-  <h2>Patienten in curaPACS importieren</h2>
-  <br>
+<div style="margin-top:15px;"> 
+  <h2 class="text-center">Patienten in curaPACS importieren</h2>
+</div>
   {% csrf_token %}
   {% if object_list|length == 0 %}
   <div class="card border-info" style="width: 30rem;">
@@ -59,8 +59,8 @@
       </div>
   
       <ul class="list-group list-group-flush"> 
-        <li class="list-group-item">Geburtsdatum: {{ instance.birthdate }}</li>
-        <li class="list-group-item">Adresse: {{ instance.address }} {{ instance.number }},
+        <li class="list-group-item py-1">Geburtsdatum: {{ instance.birthdate }}</li>
+        <li class="list-group-item py-1">Adresse: {{ instance.address }} {{ instance.number }},
           {{ instance.city }} {{ instance.code }}</li>
        
       </ul>

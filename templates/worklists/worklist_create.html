@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br>
-<h2>Auftrag erstellen</h2>
-
+<div style="margin-top:15px;"> 
+<h2 class="text-center">Auftrag erstellen</h2>
+</div>
 
 <!-- 
     # info taken from patient:
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>Auftragsdatum: </label>
@@ -44,7 +44,7 @@
                         </div>  
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>Auftragszeit: </label>
@@ -57,7 +57,7 @@
                         </div>  
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>Modalität: </label>
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col"> 
                             <label>Zuständiger Arzt: </label>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>Patient: </label>
@@ -89,7 +89,7 @@
                     </div>
                 </li>
                 
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>Geburtsdatum: </label>
@@ -100,18 +100,18 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>Geschlecht: </label>
                         </div>
-                        <div class="col">
+                        <div class="col"> 
                             <input type="text" class="font-italic" name="patient_s_sex" id="id_patient_s_sex" value='{{ patient.get_title_display}}' readonly>
                                            </div>
                     </div>
                 </li>
 
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
 

@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br>
-<h2>Aufträge</h2>
+
+<div style="margin-top:15px;"> 
+<h2 class="text-center">Aufträge</h2>
+</div>
 <div style="margin-bottom:15px;">
 <div class="card">
   <div class="card-body">
@@ -79,7 +81,7 @@ $(document).ready(function(){
      if ($.trim($(this).html()).length == 0) {              
         var icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
         var text = '<p>Für diesen Standort wurden keine Modalitäten registriert.</p>'; 
-        var position = '<div class="row"><div class="col-md-auto">'+ icon +'</div><div class="col-md-auto">'+ text +'</div><div class="col-md-auto">'+ icon +'</div>';
+        var position = '<div class="row"><div class="col-md-auto">'+ icon +'</div><div class="col-md-auto">'+ text +'</div></div>';
               
        $(this).html(position);     
       

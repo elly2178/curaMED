@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br>
-<h2>Patient entfernen</h2>
-<br>
+<div style="margin-top:15px;"> 
+<h2 class="text-center">Patient entfernen</h2>
+</div>
 <form method='POST'> {% csrf_token %}
   <h4> Möchten Sie den Patienten {{ object.first_name}} {{ object.second_name }} entfernen?</h4>
   <div class="card border-info mb-3 w-100">
@@ -11,9 +11,7 @@
       <div class="container">
         <div class="row">
           <div class="card w-2 border-0">
-            <div class="col">
-
-              {% if object.title == 'male' %}
+            <div class="col"> {% if object.title == 'male' %}
               <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
               {% else %}
               <img src="/static/images/marilyn_monroe.png" class="card-img-top" width="55" height="45">
@@ -25,20 +23,16 @@
           </div>
         </div>
       </div>
-
       <ul class="list-group list-group-flush">
-        <li class="list-group-item"> {{ object.get_title_display }} {{ object.first_name }} {{ object.second_name }}
+        <li class="list-group-item py-1"> {{ object.get_title_display }} {{ object.first_name }} {{ object.second_name }}
         </li>
-        <li class="list-group-item">Geburtstag: {{ object.birthdate }}</li>
-        <li class="list-group-item">Adresse: {{ object.address }}, {{ object.number }}</li>
-        <li class="list-group-item">Ort: {{ object.city }}, {{ object.code }}</li>
-        <li class="list-group-item">Sprache: {{ object.language }}</li>
-
-
+        <li class="list-group-item py-1">Geburtstag: {{ object.birthdate }}</li>
+        <li class="list-group-item py-1">Adresse: {{ object.address }}, {{ object.number }}</li>
+        <li class="list-group-item py-1">Ort: {{ object.city }}, {{ object.code }}</li>
+        <li class="list-group-item py-1">Sprache: {{ object.language }}</li>
       </ul>
       <input type='submit' class="btn btn-outline-primary" value='Ja' />
       <a href="{% url 'patients' %}" class="btn btn-outline-primary">Nein</a>
-
     </div>
   </div>
 

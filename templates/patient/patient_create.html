@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br>
-<h2>Patient erstellen</h2>
-
+<div style="margin-top:15px;"> 
+<h2 class="text-center">Patient erstellen</h2>
+</div>
 <form action='.' method='POST'> {% csrf_token %}
      
     <div class="card border-info mb-3">
@@ -20,7 +20,7 @@
 
             </div> 
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">
+                <li class="list-group-item py-2">
                     <div class="row">
                         <div class="col">
                             <label>Geschlecht: </label>
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-2">
                     <div class="row">
                         <div class="col">
                             <label>Vorname: </label>
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-2">
                     <div class="row">
                         <div class="col">
                             <label>Nachname: </label>
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-2">
                     <div class="row">
                         <div class="col">
                             <label>Geburtstag: </label>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-2">
                     <div class="row">
                         <div class="col">
                             <label>Strasse: </label>
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-2">
                     <div class="row">
                         <div class="col">
                             <label>Hausnummer: </label>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-2">
                     <div class="row">
                         <div class="col">
                             <label>Ort: </label>
@@ -89,8 +89,8 @@
                             {{form.city}}
                         </div>
                     </div>
-                </li>
-                <li class="list-group-item">
+                </li> 
+                <li class="list-group-item py-2">
                     <div class="row">
                         <div class="col">
                             <label>PLZ: </label>
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item py-2">
                     <div class="row">
                         <div class="col">
                             <label>Sprache: </label>

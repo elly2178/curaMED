@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br>
-<h2> Neue Modalität hinzufügen</h2>
-
+<div style="margin-top:15px;"> 
+    <h2 class="text-center"> Neue Modalität hinzufügen</h2>
+</div>
+ 
 <form method='POST'> {% csrf_token %}
     {% if messages %}
     {% for message in messages %}
@@ -21,7 +22,7 @@
                         <div class="col">
                             <img src="/static/images/mri.png" class="card-img-top" width="55" height="45">
                         </div>
-                    </div>
+                    </div> 
                     <div class="col-15">
                         <h5 class="card-title">Bitte Informationen der neuen Modalität einfügen.</h5>
                         <h6 class="card-subtitle">Bitte beachten Sie, dass der AETitle einzigartig sein muss. Der
@@ -32,17 +33,18 @@
             </div>
             <div class="card-body ">
                 <div class="container">
+                    <div style="margin-bottom:15px;"> 
                     <div class="row">
                         <div class="col">
                             <label
                                 title="Der DICOM AE-Titel ist eine kurze, eindeutige Bezeichnung für ein Gerät.">AE-Titel:
                             </label>
                         </div>
-                        <div class="col">
-                            {{form.ae_title}}
-                        </div>
+                        <div class="col">{{form.ae_title}} </div>
                     </div>
-                    <br>
+                </div>
+
+                <div style="margin-bottom:15px;"> 
                     <div class="row">
                         <div class="col">
                             <label>Typ: </label>
@@ -51,7 +53,8 @@
                             {{form.title}}
                         </div>
                     </div>
-                    <br>
+                </div>
+                <div style="margin-bottom:15px;"> 
                     <div class="row">
                         <div class="col">
                             <label>Beschreibung: </label>
@@ -60,7 +63,8 @@
                             {{form.description}}
                         </div>
                     </div>
-                    <br>
+                </div>
+                <div style="margin-bottom:15px;"> 
                     <div class="row">
                         <div class="col">
                             <label>IP Adresse: </label>
@@ -69,7 +73,8 @@
                             {{form.ip}}
                         </div>
                     </div>
-                    <br>
+                </div>
+                <div style="margin-bottom:15px;"> 
                     <div class="row">
                         <div class="col">
                             <label>Port Nummer: </label>
@@ -78,7 +83,8 @@
                             {{form.port}}
                         </div>
                     </div>
-                    <br>
+                </div>
+                <div style="margin-bottom:15px;"> 
                     <div class="row">
                         <div class="col">
                             <label>Standort: </label>
@@ -87,7 +93,8 @@
                             {{form.associate_location }}
                         </div>
                     </div>
-                    <br>
+                </div>
+               
                     <div class="row">
                         <div class="col">
                             <label>Verbindungstest: </label>

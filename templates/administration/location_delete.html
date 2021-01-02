@@ -1,31 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br>
-<h2>Standort löschen</h2>
-<br>
+<div style="margin-top:15px;"> 
+  <h2 class="text-center">Standort löschen</h2>
+</div>
+  
 <form method='POST'> {% csrf_token %}
 
-  <h4> Möchten Sie der Standort "
-    {{ object.name}}" löschen?</h4>
-  <div class="card border-info mb-3 w-100">
+  
+  <div class="card border-info mb-3 w-50 mx-auto">
     <div class="card-body">
       <div class="container">
+        
         <div class="row">
           <div class="card w-2 border-0"> 
             <div class="col">
               <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
             </div>
           </div>
-
+          <div class="col-15">
+            <h6 class="card-title">Möchten Sie den Standort "{{ object.name}}" löschen? </h6>
+          </div>
+          
         </div>
       </div>
 
       <ul class="list-group list-group-flush">
-        <li class="list-group-item"> Betriebsname: {{ object.name }}</li>
-        <li class="list-group-item">Addresse: {{ object.street }}, {{ object.number }}</li>
-        <li class="list-group-item">{{ object.city }}, {{ object.plz }}</li>
-        <li class="list-group-item">Telefon Nr.: {{ object.telefon_number }}</li>
+        <li class="list-group-item py-1"> Betriebsname: {{ object.name }}</li>
+        <li class="list-group-item py-1">Addresse: {{ object.street }}, {{ object.number }}</li>
+        <li class="list-group-item py-1">{{ object.city }}, {{ object.plz }}</li>
+        <li class="list-group-item py-1">Telefon Nr.: {{ object.telefon_number }}</li>
       </ul>
 
       <input type='submit' class="btn btn-outline-primary" value='Ja' />

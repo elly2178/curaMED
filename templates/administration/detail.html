@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br>
-<h2>Standort bearbeiten</h2>
+<div style="margin-top:15px;"> 
+    <h2 class="text-center">Standort bearbeiten</h2>
+</div>
+
 <form action='.' method='POST'> 
-    {% csrf_token %} 
-    <div class="card border-info mb-3 w-75">
-        <div class="card-header">
-             {{ object.name }}
-          </div>
+    {% csrf_token %}  
+    <div class="card border-info mb-3 w-50 mx-auto">
+        <div class="card-header">{{ object.name }}</div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>Betriebsname: </label>
@@ -22,7 +22,7 @@
                     </div>
                 </li>
 
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>Strasse: </label>
@@ -33,7 +33,7 @@
                     </div>
                 </li>
 
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>Nr.: </label>
@@ -44,7 +44,7 @@
                     </div>
                 </li>
 
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>Stadt: </label>
@@ -55,8 +55,7 @@
                     </div>
                 </li>
 
-
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>PLZ: </label>
@@ -67,8 +66,7 @@
                     </div>
                 </li>
 
-
-                <li class="list-group-item">
+                <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col">
                             <label>Telefon Nr.: </label>
@@ -78,11 +76,11 @@
                         </div>
                     </div>
                 </li>
+            </ul>
+    <input type='submit' value='Ändern' class="btn btn-outline-primary"/>
+    <a href="{% url 'administration' %}"  class="btn btn-outline-primary">Abbrechen</a>   
         </div>
     </div>
-    <input type='submit' value='Ändern' class="btn btn-outline-primary"
-    />
-    <a href="{% url 'administration' %}"  class="btn btn-outline-primary">Abbrechen</a>
    
 </form>
 

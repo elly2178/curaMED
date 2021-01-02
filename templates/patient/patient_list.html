@@ -12,9 +12,9 @@
     <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Suchen</button>
   </form>
 </nav>
-<br>
-<h2>Patientenliste</h2>
-<br>
+<div style="margin-top:15px;"> 
+<h2 class="text-center">Patientenliste</h2>
+</div>
 {% for instance in object_list reversed %}
 <div class="card border-info mb-3 w-100">
   <div class="card-body">
@@ -45,11 +45,11 @@
     </div>
 
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">Geburtsdatum: {{ instance.birthdate }}</li>
-      <li class="list-group-item">Adresse: {{ instance.address }} {{ instance.number }},
+      <li class="list-group-item py-1">Geburtsdatum: {{ instance.birthdate }}</li>
+      <li class="list-group-item py-1">Adresse: {{ instance.address }} {{ instance.number }},
         {{ instance.city }} {{ instance.code }}</li>
-      <li class="list-group-item">Sprache: {{ instance.language }}</li>
-      <li class="list-group-item">Studien: 
+      <li class="list-group-item py-1">Sprache: {{ instance.language }}</li>
+      <li class="list-group-item py-1">Studien: 
          
         <ul id="patient-{{ instance.id }}-studylist">
         {% for study in instance.studies reversed %}         
@@ -57,19 +57,21 @@
           <div id="{{ study.study_id }}" class="list-group"> 
             <a href="{% url 'fetchToken' %}?study-instance-uid={{ study.study_instance_uid }}" target ="_blank"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} beinhält:</a>
-            <li class="list-group-item">Datum: {{ study.study_date }}</li>
-            <li class="list-group-item">Uhrzeit: {{ study.study_time }}</li>
-            <li class="list-group-item">Beschreibung: {{ study.study_description }}</li>
+            <li class="list-group-item py-1">Datum: {{ study.study_date }}</li>
+            <li class="list-group-item py-1">Uhrzeit: {{ study.study_time }}</li>
+            <li class="list-group-item py-1">Beschreibung: {{ study.study_description }}</li>
           </div>
            
-          {% else %}
+          {% else %} 
+             <div style="margin-bottom:15px;">       
           <div id="{{ study.study_id }}" class="list-group">
             <a href="{% url 'fetchToken' %}?study-instance-uid={{ study.study_instance_uid }}" target ="_blank"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} ohne Beschreibung
               gefunden.</a>
           </div>
+         </div> 
           {% endif %}
-          <br>
+             
         {% endfor %}
         </ul>
 
