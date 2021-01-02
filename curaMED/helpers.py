@@ -1,3 +1,4 @@
+import os
 import json
 import hashlib
 import requests
@@ -82,21 +83,26 @@ class Orthanc:
         else:
             return response.json(), response.status_code
 
-       
-try:
-    with open("/home/schumi/Bachelor/secrets/orthanc-secret.json","r") as secretstore:
-        data = json.load(secretstore)
-        http_credentials = data.get("c0100-orthanc.curapacs.ch",None)
-        http_hostname = "https://c0100-orthanc.curapacs.ch"
-        http_username = http_credentials.get("user")
-        http_password = http_credentials.get("password")
-except FileNotFoundError:
-    with open("C:/Users/taadrar1/Documents/secrets.txt","r") as secretstore:
-        data = json.load(secretstore)
-        http_credentials = data.get("c0100-orthanc.curapacs.ch",None)
-        http_hostname = "https://c0100-orthanc.curapacs.ch"
-        http_username = http_credentials.get("user")
-        http_password = http_credentials.get("password")
 
+secrets_files = [os.environ.get("CURAMED_ORTHANC_SECRET"),
+                 "/home/schumi/Bachelor/secrets/orthanc-secret.json",
+                 "C:/Users/taadrar1/Documents/secrets.txt"]
+
+for secrets_file in secrets_files:
+    if secrets_file is not None:
+        try:
+            with open(secrets_file,"r") as secretstore:
+                secrets_data = json.load(secretstore)
+        except FileNotFoundError:
+            pass
+
+try:
+    http_credentials = secrets_data.get("c0100-orthanc.curapacs.ch", None)
+except NameError:
+    raise ValueError(f"Failed to find orthanc secrets data in any of {', '.join(secrets_files)}")
+else:
+    http_hostname = "https://c0100-orthanc.curapacs.ch"
+    http_username = http_credentials.get("user")
+    http_password = http_credentials.get("password")
 
 orthanc = Orthanc(http_hostname, http_username, http_password)
