@@ -92,6 +92,10 @@ def get_curapacs_statistics(request, accession_number):
     print(f"Got statistics response {str(statistics_response)[:30]} with status {status_code}")
     return HttpResponse(content=json.dumps(statistics_response), content_type="application/json")
 
+def remove_curapacs_worklist(request, request_uid, location_id):    
+    remove_response, status_code = helpers.orthanc.delete(f"/locations/{location_id}/worklists/{request_uid}")   
+    return HttpResponse(content=json.dumps(remove_response), content_type="application/json")
+
 def worklist_list_view(request):
     # form = WorklistInformationForm(request.GET)
     # location_id = form.cleaned_data.get("modality").associate_location.id

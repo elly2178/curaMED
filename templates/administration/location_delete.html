@@ -8,7 +8,7 @@
 <form method='POST'> {% csrf_token %}
 
   
-  <div class="card border-info mb-3 w-50 mx-auto">
+  <div class="card border-info mb-3 mx-auto" style="width: 45rem;">
     <div class="card-body">
       <div class="container">
         
@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="col-15">
-            <h6 class="card-title">Möchten Sie den Standort "{{ object.name}}" löschen? </h6>
+            <h5 class="card-title">Möchten Sie den Standort "{{ object.name}}" löschen? </h5>
           </div>
           
         </div>

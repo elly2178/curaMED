@@ -4,7 +4,7 @@
 <div style="margin-top:15px;"> 
     <h2 class="text-center"> Neue Modalität hinzufügen</h2>
 </div>
- 
+  
 <form method='POST'> {% csrf_token %}
     {% if messages %}
     {% for message in messages %}
@@ -14,7 +14,7 @@
     </div>
     {% endfor %}
     {% endif %}
-    <div class="card border-info mb-3">
+    <div class="card border-info mb-3 w-50 mx-auto"> 
         <div class="card-body">
             <div class="container">
                 <div class="row">
@@ -40,7 +40,7 @@
                                 title="Der DICOM AE-Titel ist eine kurze, eindeutige Bezeichnung für ein Gerät.">AE-Titel:
                             </label>
                         </div>
-                        <div class="col">{{form.ae_title}} </div>
+                        <div class="col" >{{form.ae_title}} </div>
                     </div>
                 </div>
 

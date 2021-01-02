@@ -46,8 +46,7 @@ class Orthanc:
             if response.status_code != 200:
                 return {"error": f"Request to {url} failed.", "status": f"{response.status_code}", "response": f"{response}"}, response.status_code
             else:
-                return response.json(), response.status_code
-    
+                return response.json(), response.status_code    
 
     def post_request(self, path: str, body: dict, timeout=2, retries=1):
         """
@@ -83,7 +82,11 @@ class Orthanc:
         else:
             return response.json(), response.status_code
 
-
+    def delete(self, path):
+        response = None
+        response = requests.delete(url, auth=(self.username, self.password), timeout=timeout)
+        return response.json(), response.status_code
+        
 secrets_files = [os.environ.get("CURAMED_ORTHANC_SECRET"),
                  "/home/schumi/Bachelor/secrets/orthanc-secret.json",
                  "C:/Users/taadrar1/Documents/secrets.txt"]

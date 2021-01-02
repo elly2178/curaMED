@@ -5,8 +5,8 @@
 <h2 class="text-center">Patient entfernen</h2>
 </div>
 <form method='POST'> {% csrf_token %}
-  <h4> Möchten Sie den Patienten {{ object.first_name}} {{ object.second_name }} entfernen?</h4>
-  <div class="card border-info mb-3 w-100">
+  
+  <div class="card border-info mb-3 mb-3 mx-auto" style="width: 45rem;"> 
     <div class="card-body">
       <div class="container">
         <div class="row">
@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="col-15">
-            <h5 class="card-title">{{object.first_name}} {{ object.second_name}}</h5>
+            <h5 class="card-title"> Möchten Sie den Patienten {{ object.first_name}} {{ object.second_name }} entfernen?</h5>
           </div>
         </div>
       </div>

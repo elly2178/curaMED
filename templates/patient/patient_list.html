@@ -3,7 +3,6 @@
 {% block content %}
 
 <nav class="navbar navbar-light">
-
   <form class="form-inline " action="{% url 'searchResult' %}" method="GET">
     <input class="form-control mr-sm-2" type="text" name='q' id='id_q' placeholder="Patient suchen" aria-label="Search">
     <script type="text/javascript">
@@ -16,7 +15,7 @@
 <h2 class="text-center">Patientenliste</h2>
 </div>
 {% for instance in object_list reversed %}
-<div class="card border-info mb-3 w-100">
+<div class="card border-info mb-3 mx-auto" style="width: 65rem;"> 
   <div class="card-body">
     <div class="container">
       <div class="row">

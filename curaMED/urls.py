@@ -52,7 +52,8 @@ from worklists.views import (
     WorklistCreateView,
     worklist_list_view,
     get_curapacs_worklists_by_location_request,
-    get_curapacs_statistics
+    get_curapacs_statistics,
+    remove_curapacs_worklist
 )
 urlpatterns = [
     path('favicon.ico',RedirectView.as_view(url='/static/images/favicon.ico')),
@@ -88,4 +89,5 @@ urlpatterns = [
     path('worklists/list/', worklist_list_view, name ='worklistList'),
     path('curapacs/locations/<int:location_id>/worklists/',get_curapacs_worklists_by_location_request, name ='locationsWorklists'),
     path('curapacs/study-by-accession-number/<int:accession_number>/statistics/',get_curapacs_statistics, name ='accessionStatistics'),
+    path('curapacs/locations/<int:location_id>/worklists/<int:request_uid>/',remove_curapacs_worklist, name ='worklistDelete'),
 ]

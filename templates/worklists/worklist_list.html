@@ -109,13 +109,13 @@
       if ($.trim($(this).html()).length == 0) {
         var icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
         var text = '<p>Für diesen Standort wurden keine Modalitäten registriert.</p>';
-        var position = '<div class="row"><div class="col-md-auto">' + icon + '</div><div class="col-md-auto">' + text + '</div></div>';
+        var position = '<div class="row"><div class="col mx-auto">' +  text + '</div><div class="col-md-auto">' + icon + '</div></div>';
 
         $(this).html(position);
 
       }
     });
-
+ 
     $("div[class='card border-info mb-3 w-100']").each(function (i) {
       var location_id = $(this).attr("corresponding-location");
       console.log("Iterating in location " + location_id);
@@ -133,6 +133,7 @@
               var patient_id = worklist["PatientID"];
               var patient_name = worklist["PatientName"];
               var study_id = worklist["StudyID"];
+              var worklist_resource_uid = worklist["resource_uid"];
               console.log("Iterating over worklist_entries for worklist with accession_number " + accession_number)
               //Check if curapacs has a study with the accession number we found in the worklist
               $.get("/curapacs/study-by-accession-number/" + accession_number + "/statistics/", function (statisticsData) {
@@ -146,10 +147,15 @@
                                                 " <a href='{% url 'fetchToken' %}?study-instance-uid=" +
                                                 study_instance_uid +
                                                 "' target='_blank' class='btn btn-link btn-sm'>\
-                                                Betrachten</a>");
+                                                Betrachten</a>" +  " <a href='curapacs/locations/" + location_id + 
+                                                + "/worklists/" + resource_uid +
+                                                "' target='_blank' class='btn btn-link btn-sm'>\
+                                                Auftrag löschen</a>" );
                   $("#table-data-series-msg-" + accession_number).html(statistics_count_series);
+               
                 }
               });
+              
               //iterate over each entry in the ScheduledProcedureStepSequence (contains modality, repsonsible doc etc.)
               //a worklist must have at least one of these entries
               worklist["ScheduledProcedureStepSequence"].forEach(function (worklist_entry, index) {

@@ -4,7 +4,7 @@
 <h2 class="text-center">Konfigurierte Modalitäten</h2>
 </div>
 {% for instance in object_list reversed %}
-<div class="card border-info mb-3 w-100">
+<div class="card border-info mb-3 mx-auto" style="width: 45rem;"> 
   <div class="card-body">
     <div class="container">
       <div class="row">
@@ -20,11 +20,11 @@
       </div>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">Typ: {{ instance.get_title_display }}</li>
-      <li class="list-group-item">Beschreibung: {{ instance.description }}</li>
-      <li class="list-group-item">IP Adresse: {{ instance.ip }}</li>
-      <li class="list-group-item">Port Nummer: {{ instance.port }}</li>
-      <li class="list-group-item"> Standort: {{ instance.associate_location.get_location_representation }} </li>
+      <li class="list-group-item py-1">Typ: {{ instance.get_title_display }}</li>
+      <li class="list-group-item py-1">Beschreibung: {{ instance.description }}</li>
+      <li class="list-group-item py-1">IP Adresse: {{ instance.ip }}</li>
+      <li class="list-group-item py-1">Port Nummer: {{ instance.port }}</li>
+      <li class="list-group-item py-1"> Standort: {{ instance.associate_location.get_location_representation }} </li>
   </ul>
     <a href="{% url 'modalityDetail' instance.id %}" class="btn btn-outline-primary">Modalität bearbeiten</a>
     <a href="{% url 'modalityDelete' instance.id %}" class="btn btn-outline-primary">Modalität entfernen</a>

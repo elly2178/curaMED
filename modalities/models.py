@@ -15,7 +15,7 @@ def validate_port(value):
         raise ValidationError("Port Nummer muss zwischen 0 und 65535 liegen.")
 
 class ModalitiesInformation(models.Model):
-    types = [('CR','Computerradiografie'),
+    types = [('CR',' Computerradiografie '),
     ('CT','Computertomografie'),
     ('US','Ultraschall'),
     ('ES','Endoskopie'),

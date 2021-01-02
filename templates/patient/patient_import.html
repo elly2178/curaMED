@@ -6,7 +6,7 @@
 </div>
   {% csrf_token %}
   {% if object_list|length == 0 %}
-  <div class="card border-info" style="width: 30rem;">
+  <div class="card border-info" style="width: 30rem;"> 
     <div class="card-body">
       Alle Patienten bereits importiert.
     </div>
@@ -21,7 +21,7 @@
   {% endif %}
 
   {% for instance in object_list reversed %}
-  <div class="card border-info mb-3 w-100">
+  <div class="card border-info mb-3 w-50 mx-auto">
     <div class="card-body">
       <div class="container">
         <div class="row">
