@@ -19,7 +19,6 @@
                 <div class="row">
                     <div class="card w-2 border-0">
                         <div class="col">
-
                             <img src="/static/images/mri.png" class="card-img-top" width="55" height="45">
                         </div>
                     </div>
@@ -39,7 +38,6 @@
                                 title="Der DICOM AE-Titel ist eine kurze, eindeutige Bezeichnung für ein Gerät.">AE-Titel:
                             </label>
                         </div>
-
                         <div class="col">
                             {{form.ae_title}}
                         </div>
@@ -81,7 +79,6 @@
                         </div>
                     </div>
                     <br>
-
                     <div class="row">
                         <div class="col">
                             <label>Standort: </label>
@@ -90,7 +87,6 @@
                             {{form.associate_location }}
                         </div>
                     </div>
-
                     <br>
                     <div class="row">
                         <div class="col">
@@ -101,14 +97,11 @@
                                 Verbinden</button>
                             <img id="status-icon" src="/static/images/cancel.png" width="35" height="35">
                         </div>
-
                     </div>
                 </div>
             </div>
-
             <input type='submit' class="btn btn-outline-primary" name='action' value='Speichern' />
             <a href="{% url 'modalities' %}" class="btn btn-outline-primary">Abbrechen</a>
-
         </div>
     </div>
 </form>
@@ -167,31 +160,31 @@
             });
 
     });
-    $('#post-btn').click(function () {
-        var ip = $("#id_ip").val();
-        var port = $("#id_port").val();
-        var location = $("#id_associate_location").val();
-        var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+    // $('#post-btn').click(function () {
+    //     var ip = $("#id_ip").val();
+    //     var port = $("#id_port").val();
+    //     var location = $("#id_associate_location").val();
+    //     var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
 
-        $.ajaxSetup({
-            timeout: 10001,
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRFToken': csrfmiddlewaretoken
-            }
-        });
+    //     $.ajaxSetup({
+    //         timeout: 10001,
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json',
+    //             'X-CSRFToken': csrfmiddlewaretoken
+    //         }
+    //     });
 
-        $.post("{%url 'modalityEcho'%}", JSON.stringify({
-            ip_address: ip,
-            port: port,
-            location_id: location
-        }),
-            function (returnedData) {
-                console.log(returnedData);
-            }).fail(function () {
-                console.log("error");
-            });
-    });
+    //     $.post("{%url 'modalityEcho'%}", JSON.stringify({
+    //         ip_address: ip,
+    //         port: port,
+    //         location_id: location
+    //     }),
+    //         function (returnedData) {
+    //             console.log(returnedData);
+    //         }).fail(function () {
+    //             console.log("error");
+    //         });
+    // });
 </script>
 {% endblock %}

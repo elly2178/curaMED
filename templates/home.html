@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% load static %}
- {% block content %}
+{% block content %}
 
- <br>
-<h3>Willkommen bei curaMED</h3>
+<div style="margin-top:15px;">
+  <h3>Willkommen bei curaMED</h3>
+</div>
 
 <div class="card-deck" style="width:auto">
-   
   <div class="card border-info">
     <div class="card-body">
       <h5 class="card-title">Patienten</h5>
@@ -18,14 +18,14 @@
   </div>
 
   <div class="card border-info">
-      <div class="card-body">
-        <h5 class="card-title">Modalitäten</h5>
-        <a href="{% url 'modalityCreate' %}" button type="button" class="btn btn-link btn-sm">Neue Modalität</a>
-        <a href="{% url 'modalities' %}" button type="button" class="btn btn-link btn-sm">Modalitäten anzeigen</a>
-        <a href="{% url 'worklistList' %}" button type="button" class="btn btn-link btn-sm"> Aufträge</a>
-      </div>
+    <div class="card-body">
+      <h5 class="card-title">Modalitäten</h5>
+      <a href="{% url 'modalityCreate' %}" button type="button" class="btn btn-link btn-sm">Neue Modalität</a>
+      <a href="{% url 'modalities' %}" button type="button" class="btn btn-link btn-sm">Modalitäten anzeigen</a>
+      <a href="{% url 'worklistList' %}" button type="button" class="btn btn-link btn-sm"> Aufträge</a>
     </div>
-  
+  </div>
+
   <div class="card border-info">
     <div class="card-body">
       <h5 class="card-title">Administration</h5>
@@ -35,11 +35,9 @@
   </div>
 </div>
 
-    <nav class="navbar fixed-bottom navbar-light bg-light">
-      <h8 class="text-blue h8">Kontakt: dumig1@bfh.ch</h8>
-      <h8 class="text-blue h8">Adresse: Quellgasse 21, 2502 Biel</h8>
-    </nav>
+<nav class="navbar fixed-bottom navbar-light bg-light">
+  <h8 class="text-blue h8">Kontakt: dumig1@bfh.ch</h8>
+  <h8 class="text-blue h8">Adresse: Quellgasse 21, 2502 Biel</h8>
+</nav>
 
- 
 {% endblock %}
- 

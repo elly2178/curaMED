@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br>
-<h2>Neuen Standort hinzufügen</h2>
+<div style="margin-top:15px;">
+  <h2>Neuen Standort hinzufügen</h2>
+</div>
 
 <form method='POST'> {% csrf_token %}
 
@@ -12,88 +13,78 @@
         <div class="row">
           <div class="card w-2 border-0">
             <div class="col">
-
               <img src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
             </div>
           </div>
           <div class="col-10">
             <h5 class="card-title">Informationen zu ihrer Praxis</h5>
-             
             <h6 class="card-subtitle"> Tragen Sie die passende Informationen in das Formular ein.</h6>
-         
- </div>
+          </div>
         </div>
 
       </div>
       <div class="card-body ">
         <div class="container">
-
+          <div style="margin-bottom:15px;"> 
+          <div class="row">
+            <div class="col">
+              <label>Filialname: </label>
+            </div>
+            <div class="col">{{form.name}} </div>
+          </div>          
+          </div>
            
-            <div class="row">
-              <div class="col">
-                <label>Filialname: </label>
-              </div>
-              <div class="col">
-                {{form.name}}
-              </div>
+          <div style="margin-bottom:15px;">
+          <div class="row">
+            <div class="col">
+              <label>Strasse: </label>
             </div>
-         <br>
-            <div class="row">
-              <div class="col">
-                <label>Strasse: </label>
-              </div>
-              <div class="col">
-                {{form.street}}
-              </div>
+            <div class="col">{{form.street}}  </div>
+          </div>
+        </div>
+        <div style="margin-bottom:15px;">
+          <div class="row">
+            <div class="col">
+              <label>Hausnummer: </label>
             </div>
-          <br>
-            <div class="row">
-              <div class="col">
-                <label>Hausnummer: </label>
-              </div>
-              <div class="col">
-                {{form.number}}
-              </div>
+            <div class="col"> {{form.number}} </div>
+          </div>
+          </div>
+          <div style="margin-bottom:15px;">
+          <div class="row">
+            <div class="col">
+              <label>Ort: </label>
+            </div>
+            <div class="col">{{form.city}} </div>
+          </div>
+        </div>         
+        <div style="margin-bottom:15px;">
+          <div class="row">
+            <div class="col">
+              <label>PLZ: </label>
+            </div>
+            <div class="col">{{form.plz}}</div>
+          </div>
+        </div>
+        <div style="margin-bottom:15px;">
+          <div class="row">
+            <div class="col">
+              <label>Telefonnummer: </label>
+            </div>
+            <div class="col">{{form.telefon_number}}      </div>
+          </div>
+        </div>
 
-            </div>
-          <br>
-            <div class="row">
-              <div class="col">
-                <label>Ort: </label>
-              </div>
-              <div class="col">
-                {{form.city}}
-              </div>
-            </div>
-          <br>
-            <div class="row">
-              <div class="col">
-                <label>PLZ: </label>
-              </div>
-              <div class="col">
-                {{form.plz}}
-              </div>
-            </div>
-          <br>
-            <div class="row">
-              <div class="col">
-                <label>Telefonnummer: </label>
-              </div>
-              <div class="col">
-                {{form.telefon_number}}
-              </div>
-            </div>
-           
 
         </div>
       </div>
 
-<input type='submit' value='Speichern' class="btn btn-outline-primary" />
-  <a href="{% url 'administration' %}" class="btn btn-outline-primary">Abbrechen</a>
+      <input type='submit' value='Speichern' class="btn btn-outline-primary" />
+      <a href="{% url 'administration' %}" class="btn btn-outline-primary">Abbrechen</a>
 
     </div>
   </div>
 
-  
+
 </form>
 {% endblock %}
