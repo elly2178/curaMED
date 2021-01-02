@@ -44,7 +44,7 @@ class Orthanc:
             raise ValueError(f"Failed to retrieve resource for GET request to {url}")
         else:
             if response.status_code != 200:
-                return {"error": f"Request to {url} failed.", "status": f"{response.status_code}"}, response.status_code
+                return {"error": f"Request to {url} failed.", "status": f"{response.status_code}", "response": f"{response}"}, response.status_code
             else:
                 return response.json(), response.status_code
     

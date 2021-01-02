@@ -2,17 +2,17 @@
 
 {% block content %}
 
-<div style="margin-top:15px;"> 
-<h2 class="text-center">Aufträge</h2>
+<div style="margin-top:15px;">
+  <h2 class="text-center">Aufträge</h2>
 </div>
 <div style="margin-bottom:15px;">
-<div class="card">
-  <div class="card-body">
-   Hier werden die bestehenden Bildaufträge für die jeweiligen Modalitäten dargestellt.
- Eine Modalität kann mit folgendem Link registriert werden.
- <a href="{% url 'modalityCreate' %}" class="card-link">Modalität registrieren</a>
+  <div class="card">
+    <div class="card-body">
+      Hier werden die bestehenden Bildaufträge für die jeweiligen Modalitäten dargestellt.
+      Eine Modalität kann mit folgendem Link registriert werden.
+      <a href="{% url 'modalityCreate' %}" class="card-link">Modalität registrieren</a>
+    </div>
   </div>
-</div>
 </div>
 
 {% for location in location_list %}
@@ -22,45 +22,74 @@
     <div class="container">
       <div class="row">
         <div class="card w-2 border-0">
-          <div class="col">             
-            <img id="status-icon" src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">          
+          <div class="col">
+            <img id="status-icon" src="/static/images/smart-home.png" class="card-img-top" width="55" height="45">
           </div>
         </div>
         <div class="col">
           <div class="row">
             <div class="col" id="title_card">
               <h5 class="card-title">{{location.name}} {{ location.id}}</h5>
-            </div>       
+            </div>
           </div>
         </div>
       </div>
     </div>
-<br>
-<div class="modality-container" corresponding-location="{{ location.id }}">
-{% for modality in modality_list %}
-{% if modality.associate_location.id == location.id %}
-    <div class="accordion" id="accordion-{{ modality.id }}" style="margin-bottom:15px;">
-      <div class="card">
-        <div class="card-header" id="heading-{{ modality.id }}">
-          <h2 class="mb-0">
-             
-            <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#wl-{{modality.id}}" aria-expanded="true" aria-controls="wl-{{modality.id}}">
-              Aufträge für Modalität {{ modality.ae_title}}:
-            </button>
-          </h2>
-        </div>
-        <div class="modality-worklist-list" corresponding-modality-aetitle="{{ modality.ae_title }}" corresponding-modality="{{ modality.id }}">
-        
+    <br>
+    <div class="modality-container" corresponding-location="{{ location.id }}">
+      {% for modality in modality_list %}
+      {% if modality.associate_location.id == location.id %}
+      <div class="accordion" id="accordion-{{ modality.id }}" style="margin-bottom:15px;">
+        <div class="card">
+          <div class="card-header" id="heading-{{ modality.id }}">
+            <h2 class="mb-0">
+
+              <button class="btn btn-block text-left" type="button" data-toggle="collapse"
+                data-target="#wl-{{modality.id}}" aria-expanded="true" aria-controls="wl-{{modality.id}}">
+                Aufträge für Modalität {{ modality.ae_title}}:
+              </button>
+            </h2>
+          </div>
+          <div id="wl-{{modality.id}}" class="collapse show" aria-labelledby="heading-{{ modality.id }}" data-parent="#accordion-{{ modality.id }}">
+
+            <div class="card-body">
+              <div class="modality-worklist-list" corresponding-modality-aetitle="{{ modality.ae_title }}"
+                corresponding-modality="{{ modality.id }}">
+                <div id="wl-{{modality.id}}" class="collapse show" aria-labelledby="heading-{{ modality.id }}"
+                  data-parent="accordion-{{ modality.id }}">
+                  <table class="table table-hover" id="table-head-{{ modality.id }}" style="display: none">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Auftragsnummer</th>
+                        <th scope="col">Zuständiger Arzt</th>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Zeit</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Anzahl Serien</th>
+                        <th scope="col">Anzahl Instanzen</th>
+                      </tr>
+                    </thead>
+                    <tbody id="table-rows-{{ modality.id }}">
+
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </div>
-    </div>
 
-    {% endif %}
-    {% endfor %}
+      {% endif %}
+      {% endfor %}
+    </div>
   </div>
-  </div>
-  </div>
- 
+</div>
+
 {% endfor %}
 
 
@@ -76,98 +105,97 @@
   "AccessionNumber": "3434",      
      -->
 <script>
-$(document).ready(function(){
-   $("div[class='modality-container']").each(function (i) {
-     if ($.trim($(this).html()).length == 0) {              
+  $(document).ready(function () {
+    $("div[class='modality-container']").each(function (i) {
+      if ($.trim($(this).html()).length == 0) {
         var icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
-        var text = '<p>Für diesen Standort wurden keine Modalitäten registriert.</p>'; 
-        var position = '<div class="row"><div class="col-md-auto">'+ icon +'</div><div class="col-md-auto">'+ text +'</div></div>';
-              
-       $(this).html(position);     
-      
-      }
-   });
+        var text = '<p>Für diesen Standort wurden keine Modalitäten registriert.</p>';
+        var position = '<div class="row"><div class="col-md-auto">' + icon + '</div><div class="col-md-auto">' + text + '</div></div>';
 
-  $("div[class='card border-info mb-3 w-100']").each(function (i) {  
+        $(this).html(position);
+
+      }
+    });
+
+    $("div[class='card border-info mb-3 w-100']").each(function (i) {
       var location_id = $(this).attr("corresponding-location");
       console.log("Iterating in location " + location_id);
+      //Iterate over all the locations found (determined by selecting all divs with class 'card border-info mb-3 w-100'
       $.get("/curapacs/locations/" + location_id + "/worklists/",
-            function (returnedData) {
-              if (returnedData["status"] == "success") {
-                console.log("Worklist for location " + location_id + " received with status success")
-                var list_of_worklists = returnedData["content"];
-                list_of_worklists.forEach(function( worklist, index){
-                    var accession_number = worklist["AccessionNumber"];
-                    var patient_id = worklist["PatientID"];
-                    var patient_name = worklist["PatientName"];
-                    var study_id = worklist["StudyID"];
-                    var physicians_name = worklist["ScheduledProcedureStepSequence"]["ScheduledPerformingPhysicianName"];
-                    var create_date = worklist["ScheduledProcedureStepSequence"]["ScheduledProcedureStepStartDate"];
-                    var create_hour =  worklist["ScheduledProcedureStepSequence"]["ScheduledProcedureStepStartTime"];
-                    console.log("Iterating over worklist_entries for worklist with accession_number " + accession_number)
-                    $.get("/curapacs/study-by-accession-number/" + accession_number +"/statistics/", function(statisticsData){
-                        console.log("Statistics Data received " + statisticsData);
-                        if (statisticsData["status"] == "success"){
-                          var found_study_for_accession_number = true;
-                          var resource_uid = statisticsData["content"]["resource_uid"];
-                          var statistics_count_instances = statisticsData["content"]["statistics"]["CountInstances"];
-                          var statistics_count_series =  statisticsData["content"]["statistics"]["CountSeries"];
-                          $("div[class=modality-container][corresponding-location=" + location_id + "]").html(
-                                                 "Anzahl Instanzen" + statistics_count_instances +
-                                                 "Anzahl Serien " + statistics_count_series + 
-                                                 "Resourcen UID " + resource_uid);
-                        } else {
-                          var found_study_for_accession_number = false;
-                        }
-                      });
-                    worklist["ScheduledProcedureStepSequence"].forEach(function(worklist_entry, index){
-                      
-                      var ae_title =  worklist_entry["ScheduledStationAETitle"];
-                      var worklist_body_div = $("div[corresponding-modality-aetitle=" + ae_title + "]");
-                      var modality_id = worklist_body_div.attr("corresponding-modality");
-                      var insert_html = '<div id="wl-' +
-                                         + modality_id +
-                                         '" class="collapse show" aria-labelledby="heading-' +
-                                         modality_id + '" data-parent="#accordion-' +
-                                         modality_id + '"><table class="table table-hover">\
-                                        <thead>\
-                                          <tr>\
-                                            <th scope="col">#</th>\
-                                            <th scope="col">Auftragsnummer</th>\
-                                            <th scope="col">Zuständiger Artzt</th>\
-                                            <th scope="col">Datum</th>\
-                                            <th scope="col">Zeit</th>\
-                                            <th scope="col">Patient name</th>\
-                                          </tr>\
-                                        </thead>\
-                                        <tbody>\
-                                          <tr>\
-                                            <th scope="row">1</th>\
-                                            <td>'+ accession_number + '</td>\
-                                            <td>'+ physicians_name +'</td>\
-                                            <td>'+ create_date +'</td>\
-                                            <td>'+ create_hour +'</td>\
-                                            <td>'+ patient_name +'</td>\
-                                          </tr>\
-                                        </tbody>\
-                                      </table>\
-                                       </div>';
+        function (returnedData) {
+          //if the location is available (there might not be any worklists)
+          if (returnedData["status"] == "success") {
+            console.log("Worklist for location " + location_id + " received with status success")
+            var list_of_worklists = returnedData["content"];
+            //iterate over the worklists we found
+            var worklist_entries_counter = 0;
+            list_of_worklists.forEach(function (worklist, index) {
+              var accession_number = worklist["AccessionNumber"];
+              var patient_id = worklist["PatientID"];
+              var patient_name = worklist["PatientName"];
+              var study_id = worklist["StudyID"];
+              var found_study_for_accession_number = false;
+              console.log("Iterating over worklist_entries for worklist with accession_number " + accession_number)
+              //Check if curapacs has a study with the accession number we found in the worklist
+              $.get("/curapacs/study-by-accession-number/" + accession_number + "/statistics/", function (statisticsData) {
+                console.log("Statistics Data received " + statisticsData);
+                if (statisticsData["status"] == "success") {
+                  var found_study_for_accession_number = true;
+                  var resource_uid = statisticsData["content"]["resource_uid"];
+                  var statistics_count_instances = statisticsData["content"]["statistics"]["CountInstances"];
+                  var statistics_count_series = statisticsData["content"]["statistics"]["CountSeries"];
+                  $("div[class=modality-container][corresponding-location=" + location_id + "]").html();
+                  //  "Anzahl Instanzen " + statistics_count_instances +
+                  //  "Anzahl Serien " + statistics_count_series + 
+                  //  "Resourcen UID " + resource_uid);
+                }
+              });
+              //iterate over each entry in the ScheduledProcedureStepSequence (contains modality, repsonsible doc etc.)
+              //a worklist must have at least one of these entries
+              worklist["ScheduledProcedureStepSequence"].forEach(function (worklist_entry, index) {
+                console.log("---- you are in the for each worklists ----");
+                var physicians_name = worklist_entry["ScheduledPerformingPhysicianName"];
+                var creation_date = worklist_entry["ScheduledProcedureStepStartDate"];
+                var creation_hour = worklist_entry["ScheduledProcedureStepStartTime"];
+                var ae_title = worklist_entry["ScheduledStationAETitle"];
+                var worklist_body_div = $("div[corresponding-modality-aetitle=" + ae_title + "]");
+                var modality_id = worklist_body_div.attr("corresponding-modality");
+                if (modality_id) {
+                  worklist_entries_counter = worklist_entries_counter + 1;
+                }
+                if (!found_study_for_accession_number == true) {
+                  var statistics_count_instances = "0";
+                  var statistics_count_series = "0";
+                }
+                //prepare a table with all the information we could gather from the worklist
 
-
-                    });
-                });
-              }
- 
-            }).fail(function(){
-              console.log("Location " + location_id + " failed");
-              var existing_html = $("div[class=modality-container][corresponding-location=" + location_id + "]").html();
-              var prepend_message = "<p>Location timed out</p>";
-              $("div[class=modality-container][corresponding-location=" + location_id + "]").html(prepend_message + existing_html);
+                var rows_html = '<tr>\
+                                    <th scope="row">'+ worklist_entries_counter + '</th>\
+                                    <td>'+ accession_number + '</td>\
+                                    <td>'+ physicians_name + '</td>\
+                                    <td>'+ creation_date + '</td>\
+                                    <td>'+ creation_hour + '</td>\
+                                    <td>'+ patient_name + '</td>\
+                                    <td>'+ statistics_count_series + '</td>\
+                                    <td>'+ statistics_count_instances + '</td>\
+                                    </tr>';
+                $("#table-head-" + modality_id).show();
+                $("#table-rows-" + modality_id).append(rows_html);
 
               });
-                          
-          });
-});
+            });
+          }
+
+        }).fail(function () {
+          console.log("Location " + location_id + " failed");
+          var existing_html = $("div[class=modality-container][corresponding-location=" + location_id + "]").html();
+          var prepend_message = "<p>Location timed out</p>";
+          $("div[class=modality-container][corresponding-location=" + location_id + "]").html(prepend_message + existing_html);
+
+        });
+
+    });
+  });
 
 </script>
 {% endblock %}
