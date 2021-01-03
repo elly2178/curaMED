@@ -69,7 +69,8 @@ def create_curapacs_worklist_request(form_cleaned_data):
                 "ScheduledStationAETitle": str(form_cleaned_data.get("modality").ae_title),
                 "ScheduledProcedureStepStartDate": worklist_datetime.strftime("%Y%m%d"), 
                 "ScheduledProcedureStepStartTime": worklist_datetime.strftime("%H%M%S"),
-                "ScheduledPerformingPhysicianName": physician_name
+                "ScheduledPerformingPhysicianName": physician_name,
+                "ScheduledProcedureStepDescription": str(form_cleaned_data.get("scheduled_procedure_step_description"))
             }
         ]
         }
@@ -85,6 +86,7 @@ def get_curapacs_worklists_by_location_request(request, location_id):
         worklists_response, status_code = helpers.orthanc.get_request(f"/locations/{location_id}/worklists")
     except ValueError:
         worklists_response = {"status": "error"}
+    #Replace ^ char in ScheduledPerformingPhysicianName (this attribute is inside the dicts listed in ScheduledProcedureStepSequence)
     return HttpResponse(content=json.dumps(worklists_response), content_type="application/json")
 
 def get_curapacs_statistics(request, accession_number):   

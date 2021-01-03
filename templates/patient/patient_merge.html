@@ -20,7 +20,7 @@
                                     loading="lazy">curaMED</h5>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item py-1">Name: {{ object.first_name }} {{ object.second_name }}</li>
-                                <li class="list-group-item py-1">Geschlecht: {{ object.title}} </li>
+                                <li class="list-group-item py-1">Geschlecht: {% if object.title == "male" %}männlich{% else %}weiblich{% endif %}</li>
                                 <li class="list-group-item py-1">Geburtsdatum: {{ object.birthdate }} </li>
                                 <li class="list-group-item py-1">Strasse: {{ object.address}}, {{ object.number }}, {{ object.city }}, {{ object.code }}</li>
                                 <li class="list-group-item py-1">Sprache: {{ object.language }}</li>

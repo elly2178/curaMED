@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 <div style="margin-top:15px;">
-<h2 class="text-center">Konfigurierte Modalitäten</h2>
+<h2 class="text-center">Konfigurierte Modalitäten</h2> {% csrf_token %}
 </div>
-{% for instance in object_list reversed %}
+{% for instance in object_list reversed %} 
 <div class="card border-info mb-3 mx-auto" style="width: 45rem;"> 
   <div class="card-body">
     <div class="container">
@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="col-15">
-          <h5 class="card-title" title="Der DICOM AE-Titel ist eine kurze, eindeutige Bezeichnung für ein Gerät">
+          <h5 class="card-title" id="ae-title-{{instance.id}}" corresponding-ae-title="{{instance.ae_title}}" title="Der DICOM AE-Titel ist eine kurze, eindeutige Bezeichnung für ein Gerät">
             AE-Titel: {{instance.ae_title}} </h5>
         </div>
       </div>
@@ -22,33 +22,61 @@
     <ul class="list-group list-group-flush">
       <li class="list-group-item py-1">Typ: {{ instance.get_title_display }}</li>
       <li class="list-group-item py-1">Beschreibung: {{ instance.description }}</li>
-      <li class="list-group-item py-1">IP Adresse: {{ instance.ip }}</li>
-      <li class="list-group-item py-1">Port Nummer: {{ instance.port }}</li>
-      <li class="list-group-item py-1"> Standort: {{ instance.associate_location.get_location_representation }} </li>
+      <li class="list-group-item py-1" id="ip-address-{{instance.id}}" corresponding-ip-address="{{ instance.ip }}" >IP Adresse: {{ instance.ip }}</li>
+      <li class="list-group-item py-1" id="port-{{instance.id}}" corresponding-port="{{ instance.port }}">Port Nummer: {{ instance.port }}</li>
+      <li class="list-group-item py-1" id="location-{{instance.id}}" corresponding-location="{{ instance.associate_location.id }}"> Standort: {{ instance.associate_location.get_location_representation }} </li>
   </ul>
     <a href="{% url 'modalityDetail' instance.id %}" class="btn btn-outline-primary">Modalität bearbeiten</a>
     <a href="{% url 'modalityDelete' instance.id %}" class="btn btn-outline-primary">Modalität entfernen</a>
-    <button type="button" id="btn-connect" class="btn btn-outline-primary"> Verbinden</button>
+    <button type="button" id="btn-connect-{{ instance.id }}" corresponding-modality-id="{{ instance.id }}" class="btn btn-outline-primary"> Verbinden</button>
   </div>
 </div>
 <script>
-  $('#btn-connect').click(function () {
-     $.ajaxSetup({ timeout: 6001 })
-        var ae_title = $("#id_ae_title").val();
-        var ip = $("#id_ip").val();
-        var port = $("#id_port").val();
-        var location = $("#id_associate_location").val();
-    $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
-    var $ti = $('#btn-connect').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
+  $('[id^=btn-connect]').click(function () {
+    var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+     $.ajaxSetup({ timeout: 6001,
+     
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRFToken': csrfmiddlewaretoken
+    }}) 
+        var connection_button = $(this);
+        var modality_id = $(this).attr("corresponding-modality-id");
+        var ae_title = $("#ae-title-" + modality_id).attr("corresponding-ae-title");
+        var ip = $("#ip-address-" + modality_id).attr("corresponding-ip-address");
+        var port = $("#port-" + modality_id).attr("corresponding-port");
+        var location = $("#location-" + modality_id).attr("corresponding-location");
+
+    $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
+    var $ti = $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
    
-    setTimeout(function () {       
+    setTimeout(function () {        
     }, 1000);
    
-   var jqxhr = jQuery.get("{%url 'modalityEcho'%}?ip-address=" + ip + "&port-address=" + port + "&ae-title=" + ae_title + "&location-id=" + location, function () {
-            $ti.html('Modalität Online');           
+    var jqxhr = jQuery.post("{%url 'modalityEcho'%}", JSON.stringify({
+            ip_address: ip,
+            port: port,
+            location_id: location
+        }), function (responseData) {
+            //var parsed_response = jQuery.parseJSON(responseData)
+            var parsed_response = responseData
+            console.log(parsed_response);
+            if (parsed_response["status"] == "error") {
+                var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
+                var button_text = "Modalität Offline";
+            } else {
+                var button_icon = '<img id="status-icon" src="/static/images/check.png" width="25" height="25">';
+                var button_text = "Modalität Online";
+            }
+            connection_button.addClass('enabled');
+            connection_button.html(button_text + " " + button_icon);
         })
             .fail(function () {
-                $ti.html('Modalität Offline'); 
+                var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
+                var button_text = "Modalität Offline";
+                connection_button.addClass('enabled');
+                connection_button.html(button_text + " " + button_icon);
             });
   });
    

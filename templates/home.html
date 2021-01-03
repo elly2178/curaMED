@@ -3,37 +3,76 @@
 {% load static %}
 {% block content %}
 
-<div style="margin-top:15px;">
+<div style="margin-top:15px;margin-bottom:15px;">
   <h3 class="text-center">Willkommen bei curaMED</h3>
 </div>
-
 <div class="card-deck" style="width:auto">
   <div class="card border-info">
     <div class="card-body">
       <h5 class="card-title">Patienten</h5>
-      <a href="{% url 'patients' %}" button type="button" class="btn btn-link btn-sm">Patientenliste</a>
-      <a href="{% url 'patientCreate' %}" button type="button" class="btn btn-link btn-sm">Patient erstellen</a>
-      <a href="{% url 'patientsImport' %}" button type="button" class="btn btn-link btn-sm">Patienten importieren</a>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <a href="{% url 'patients' %}" button type="button" class="btn btn-link btn-sm">Patientenliste</a>
+        </li>
+        <li class="list-group-item">
+          <a href="{% url 'patientCreate' %}" button type="button" class="btn btn-link btn-sm">Patient erstellen</a>
+        </li>
+        <li class="list-group-item">
+          <a href="{% url 'patientsImport' %}" button type="button" class="btn btn-link btn-sm">Patienten
+            importieren</a>
+        </li>
+      </ul>
+
     </div>
   </div>
 
   <div class="card border-info">
     <div class="card-body">
       <h5 class="card-title">Modalitäten</h5>
-      <a href="{% url 'modalityCreate' %}" button type="button" class="btn btn-link btn-sm">Neue Modalität</a>
-      <a href="{% url 'modalities' %}" button type="button" class="btn btn-link btn-sm">Modalitäten anzeigen</a>
-      <a href="{% url 'worklistList' %}" button type="button" class="btn btn-link btn-sm"> Aufträge</a>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <a href="{% url 'modalityCreate' %}" button type="button" class="btn btn-link btn-sm">Neue Modalität</a>
+        </li>
+        <li class="list-group-item">
+          <a href="{% url 'modalities' %}" button type="button" class="btn btn-link btn-sm">Modalitäten anzeigen</a>
+        </li>
+        <li class="list-group-item">
+          <a href="{% url 'worklistList' %}" button type="button" class="btn btn-link btn-sm"> Aufträge</a>
+        </li>
+      </ul>
     </div>
   </div>
 
   <div class="card border-info">
     <div class="card-body">
       <h5 class="card-title">Administration</h5>
-      <a href=" {% url 'locationCreate' %}" button type="button" class="btn btn-link btn-sm">Standort konfigurieren</a>
-      <a href=" {% url 'administration' %}" button type="button" class="btn btn-link btn-sm">Standorte anzeigen</a>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <a href=" {% url 'locationCreate' %}" button type="button" class="btn btn-link btn-sm">Standort
+            konfigurieren</a>
+        </li>
+        <li class="list-group-item">
+          <a href=" {% url 'administration' %}" button type="button" class="btn btn-link btn-sm">Standorte anzeigen</a>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
+
+<div class="card border-secondary mb-" style="margin-top:15px;">
+  <div class="card-header">Hinweis</div>
+  <div class="card-body text-secondary">
+    <h6>Dieser Prototyp wurde im Rahmen der Bachelorarbeit "curaPACS" entworfen und demonstriert verschiendene
+      Funktionen von curaPACS aus Sicht eines Praxisinformationssystems. Der vollstängige Quellcode kann im
+      <a href="https://github.com/elly2178/curaMED">git-Repository</a> eingesehen werden. Weiter kann via
+      <a href="https://hub.docker.com/r/dumig1/curamed">DockerHub</a> ein aktuelles Image
+      der Software bezogen werden. Die Lizenzinformationen sind der Datei "LICENSE" im git-Repository zu entnehmen.</h6>
+  </div>
+
+</div>
+ 
+
+
 
 <nav class="navbar fixed-bottom navbar-light bg-light">
   <h8 class="text-blue h8">Kontakt: dumig1@bfh.ch</h8>
