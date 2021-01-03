@@ -89,5 +89,5 @@ urlpatterns = [
     path('worklists/list/', worklist_list_view, name ='worklistList'),
     path('curapacs/locations/<int:location_id>/worklists/',get_curapacs_worklists_by_location_request, name ='locationsWorklists'),
     path('curapacs/study-by-accession-number/<int:accession_number>/statistics/',get_curapacs_statistics, name ='accessionStatistics'),
-    path('curapacs/locations/<int:location_id>/worklists/<int:request_uid>/',remove_curapacs_worklist, name ='worklistDelete'),
+    path('curapacs/locations/<int:location_id>/worklists/<str:worklist_uid>/',remove_curapacs_worklist, name ='worklistDelete'),
 ]

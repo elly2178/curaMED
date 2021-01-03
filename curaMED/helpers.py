@@ -82,11 +82,28 @@ class Orthanc:
         else:
             return response.json(), response.status_code
 
-    def delete(self, path):
+    def delete_request(self, path, timeout=3, retries=1):
+        url = self.get_url_for_path(path)
         response = None
-        response = requests.delete(url, auth=(self.username, self.password), timeout=timeout)
-        return response.json(), response.status_code
-        
+        for _ in range(retries + 1):
+            try:
+                response = requests.delete(url,
+                                        auth=(self.username, self.password),
+                                        timeout=timeout)
+                if response.status_code == 404:
+                    return {}, response.status_code
+                break
+            except requests.Timeout:
+                continue
+        if response is None:
+            raise ValueError(f"Failed to retrieve resource for DELETE request to {url}")
+        else:
+            if response.status_code != 200:
+                return {"error": f"Request to {url} failed.", "status": f"{response.status_code}", "response": f"{response}"}, response.status_code
+            else:
+                return response.json(), response.status_code
+         
+          
 secrets_files = [os.environ.get("CURAMED_ORTHANC_SECRET"),
                  "/home/schumi/Bachelor/secrets/orthanc-secret.json",
                  "C:/Users/taadrar1/Documents/secrets.txt"]

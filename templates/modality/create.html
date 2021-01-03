@@ -8,7 +8,7 @@
 <form method='POST'> {% csrf_token %}
     {% if messages %}
     {% for message in messages %}
-    <div class="alert alert-warning 
+    <div class="alert alert-warning w-50 mx-auto
         {% if message.tags %} alert-{{ message.tags }}{% endif %}" role="alert">
         {{ message }}
     </div>

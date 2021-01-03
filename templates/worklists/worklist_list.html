@@ -3,7 +3,7 @@
 {% block content %}
 
 <div style="margin-top:15px;">
-  <h2 class="text-center">Aufträge</h2>
+  <h2 class="text-center">Aufträge</h2> {% csrf_token %}
 </div>
 <div style="margin-bottom:15px;">
   <div class="card">
@@ -16,7 +16,7 @@
 </div>
 
 {% for location in location_list %}
-
+<div style="margin-bottom:15px;">
 <div class="card border-info mb-3 w-100" corresponding-location="{{ location.id }}">
   <div class="card-body">
     <div class="container">
@@ -65,8 +65,9 @@
                         <th scope="col">Datum</th>
                         <th scope="col">Zeit</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Anzahl Serien</th>
-                        <th scope="col">Anzahl Instanzen</th>
+                        <th scope="col">Serien</th>
+                        <th scope="col">Instanzen</th>
+                        <th scope="col">Löschen</th>
                       </tr>
                     </thead>
                     <tbody id="table-rows-{{ modality.id }}">
@@ -92,18 +93,38 @@
 {% endfor %}
 
 
-<!-- 
-[{"PatientName": "ljg",
-  "PatientID": "37",
-  "ScheduledProcedureStepSequence": [{'Modality': 'US',
-                                      'ScheduledStationAETitle': 'aq_235',
-                                      'ScheduledProcedureStepStartDate': '20201230',
-                                      'ScheduledProcedureStepStartTime': '215300',
-                                      'ScheduledPerformingPhysicianName': 'Dr.^Thomas^Burkle'}]
-
-  "AccessionNumber": "3434",      
-     -->
 <script>
+  var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+  
+  $("tbody").on("click", "[id^=delete-worklist]", function() {
+    $.ajaxSetup({
+            timeout: 10001,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRFToken': csrfmiddlewaretoken
+            }
+        });
+    var location_id = $(this).attr("corresponding-location");
+    var worklist_uid = $(this).attr("corresponding-worklist-uid");
+    var request_path = "/curapacs/locations/" + location_id + "/worklists/" + worklist_uid + "/";
+    var delete_button = $(this);
+    delete_button.html("Wird gelöscht");
+    $.ajax({
+    url: request_path,
+    type: 'DELETE',
+    success: function(returnedData) {
+      if (returnedData["status"] == "success") {
+        console.log("worklist deleted, " + returnedData);
+        delete_button.html("Gelöscht");
+      } else {
+        console.log("Failed to delete worklist, " + returnedData);
+        delete_button.html("Löschen fehlgeschlagen");
+      }
+    }
+  });
+  });
+
   $(document).ready(function () {
     $("div[class='modality-container']").each(function (i) {
       if ($.trim($(this).html()).length == 0) {
@@ -147,10 +168,7 @@
                                                 " <a href='{% url 'fetchToken' %}?study-instance-uid=" +
                                                 study_instance_uid +
                                                 "' target='_blank' class='btn btn-link btn-sm'>\
-                                                Betrachten</a>" +  " <a href='curapacs/locations/" + location_id + 
-                                                + "/worklists/" + resource_uid +
-                                                "' target='_blank' class='btn btn-link btn-sm'>\
-                                                Auftrag löschen</a>" );
+                                                Betrachten</a>");
                   $("#table-data-series-msg-" + accession_number).html(statistics_count_series);
                
                 }
@@ -160,8 +178,15 @@
               //a worklist must have at least one of these entries
               worklist["ScheduledProcedureStepSequence"].forEach(function (worklist_entry, index) {
                 var physicians_name = worklist_entry["ScheduledPerformingPhysicianName"];
-                var creation_date = worklist_entry["ScheduledProcedureStepStartDate"];
-                var creation_hour = worklist_entry["ScheduledProcedureStepStartTime"];
+                var creation_date = worklist_entry["ScheduledProcedureStepStartDate"]; 
+                 
+                var creation_date_year = creation_date.slice(0,4);
+                var creation_date_month = creation_date.slice(4,6);
+                var creation_date_day = creation_date.slice(6,8);
+   
+                var creation_time = worklist_entry["ScheduledProcedureStepStartTime"];
+                var creation_time_hour = creation_time.slice(0,2);
+                var creation_time_minute = creation_time.slice(2,4);
                 var ae_title = worklist_entry["ScheduledStationAETitle"];
                 var worklist_body_div = $("div[corresponding-modality-aetitle=" + ae_title + "]");
                 var modality_id = worklist_body_div.attr("corresponding-modality");
@@ -170,16 +195,20 @@
                 }
                 var statistics_count_instances_message = "0";
                 var statistics_count_series_message = "0";
+                var delete_button =  "<button type='button' class='btn btn-link btn-sm' id='delete-worklist-" +
+                                        location_id + "-" + worklist_entries_counter +"' corresponding-location='" + location_id +"' " +
+                                        "corresponding-worklist-uid=" + worklist_resource_uid + ">Auftrag löschen</button>" 
                 //prepare a table with all the information we could gather from the worklist
                 var rows_html = '<tr>\
                                     <th scope="row">'+ worklist_entries_counter + '</th>\
                                     <td>'+ accession_number + '</td>\
                                     <td>'+ physicians_name + '</td>\
-                                    <td>'+ creation_date + '</td>\
-                                    <td>'+ creation_hour + '</td>\
+                                    <td>'+ creation_date_day + '.' + creation_date_month + '.' + creation_date_year + '</td>\
+                                    <td>'+ creation_time_hour + ':' + creation_time_minute + '</td>\
                                     <td>'+ patient_name + '</td>\
                                     <td id="table-data-series-msg-' + accession_number + '" >'+ statistics_count_series_message + '</td>\
                                     <td id="table-data-instance-msg-' + accession_number + '" >'+ statistics_count_instances_message + '</td>\
+                                    <td>'+ delete_button +'</td>\
                                     </tr>';                                    
                 $("#card-body-" + modality_id).show();
                 $("#table-rows-" + modality_id).append(rows_html);

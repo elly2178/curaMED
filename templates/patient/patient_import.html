@@ -136,7 +136,7 @@
                   $("#show-import-for-patient-" + patient.id ).html('Patient erfolgreich importiert');
                   $("#show-import-for-patient-" + patient.id ).prop('disabled', true);   
                 });
-              }).fail(function (){
+              }).fail(function (){ 
                  console.log("error");
               }).always(function() {
                   $("#btn-import-all-patients").html("Alle Patienten importieren");
