@@ -21,9 +21,9 @@
           <div class="col" id="connetion-button-div">
             <button type="button" id="btn-connect" corresponding-location="{{ object.id }}"
               class="btn btn-outline-primary" name='get-location-status'>
-              Verfügbarkeit prüfen</button>
+              Verfügbarkeit prüfen
             <img id="status-icon" corresponding-location="{{ object.id }}" name ='get-location-status-icon'
-             src="/static/images/cancel.png" width="35" height="35" style="display: none;">
+             src="/static/images/cancel.png" width="35" height="35" style="display: none;"></button>
           </div>
         </div>
       </div>
@@ -65,11 +65,13 @@
     
       console.log(data.status); 
       if (data.status === 'success') {
-       $ti.html('Gateway Online'); 
+      var button_icon = '<img id="status-icon" src="/static/images/check.png" width="25" height="25">';
+      $ti.html('Gateway Online' + " "+ button_icon);    
       $("img[corresponding-location=" + locationId + "]").prop("src", "/static/images/check.png");
       $("img[corresponding-location=" + locationId + "]").show();
       }else{
-        $ti.html('Gateway Offline');
+        var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
+        $ti.html('Gateway Offline' + " "+ button_icon);
         $("img[corresponding-location=" + locationId + "]").show();
       }
       

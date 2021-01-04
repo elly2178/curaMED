@@ -24,12 +24,12 @@
         </div>
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item py-1"> {{ object.get_title_display }} {{ object.first_name }} {{ object.second_name }}
+        <li class="list-group-item py-1 mt-1"> {{ object.get_title_display }} {{ object.first_name }} {{ object.second_name }}
         </li>
         <li class="list-group-item py-1">Geburtstag: {{ object.birthdate }}</li>
         <li class="list-group-item py-1">Adresse: {{ object.address }}, {{ object.number }}</li>
         <li class="list-group-item py-1">Ort: {{ object.city }}, {{ object.code }}</li>
-        <li class="list-group-item py-1">Sprache: {{ object.language }}</li>
+        <li class="list-group-item py-1 mb-1">Sprache: {{ object.language }}</li>
       </ul>
       <input type='submit' class="btn btn-outline-primary" value='Ja' />
       <a href="{% url 'patients' %}" class="btn btn-outline-primary">Nein</a>

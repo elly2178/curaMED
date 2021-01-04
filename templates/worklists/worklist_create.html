@@ -4,17 +4,6 @@
 <div style="margin-top:15px;"> 
 <h2 class="text-center">Auftrag erstellen</h2>
 </div>
-
-<!-- 
-    # info taken from patient:
-    # PID,  Vorname, Nachname, geb dat, geschlecht, tel nr -non editable data
-    # AUftragsnr - find range of values - dicom attribut 
-    # auftragsnr ==? accession nr? 
-    #procedure name + procedure code
-    #geplannte durchführeung datum/ zeit
-    # requestion physician look in dicom standard
-    # standort/ raumnr/modalität
--->
  
 <form id='worklist-form' method='POST'> {% csrf_token %}
     <input type="hidden" name="patient_id" id="id_patient_id" value='{{ patient.id }}' readonly>

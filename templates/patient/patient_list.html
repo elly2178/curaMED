@@ -20,11 +20,11 @@
     <div class="container">
       <div class="row">
         <div class="card w-2 border-0">
-          <div class="col">
+          <div class="col" style="width: 100px;">
             {% if instance.title == "male" %}
-            <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
+            <img src="/static/images/batman.png" class="card-img-top">
             {% else %}
-            <img src="/static/images/marilyn_monroe.png" class="card-img-top" width="55" height="45">
+            <img src="/static/images/marilyn_monroe.png" class="card-img-top">
             {% endif %}
           </div>
         </div>
@@ -48,8 +48,11 @@
       <li class="list-group-item py-1">Adresse: {{ instance.address }} {{ instance.number }},
         {{ instance.city }} {{ instance.code }}</li>
       <li class="list-group-item py-1">Sprache: {{ instance.language }}</li>
+
+      <!-- aici hide style="display: none" id="study-list-{{ instance.id }}" 
+                corresponding-study-instance="studien-{{ instance.id }}"-->
       <li class="list-group-item py-1">Studien: 
-         
+        
         <ul id="patient-{{ instance.id }}-studylist">
         {% for study in instance.studies reversed %}         
           {% if study.study_description %}
@@ -73,7 +76,7 @@
              
         {% endfor %}
         </ul>
-
+       
         <div class="row">
           <div class="col">
           </div>
@@ -98,6 +101,8 @@
 {% endfor %}
 <script>
   var showAllStudiesState = false;
+ 
+ 
   function changeStudiesVisibility(i) {
     if (i == 0) {
       return;

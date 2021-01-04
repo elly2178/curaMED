@@ -4,7 +4,7 @@
 <h2 class="text-center">Konfigurierte Modalitäten</h2> {% csrf_token %}
 </div>
 {% for instance in object_list reversed %} 
-<div class="card border-info mb-3 mx-auto" style="width: 45rem;"> 
+<div class="card border-info mb-3 mx-auto" style="width: 35rem;"> 
   <div class="card-body">
     <div class="container">
       <div class="row">
@@ -20,11 +20,11 @@
       </div>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item py-1">Typ: {{ instance.get_title_display }}</li>
+      <li class="list-group-item py-1 mt-1">Typ: {{ instance.get_title_display }}</li>
       <li class="list-group-item py-1">Beschreibung: {{ instance.description }}</li>
       <li class="list-group-item py-1" id="ip-address-{{instance.id}}" corresponding-ip-address="{{ instance.ip }}" >IP Adresse: {{ instance.ip }}</li>
       <li class="list-group-item py-1" id="port-{{instance.id}}" corresponding-port="{{ instance.port }}">Port Nummer: {{ instance.port }}</li>
-      <li class="list-group-item py-1" id="location-{{instance.id}}" corresponding-location="{{ instance.associate_location.id }}"> Standort: {{ instance.associate_location.get_location_representation }} </li>
+      <li class="list-group-item py-1 mb-1" id="location-{{instance.id}}" corresponding-location="{{ instance.associate_location.id }}"> Standort: {{ instance.associate_location.get_location_representation }} </li>
   </ul>
     <a href="{% url 'modalityDetail' instance.id %}" class="btn btn-outline-primary">Modalität bearbeiten</a>
     <a href="{% url 'modalityDelete' instance.id %}" class="btn btn-outline-primary">Modalität entfernen</a>
@@ -69,7 +69,7 @@
                 var button_icon = '<img id="status-icon" src="/static/images/check.png" width="25" height="25">';
                 var button_text = "Modalität Online";
             }
-            connection_button.addClass('enabled');
+            connection_button.addClass('enabled'); 
             connection_button.html(button_text + " " + button_icon);
         })
             .fail(function () {

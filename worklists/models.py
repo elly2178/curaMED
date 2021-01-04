@@ -34,7 +34,7 @@ class WorklistInformation(models.Model):
     patient_id = models.CharField(max_length= 64)     
     patient_s_birth_date = models.CharField(max_length=100) 
     patient_s_sex = models.CharField(max_length=4)    
-    scheduled_procedure_step_description =  models.CharField(max_length=64)
+    scheduled_procedure_step_description =  models.CharField(max_length=500)
     
     def get_absolute_url(self):
         return reverse("worklists", kwargs={"id":self.id})

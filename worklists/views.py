@@ -86,7 +86,14 @@ def get_curapacs_worklists_by_location_request(request, location_id):
         worklists_response, status_code = helpers.orthanc.get_request(f"/locations/{location_id}/worklists")
     except ValueError:
         worklists_response = {"status": "error"}
-    #Replace ^ char in ScheduledPerformingPhysicianName (this attribute is inside the dicts listed in ScheduledProcedureStepSequence)
+
+    # for physician in worklists_response:
+    #     physician = worklists_response.get("ScheduledProcedureStepSequence", {}).get("ScheduledPerformingPhysicianName")     
+    #     print("name is : ", physician)
+ 
+    #     # physician = worklists_response("ScheduledPerformingPhysicianName").replace("^"," ")
+    #     # print(physician)
+   
     return HttpResponse(content=json.dumps(worklists_response), content_type="application/json")
 
 def get_curapacs_statistics(request, accession_number):   
