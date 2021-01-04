@@ -26,11 +26,11 @@
       <div class="container">
         <div class="row">
           <div class="card w-2 border-0">
-            <div class="col">
+            <div class="col"  style="width: 80px;">
               {% if instance.title == "male" %}
-              <img src="/static/images/batman.png" class="card-img-top" width="55" height="45">
+              <img src="/static/images/batman.png" class="card-img-top">
               {% else %}
-              <img src="/static/images/marilyn_monroe.png" class="card-img-top" width="55" height="45">
+              <img src="/static/images/marilyn_monroe.png" class="card-img-top">
               {% endif %}
             </div>
           </div>
@@ -43,7 +43,10 @@
               <div class="toast" id="import-toast-{{ instance.id }}" data-autohide="false" 
               role="alert" aria-live="assertive" aria-atomic="true" style="display: none"> 
                 <div class="toast-header">
-                  <img src="/static/images/cancel.png" class="rounded mr-2" width="15" height="15">
+                  <div class="col" style="width: 80px;"> 
+                    <img src="/static/images/cancel.png" class="rounded mr-2">
+                  </div>
+                  
                   <strong class="mr-auto">Fehler</strong>
                   <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
