@@ -10,16 +10,24 @@ class DateInput(forms.DateInput):
 class PatientInformationForm(forms.ModelForm):
     
     sex = [('male','Herr'),('female','Frau')]
-    title = forms.ChoiceField(required = False, choices=sex , label='Geschlecht')
-    first_name = forms.CharField(label='Nachname')
-    second_name = forms.CharField(label='Vorname')
+    title = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                            required = False, choices=sex , label='Geschlecht')
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'})
+                            ,label='Nachname')
+    second_name = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}),
+                            label='Vorname') 
     
-    birthdate = forms.DateField(widget=DateInput() ,label='Geburtsdatum')
-    address = forms.CharField(label='Addresse')
-    number = forms.CharField(label='Nummer')
-    city = forms.CharField(label='Stadt')
-    code = forms.CharField(label='PLZ')
-    language = forms.CharField(required=False, label='Sprache')
+    birthdate = forms.DateField(widget=DateInput(attrs={'class': 'form-control'}) ,label='Geburtsdatum')
+    address = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}),
+                                label='Addresse')
+    number = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}),
+                                label='Nummer')
+    city = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}),
+                            label='Stadt')
+    code = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}),
+                            label='PLZ')
+    language = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}),
+                        required=False, label='Sprache')
        
     class Meta: 
         model = PatientInformation

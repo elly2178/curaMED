@@ -10,19 +10,23 @@ class ModalitiesInformationForm(forms.ModelForm):
     ('CT','Computertomografie'),
     ('US','Ultraschall'),
     ('ES','Endoskopie'),
-    ('DX','Digitale Radiografie'),
+    ('DX','Digitale Radiografie'), 
     ('MG','Mammografie')    
     ]
     # more titles under: http://dicomlookup.com/modalities.asp
     ae_title = forms.CharField(
-        widget=forms.TextInput(attrs={"placeholder": "MTX203"}))
-    
-    title =  forms.ChoiceField(choices=types, label='Typ')
+        widget=forms.TextInput(attrs={'class' : 'form-control', "placeholder": "MTX203"}))
+  
+    title =  forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                                choices=types, label='Typ')
      
-    description = forms.CharField(required=False, label="Beschreibung")
-    ip = forms.GenericIPAddressField(label="IP Adresse")
-    port = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "104"}))
-    associate_location = LocationModelChoiceField(label="Standort",
+    description = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}),
+                                    required=False, label="Beschreibung")
+    ip = forms.GenericIPAddressField(widget=forms.TextInput(attrs={'class' : 'form-control'}),
+                                    label="IP Adresse")
+    port = forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control',"placeholder": "104"}))
+    associate_location = LocationModelChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                                                    label="Standort",
                                                   queryset=AdministrationInformation.objects.all(),
                                                   to_field_name='id',
                                                   initial=0)
