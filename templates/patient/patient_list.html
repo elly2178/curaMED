@@ -31,7 +31,7 @@
         <div class="col">
           <div class="row">
             <div class="col">
-              <h5 class="card-title">{{instance.first_name}} {{ instance.second_name}}</h5>
+              <h5 class="card-title" corresponding-instance-id={{instance.id}}>{{instance.first_name}} {{ instance.second_name}}</h5>
             </div>
             <div class="col-md-auto">
               <a href="{% url 'patientDetail' instance.id %}" class="btn btn-outline-primary">Patient bearbeiten</a>
@@ -49,14 +49,14 @@
         {{ instance.city }} {{ instance.code }}</li>
       <li class="list-group-item py-1">Sprache: {{ instance.language }}</li>
 
-      <!-- aici hide style="display: none" id="study-list-{{ instance.id }}" 
-                corresponding-study-instance="studien-{{ instance.id }}"-->
-      <li class="list-group-item py-1">Studien: 
+      {% if instance.studies|length > 1%}
+      <li class="list-group-item py-1" id="study-list-{{ instance.id }}" 
+      corresponding-study-instance="studien-{{ instance.id }}" >Studien: 
         
         <ul id="patient-{{ instance.id }}-studylist">
         {% for study in instance.studies reversed %}         
           {% if study.study_description %}
-          <div id="{{ study.study_id }}" class="list-group"> 
+          <div id="{{ study.study_id }}" class="list-group" style="margin-bottom:15px;"> 
             <a href="{% url 'fetchToken' %}?study-instance-uid={{ study.study_instance_uid }}" target ="_blank"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} beinhält:</a>
             <li class="list-group-item py-1">Datum: {{ study.study_date }}</li>
@@ -76,7 +76,10 @@
              
         {% endfor %}
         </ul>
-       
+        {% else %}
+        <li class="list-group-item py-1" id="study-list-{{ instance.id }}" 
+        corresponding-study-instance="studien-{{ instance.id }}" hide style="display: none">Studien: 
+       {% endif%}
         <div class="row">
           <div class="col">
           </div>
@@ -101,8 +104,7 @@
 {% endfor %}
 <script>
   var showAllStudiesState = false;
- 
- 
+   
   function changeStudiesVisibility(i) {
     if (i == 0) {
       return;

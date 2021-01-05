@@ -13,7 +13,7 @@
                 <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col"> <label>Geschlecht: </label> </div>
-                        <div class="col"> <select name='title' id='id_title'>
+                        <div class="col"> <select name='title' id='id_title' class="form-control" readonly>
                                 <option value='{{object.get_title_display}}'>{{object.get_title_display}}</option>
                                 <option disabled>────</option>
                                 <option value='male '> Herr </option>
@@ -25,43 +25,43 @@
                     <div class="row">
                         <div class="col"> <label>Vorname: </label> </div>
                         <div class="col"> 
-                            <input type="text" name="first_name" id="id_first_name" value='{{ object.first_name }}'> </div>
+                            <input type="text" class="form-control" name="first_name" id="id_first_name" value='{{ object.first_name }}'> </div>
                     </div>
                 </li>
                 <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col"><label>Nachname </label></div>
                         <div class="col">
-                            <input type="text" name="second_name" id="id_second_name" value='{{ object.second_name }}'></div>
+                            <input type="text" class="form-control" name="second_name" id="id_second_name" value='{{ object.second_name }}'></div>
                     </div>
                 </li>
                 <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col"><label>Geburtstag: </label></div>
                         <div class="col">
-                            <!-- class="datepicker" -->
-                            <input type="text" name="birthdate" id="id_birthdate" value="{{object.birthdate}}"></div>
+                            <!-- class="datepicker" --> 
+                            <input type="text" class="form-control" name="birthdate" id="id_birthdate" value="{{object.birthdate}}" readonly></div>
                     </div>
                 </li>
                 <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col"><label>Strasse: </label></div>
                         <div class="col">
-                            <input type="text" name="address" id="id_address" value='{{ object.address }}'></div>
+                            <input type="text" class="form-control" name="address" id="id_address" value='{{ object.address }}'></div>
                     </div>
                 </li>
                 <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col"><label>Nr.: </label></div>
                         <div class="col">
-                            <input type="text" name="number" id="id_number" value='{{ object.number }}'> </div>
+                            <input type="text" class="form-control" name="number" id="id_number" value='{{ object.number }}'> </div>
                     </div>
                 </li>
                 <li class="list-group-item py-1">
                     <div class="row">
                         <div class="col"><label>Stadt: </label></div>
                         <div class="col">
-                            <input type="text" name="city" id="id_city" value='{{ object.city }}'></div>
+                            <input type="text" class="form-control" name="city" id="id_city" value='{{ object.city }}'></div>
                     </div>
                 </li>
 
@@ -69,7 +69,7 @@
                     <div class="row">
                         <div class="col"><label>PLZ: </label></div>
                         <div class="col">
-                            <input type="text" name="code" id="id_code" value='{{ object.code }}'></div>
+                            <input type="text" class="form-control" name="code" id="id_code" value='{{ object.code }}'></div>
                     </div>
                 </li>
 
@@ -77,7 +77,7 @@
                     <div class="row">
                         <div class="col"><label>Sprache: </label></div>
                         <div class="col">
-                            <input type="text" name="language" id="id_language" value='{{ object.language }}'></div>
+                            <input type="text" class="form-control" name="language" id="id_language" value='{{ object.language }}'></div>
                     </div>
                 </li>
             </ul>

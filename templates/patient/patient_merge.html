@@ -125,7 +125,7 @@
 </div>
 
 
-<script>
+<script> 
     const original_patient_id = "{{ object.id }}"
     $.get("{%url 'curapacsSearchPatients'%}?patient-id=" + original_patient_id,
             function (responseData) {

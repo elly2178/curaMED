@@ -126,7 +126,7 @@
                 'Accept': 'application/json',
                 'X-CSRFToken': csrfmiddlewaretoken
             }
-        }); 
+        });  
 
       $.post("{%url 'patientsImport' %}", JSON.stringify(patientIds),
               function (returnedData){ 

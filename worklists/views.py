@@ -86,13 +86,14 @@ def get_curapacs_worklists_by_location_request(request, location_id):
         worklists_response, status_code = helpers.orthanc.get_request(f"/locations/{location_id}/worklists")
     except ValueError:
         worklists_response = {"status": "error"}
+    
 
-    # for physician in worklists_response:
-    #     physician = worklists_response.get("ScheduledProcedureStepSequence", {}).get("ScheduledPerformingPhysicianName")     
-    #     print("name is : ", physician)
+    #physician = worklists_response.get("ScheduledProcedureStepSequence"[0].get("ScheduledPerformingPhysicianName"))
+    # physician.replace("^"," ")
+    #print("name is : ", physician)
  
-    #     # physician = worklists_response("ScheduledPerformingPhysicianName").replace("^"," ")
-    #     # print(physician)
+        # physician = worklists_response("ScheduledPerformingPhysicianName").replace("^"," ")
+        # print(physician)
    
     return HttpResponse(content=json.dumps(worklists_response), content_type="application/json")
 
