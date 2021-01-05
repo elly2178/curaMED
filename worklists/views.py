@@ -87,14 +87,12 @@ def get_curapacs_worklists_by_location_request(request, location_id):
     except ValueError:
         worklists_response = {"status": "error"}
     
-
-    #physician = worklists_response.get("ScheduledProcedureStepSequence"[0].get("ScheduledPerformingPhysicianName"))
-    # physician.replace("^"," ")
-    #print("name is : ", physician)
- 
-        # physician = worklists_response("ScheduledPerformingPhysicianName").replace("^"," ")
-        # print(physician)
-   
+    for worklist in worklists_response.get("content"):  
+        for worklist_entry in worklist.get("ScheduledProcedureStepSequence"):
+            doctor =  worklist_entry.get("ScheduledPerformingPhysicianName").replace("^"," ")
+            # 94 changes the value of the key "ScheduledPerformingPhysicianName" 
+            worklist_entry["ScheduledPerformingPhysicianName"] = doctor
+           
     return HttpResponse(content=json.dumps(worklists_response), content_type="application/json")
 
 def get_curapacs_statistics(request, accession_number):   
