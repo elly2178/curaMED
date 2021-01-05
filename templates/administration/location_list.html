@@ -47,14 +47,12 @@
  
 {% endfor %}
 <script>
-  $("#status-icon").hide();
-  
+  $("#status-icon").hide();  
   $("button[name='get-location-status']").click(function () {
     $.ajaxSetup({ timeout: 6001 })
 
     $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...').addClass('disabled');
     var $ti = $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Verbinden...');
- // corresponding-stauts="{{ object.id }}" name ='get-location-status-icon'
     setTimeout(function () {
       //dont remove.. 
     }, 1000);

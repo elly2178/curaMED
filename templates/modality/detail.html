@@ -25,7 +25,7 @@
                                 <label>AETitle: </label>
                             </div>
                             <div class="col">
-                                <input type="text" name="ae_title" id="id_ae_title"
+                                <input type="text" class="form-control" name="ae_title" id="id_ae_title"
                                     title="Der AE-Titel kann nicht bearbeitet werden. Bitte hierfür die Modalität neu erstellen."
                                     value='{{ object.ae_title }}' readonly>
                             </div>
@@ -37,7 +37,7 @@
                                 <label>Title: </label>
                             </div>
                             <div class="col">
-                                <input type="text" name="title" id="id_name" value='{{ object.title }}'>
+                                <input type="text" class="form-control" name="title" id="id_name" value='{{ object.title }}'>
                             </div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                                 <label>Beschreibung: </label>
                             </div>
                             <div class="col">
-                                <input type="text" name="description" id="id_name" value='{{ object.description }}'>
+                                <input type="text" class="form-control" name="description" id="id_name" value='{{ object.description }}'>
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                                 <label>IP: </label>
                             </div>
                             <div class="col">
-                                <input type="text" name="ip" id="id_name" value='{{ object.ip }}'>
+                                <input type="text" class="form-control" name="ip" id="id_name" value='{{ object.ip }}'>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                                 <label>Port: </label>
                             </div>
                             <div class="col">
-                                <input type="text" name="port" id="id_name" value='{{ object.port }}'>
+                                <input type="text" class="form-control" name="port" id="id_name" value='{{ object.port }}'>
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                             </div>
 
                             <div class="col" id="associate_location">
-                                <select name='associate_location' id='id_associate_location'>
+                                <select name='associate_location' class="form-control" id='id_associate_location'>
                                     {% for dropdown in AdministrationInformation %}
                                     <option value='{{ dropdown.id }}'>
                                         {{ dropdown.get_location_representation }}</option>

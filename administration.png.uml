@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>Python</ID>
+  <OriginalElement>#C:/Users/ADEK/Downloads/MedInfo/In/Semestrul 11/curaMED/administration</OriginalElement>
+  <nodes>
+    <node x="569.0" y="646.0">AppConfig</node>
+    <node x="0.0" y="414.0">administration.forms.AdministrationInformationForm</node>
+    <node x="0.0" y="726.0">administration.models.LocationModelChoiceField</node>
+    <node x="168.0" y="0.0">Model</node>
+    <node x="0.0" y="80.0">administration.models.AdministrationInformation</node>
+    <node x="164.0" y="334.0">ModelForm</node>
+    <node x="445.0" y="726.0">administration.apps.AdministrationConfig</node>
+    <node x="120.0" y="646.0">ModelChoiceField</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="administration.forms.AdministrationInformationForm" target="ModelForm">
+      <point x="0.0" y="-93.5" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="administration.apps.AdministrationConfig" target="AppConfig">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="administration.models.LocationModelChoiceField" target="ModelChoiceField">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="administration.models.AdministrationInformation" target="Model">
+      <point x="0.0" y="-104.5" />
+      <point x="0.0" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8703007518796992" x="398.5" y="522.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+    <Category>Fields</Category>
+  </Categories>
+</Diagram>
+
