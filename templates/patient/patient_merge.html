@@ -193,10 +193,10 @@
                 var parsed_response = jQuery.parseJSON(responseData)
                 console.log(parsed_response);
                 if (parsed_response["failed"].length != 0) {
-                    var button_icon = '<div class="col" style="width: 80px;"><img id="status-icon" src="/static/images/cancel.png"></div>';
+                    var button_icon = '<div class="col"><img id="status-icon" src="/static/images/cancel.png"></div>';
                     var button_text = "Vorgang fehlgeschlagen";
                 } else {
-                    var button_icon = '<div class="col" style="width: 80px;"><img id="status-icon" src="/static/images/check.png"></div>';
+                    var button_icon = '<div class="col"><img id="status-icon" src="/static/images/check.png"></div>';
                     var button_text = "Vorgang erfolgreich";
                 }
                 $('#merge-btn').addClass('enabled');

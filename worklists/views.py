@@ -105,8 +105,6 @@ def remove_curapacs_worklist(request, location_id, worklist_uid):
     return HttpResponse(content=json.dumps(remove_response), content_type="application/json") 
 
 def worklist_list_view(request):
-    # form = WorklistInformationForm(request.GET)
-    # location_id = form.cleaned_data.get("modality").associate_location.id
     queryset = AdministrationInformation.objects.all()
     queryModalitySet = ModalitiesInformation.objects.all()
     queryWorklistSet = WorklistInformation.objects.all()
