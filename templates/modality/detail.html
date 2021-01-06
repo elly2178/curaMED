@@ -37,7 +37,15 @@
                                 <label>Title: </label>
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" name="title" id="id_name" value='{{ object.title }}'>
+                                <input type="text" class="form-control" name="title"
+                                title="
+                                ('CR','Computerradiografie'),
+                                ('CT','Computertomografie'),
+                                ('US','Ultraschall'),
+                                ('ES','Endoskopie'),
+                                ('DX','Digitale Radiografie'), 
+                                ('MG','Mammografie')" 
+                                id="id_name" value='{{ object.title }}'>
                             </div>
                         </div>
                     </div>
