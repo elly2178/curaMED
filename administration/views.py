@@ -5,6 +5,7 @@ from .forms import AdministrationInformationForm
 from django.views.generic import (     
     UpdateView )
 
+from django.contrib import messages
 from curaMED import helpers
 import json
 # Create your views here.
@@ -35,11 +36,15 @@ def location_create_view(request):
     if form.is_valid():
         form.save()
         form = AdministrationInformationForm()
-        return redirect('administration')
+        return redirect('administration')    
+    else:
+        for fieldname, errormessages in form.errors.items():
+            for errormessage in errormessages:
+                messages.warning(request, "PLZ kann nicht mehr als vier Zahlen haben.")  
     context = {
         'form':form
     }
-    return render(request, 'administration/create.html', context)
+    return render(request, 'administration/create.html', context) 
  
 def location_detail_view(request, id):
     obj = get_object_or_404(AdministrationInformation, id=id)

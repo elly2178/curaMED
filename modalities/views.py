@@ -6,7 +6,7 @@ from administration.models import AdministrationInformation
 from django.core.exceptions import ValidationError
 
 
-from django.contrib import messages
+from django.contrib import messages 
 from curaMED import helpers
 import json
 
@@ -38,7 +38,7 @@ def modality_create_view(request):
     else:
         for fieldname, errormessages in form.errors.items():
             for errormessage in errormessages:
-                messages.warning(request, errormessage)
+                messages.warning(request, errormessage) 
     context = {
         'form':form 
     }

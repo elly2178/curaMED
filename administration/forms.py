@@ -1,7 +1,7 @@
 from django import forms
 
 from.models import AdministrationInformation
-
+ 
 class AdministrationInformationForm(forms.ModelForm):
     
     name = forms.CharField(label='Betriebsname',

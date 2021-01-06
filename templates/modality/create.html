@@ -154,10 +154,7 @@
             }
             $('#btn-connect').addClass('enabled');
             $('#btn-connect').html(button_text + " " + button_icon);
-
-            //$ti.html('Modalität Online');
-            //$("#status-icon").prop("src", "/static/images/check.png");
-            //$("#status-icon").show();
+            
         })
             .fail(function () {
                 var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
@@ -167,31 +164,6 @@
             });
 
     });
-    // $('#post-btn').click(function () {
-    //     var ip = $("#id_ip").val();
-    //     var port = $("#id_port").val();
-    //     var location = $("#id_associate_location").val();
-    //     var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
-
-    //     $.ajaxSetup({
-    //         timeout: 10001,
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/json',
-    //             'X-CSRFToken': csrfmiddlewaretoken
-    //         }
-    //     });
-
-    //     $.post("{%url 'modalityEcho'%}", JSON.stringify({
-    //         ip_address: ip,
-    //         port: port,
-    //         location_id: location
-    //     }),
-    //         function (returnedData) {
-    //             console.log(returnedData);
-    //         }).fail(function () {
-    //             console.log("error");
-    //         });
-    // });
+    
 </script>
 {% endblock %}

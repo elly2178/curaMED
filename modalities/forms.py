@@ -36,7 +36,7 @@ class ModalitiesInformationForm(forms.ModelForm):
     def clean_ae_title(self):
         ae_title = self.cleaned_data['ae_title']
         if ModalitiesInformation.objects.filter(ae_title=ae_title).exists():
-            raise ValidationError("Eine Modalität mit diesem AETitle existiert bereits.")
+            raise ValidationError("Eine Modalität mit diesem AETitle existiert bereits.") 
         return ae_title
 
     class Meta: 

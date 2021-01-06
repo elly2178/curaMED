@@ -6,7 +6,17 @@
 </div>
 
 <form method='POST'> {% csrf_token %}
+<!-- add allert banner-->
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-warning w-50 mx-auto
+        {% if message.tags %} alert-{{ message.tags }}{% endif %}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
 
+    <!-- end alert-->
   <div class="card border-info mb-3 w-50 mx-auto">
     <div class="card-body">
       <div class="container">
@@ -84,7 +94,9 @@
 
     </div>
   </div>
-
-
 </form>
+
+<script>
+  
+</script>
 {% endblock %}

@@ -12,7 +12,7 @@ class AdministrationInformation(models.Model):
     name = models.CharField(max_length=100)
     street = models.CharField(max_length=80)
     city = models.CharField(max_length=40)
-    plz = models.CharField(max_length=4)
+    plz = models.CharField(max_length=4) 
     number = models.IntegerField()
     telefon_number = models.CharField(max_length=15)
 
