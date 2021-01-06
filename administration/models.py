@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from django.forms import ModelChoiceField
-from phonenumber_field.modelfields import PhoneNumberField
+from django.forms import ModelChoiceField 
 
 class LocationModelChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
@@ -13,8 +12,8 @@ class AdministrationInformation(models.Model):
     street = models.CharField(max_length=80)
     city = models.CharField(max_length=40)
     plz = models.CharField(max_length=4) 
-    number = models.IntegerField()    
-    telefon_number =  PhoneNumberField() 
+    number = models.IntegerField() 
+    telefon_number = models.CharField(max_length=30)
 
     def get_absolute_url(self):
         return reverse("administration", kwargs={"id":self.id})
