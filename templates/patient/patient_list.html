@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <ul class="list-group list-group-flush">
+    <ul class="list-group list-group-flush" style="margin-bottom:15px;">
       <li class="list-group-item py-1">Geburtsdatum: {{ instance.birthdate }}</li>
       <li class="list-group-item py-1">Adresse: {{ instance.address }} {{ instance.number }},
         {{ instance.city }} {{ instance.code }}</li>
@@ -62,6 +62,8 @@
             <li class="list-group-item py-1">Datum: {{ study.study_date }}</li>
             <li class="list-group-item py-1">Uhrzeit: {{ study.study_time }}</li>
             <li class="list-group-item py-1">Beschreibung: {{ study.study_description }}</li>
+            <!-- Line added for attachments-->
+            <li class="list-group-item py-1">Attachments:  </li>
           </div>
            
           {% else %} 
@@ -70,6 +72,8 @@
             <a href="{% url 'fetchToken' %}?study-instance-uid={{ study.study_instance_uid }}" target ="_blank"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} ohne Beschreibung
               gefunden.</a>
+                <!-- Line added for attachments-->
+              <li class="list-group-item py-1">Attachments:  </li>
           </div>
          </div> 
           {% endif %}

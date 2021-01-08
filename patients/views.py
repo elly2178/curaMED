@@ -256,14 +256,14 @@ def curapacs_search_patients_view(request):
     for orthanc_uid in curapacs_search_response:        
         patient_information_response, status_code = helpers.orthanc.get_request(f"/patients/{orthanc_uid}")
         given_patient_id = patient_information_response.get("MainDicomTags",{}).get("PatientID","") 
-        given_patient_name = patient_information_response.get("MainDicomTags",{}).get("PatientName","")  
+        given_patient_name = patient_information_response.get("MainDicomTags",{}).get("PatientName","").replace("^"," ")  
         existing_patient_study_uids = patient_information_response.get("Studies",[])
         study_uids_nr = len(existing_patient_study_uids)
         results_list.append({"id": given_patient_id,
                              "name": given_patient_name,
                              "study_count": study_uids_nr
-                             })        
-    
+                             })         
+     
     return HttpResponse(content=json.dumps(results_list), content_type="application/json")
 
 

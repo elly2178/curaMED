@@ -136,7 +136,6 @@
                 }
             });
     $("#search-btn").click(function () {
-        console.log("im berfore the id and the name")
         $.ajaxSetup({
             timeout: 10001,
             headers: {
@@ -145,7 +144,7 @@
                 'X-CSRFToken': csrfmiddlewaretoken
             }
         });
- 
+        $(this).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Suchen...');
         var patient_id = $("#patient_id_query").val();
         var patient_name = $("#patient_name_query").val();
         var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
@@ -158,14 +157,22 @@
         $.get("{%url 'curapacsSearchPatients'%}?patient-id=" + encoded_patient_id + "&patient-name=" + encoded_patient_name,
             function (returnedData) { 
                 $("#result-list").removeAttr("style").css("display", "inline");
-                $("#result-list").html = ""
+                $("#result-list").html = "";
                 var result_list_content = "";
                 returnedData.forEach(function (patient, index) {
                     result_list_content = result_list_content + '<li class="list-group-item" style="padding-left: 25px;" ><input class="form-check-input me-1" type="checkbox" corresponding-patient="' + patient.id + '" value="">' + patient.name + ' (DICOM ID: ' + patient.id + ') mit ' + patient.study_count + ' Studie(n)</li>';
+                    
                 });
-                $("#result-list").html(result_list_content)
+                $("#result-list").html(result_list_content);
+                $("#search-btn").html("Patienten gefunden");
+                if (result_list_content.length == 0 ) {
+                    $("#result-list").html("Keine Patienten gefunden");
+                    $("#search-btn").html("Erneuert suchen");
+                    }
             });
-    }); 
+   
+    });   
+     
     $("#merge-btn").click(function () {
         var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
         $.ajaxSetup({
@@ -193,11 +200,12 @@
                 var parsed_response = jQuery.parseJSON(responseData)
                 console.log(parsed_response);
                 if (parsed_response["failed"].length != 0) {
-                    var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="30" height="30">';
+                    var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
                     var button_text = "Vorgang fehlgeschlagen";
                 } else {
-                    var button_icon = '<img id="status-icon" src="/static/images/check.png"width="30" height="30">';
+                    var button_icon = '<img id="status-icon" src="/static/images/check.png"width="25" height="25">';
                     var button_text = "Vorgang erfolgreich";
+                    window.location.href = "{% url 'patients' %}"
                 }
                 $('#merge-btn').addClass('enabled');
                 $('#merge-btn').html(button_text + " " + button_icon);

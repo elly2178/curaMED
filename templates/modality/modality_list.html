@@ -28,7 +28,8 @@
   </ul>
     <a href="{% url 'modalityDetail' instance.id %}" class="btn btn-outline-primary">Modalität bearbeiten</a>
     <a href="{% url 'modalityDelete' instance.id %}" class="btn btn-outline-primary">Modalität entfernen</a>
-    <button type="button" id="btn-connect-{{ instance.id }}" corresponding-modality-id="{{ instance.id }}" class="btn btn-outline-primary"> Verbinden</button>
+    <button type="button" id="btn-connect-{{ instance.id }}" corresponding-modality-id="{{ instance.id }}" class="btn btn-outline-primary"
+    title="C-Echo durchführen"> Verbinden</button>
   </div>
 </div>
 <script>

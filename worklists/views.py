@@ -91,7 +91,7 @@ def get_curapacs_worklists_by_location_request(request, location_id):
         for worklist_entry in worklist.get("ScheduledProcedureStepSequence"):
             doctor =  worklist_entry.get("ScheduledPerformingPhysicianName").replace("^"," ")
             # 94 changes the value of the key "ScheduledPerformingPhysicianName" 
-            worklist_entry["ScheduledPerformingPhysicianName"] = doctor
+            worklist_entry["ScheduledPerformingPhysicianName"] = doctor 
            
     return HttpResponse(content=json.dumps(worklists_response), content_type="application/json")
 
