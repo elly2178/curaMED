@@ -187,8 +187,7 @@
         var patient_dicom_uid_list = [];
         $("input[type=checkbox]").each(function (i) {
             if ($(this).prop('checked')) {
-                patient_dicom_uid_list.push($(this).attr("corresponding-patient"));
-               
+                patient_dicom_uid_list.push($(this).attr("corresponding-patient"));               
             }
         });
         if (patient_dicom_uid_list.length == 0) {

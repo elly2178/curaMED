@@ -139,8 +139,12 @@
                   $("#show-import-for-patient-" + patient.id ).html('Patient erfolgreich importiert');
                   $("#show-import-for-patient-" + patient.id ).prop('disabled', true);   
                 });
-              }).fail(function (){ 
-                 console.log("error");
+              }).fail(function (){
+                $.each(patientIds, function (patientid, index) {
+                  $("#import-toast-" + patientid).removeAttr("style").css("display","inline");
+                  $("#import-toast-" + patientid).toast("show");
+                  $("#show-import-for-patient-" + patientid ).html('Erneut versuchen');
+                });
               }).always(function() {
                   $("#btn-import-all-patients").html("Alle Patienten importieren");
                 }
