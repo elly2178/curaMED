@@ -140,7 +140,8 @@
         var jqxhr = jQuery.post("{%url 'modalityEcho'%}", JSON.stringify({
             ip_address: ip,
             port: port,
-            location_id: location
+            location_id: location,
+            timeout: 10
         }), function (responseData) {
             //var parsed_response = jQuery.parseJSON(responseData)
             var parsed_response = responseData
