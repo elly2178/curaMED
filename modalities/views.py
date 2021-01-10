@@ -91,7 +91,7 @@ def modality_connection_test_view(request):
 
         response_dict, response_status = helpers.orthanc.post_request(f"/locations/{location}/echo",
                                                                       request_body,
-                                                                      timeout=8)
+                                                                      timeout=10)
         return HttpResponse(content=json.dumps(response_dict),
                             content_type="application/json")         
     else:
