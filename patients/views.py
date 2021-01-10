@@ -57,8 +57,7 @@ def patient_search_result_view(request):
     return render(request, 'patient/patient_list.html', context)
  
 def patient_list_view(request):
-    queryset = PatientInformation.objects.all()
-    
+    queryset = PatientInformation.objects.all()    
     for patient in queryset:
         curamed_patient_id = patient.id
         patient.studies = []
@@ -178,7 +177,7 @@ def fetch_meddream_token(request):
 
     body = { "items": [
             {"studies": {
-                "study": study_instance_uid,
+                "study": study_instance_uid, 
                 "storage": "Orthanc"}
             } ]
             }       

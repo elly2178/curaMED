@@ -180,8 +180,7 @@
         var patient_dicom_uid_list = [];
         $("input[type=checkbox]").each(function (i) {
             if ($(this).prop('checked')) {
-                patient_dicom_uid_list.push($(this).attr("corresponding-patient"));
-               
+                patient_dicom_uid_list.push($(this).attr("corresponding-patient"));               
             }
         });
         if (patient_dicom_uid_list.length == 0) {
@@ -193,11 +192,13 @@
                 var parsed_response = jQuery.parseJSON(responseData)
                 console.log(parsed_response);
                 if (parsed_response["failed"].length != 0) {
-                    var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="30" height="30">';
+                    var button_icon = '<img id="status-icon" src="/static/images/cancel.png" width="25" height="25">';
                     var button_text = "Vorgang fehlgeschlagen";
                 } else {
-                    var button_icon = '<img id="status-icon" src="/static/images/check.png"width="30" height="30">';
+                    var button_icon = '<img id="status-icon" src="/static/images/check.png"width="25" height="25">';
                     var button_text = "Vorgang erfolgreich";
+                    window.location.href = "{% url 'patients' %}" 
+
                 }
                 $('#merge-btn').addClass('enabled');
                 $('#merge-btn').html(button_text + " " + button_icon);
