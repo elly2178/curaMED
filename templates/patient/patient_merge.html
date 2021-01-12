@@ -204,7 +204,13 @@
                 } else {
                     var button_icon = '<img id="status-icon" src="/static/images/check.png"width="25" height="25">';
                     var button_text = "Vorgang erfolgreich";
-                    window.location.href = "{% url 'patients' %}"
+                    window.setTimeout(function(){
+
+                    // Move to a new location or you can do something else
+                    window.location.href =  "{% url 'patients' %}";
+
+                    }, 5000);
+                    
                 }
                 $('#merge-btn').addClass('enabled');
                 $('#merge-btn').html(button_text + " " + button_icon);
