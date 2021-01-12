@@ -70,7 +70,7 @@ urlpatterns = [
     path('patients/<int:id>/detail/', patient_detail_view, name ='patientDetail'),
     path('patients/<int:id>/delete/', patient_delete_view, name ='patientDelete'),
     path('patients/meddreamtoken/', fetch_meddream_token, name ='fetchToken'),
-    path('patients/merge/<int:id>/', patient_merge_view, name ='patientMerge'),
+    path('patients/merge/<int:id>/', patient_merge_view, name ='patientMerge'), 
     path('curapacs/search/patients/', curapacs_search_patients_view, name ='curapacsSearchPatients'),
        
     path('modalities/create/', modality_create_view, name ='modalityCreate'),
