@@ -106,7 +106,8 @@ class Orthanc:
           
 secrets_files = [os.environ.get("CURAMED_ORTHANC_SECRET"),
                  "/home/schumi/Bachelor/secrets/orthanc-secret.json",
-                 "C:/Users/taadrar1/Documents/secrets.txt"]
+                 "C:/Users/taadrar1/Documents/secrets.txt",
+                 "C:/Users/ADEK/Documents/curapacs_secret.txt"]
 
 for secrets_file in secrets_files:
     if secrets_file is not None:
