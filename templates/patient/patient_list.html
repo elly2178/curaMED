@@ -49,7 +49,7 @@
         {{ instance.city }} {{ instance.code }}</li>
       <li class="list-group-item py-1">Sprache: {{ instance.language }}</li>
 
-      {% if instance.studies|length => 1%}
+      {% if instance.studies|length >= 1%}
       <li class="list-group-item py-1" id="study-list-{{ instance.id }}" 
       corresponding-study-instance="studien-{{ instance.id }}" >Studien: 
         
