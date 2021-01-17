@@ -12,7 +12,7 @@ class WorklistInformationForm(forms.ModelForm):
         queryset=ModalitiesInformation.objects.all(), 
         to_field_name='ae_title', 
         initial=0)   
-    doctor_list = [('dr1', 'Dr. Stephan Weingartner'), ('dr2','Dr. Matias Schütz'),('dr3', 'Dr. Marvin Spengler')]
+    doctor_list = [('dr1', 'Dr. Stephan Weingartner'), ('dr2','Dr. Matias Schuetz'),('dr3', 'Dr. Marvin Spengler')]
     scheduled_performing_physician_s_name = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
                                     choices=doctor_list,label='Zuständiger Arzt')
     patient_s_name = forms.CharField()
