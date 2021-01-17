@@ -27,7 +27,7 @@ class WorklistInformation(models.Model):
     scheduled_procedure_step_start_time = models.CharField(max_length=12, validators=[validate_time])
     modality = models.ForeignKey('modalities.ModalitiesInformation', on_delete=models.CASCADE)
     doctor_list = [('dr1', 'Dr. Stephan Weingartner'), 
-                    ('dr2','Dr. Matias Schuetz'),
+                    ('dr2','Dr. Thomas Anderson'),
                     ('dr3', 'Dr. Marvin Spengler')]
     scheduled_performing_physician_s_name = models.CharField(max_length=80,choices=doctor_list)
     patient_s_name = models.CharField(max_length=100) 
