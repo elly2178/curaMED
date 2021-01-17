@@ -49,7 +49,7 @@
         {{ instance.city }} {{ instance.code }}</li>
       <li class="list-group-item py-1">Sprache: {{ instance.language }}</li>
 
-      {% if instance.studies|length > 1%}
+      {% if instance.studies|length => 1%}
       <li class="list-group-item py-1" id="study-list-{{ instance.id }}" 
       corresponding-study-instance="studien-{{ instance.id }}" >Studien: 
         
@@ -70,8 +70,7 @@
             <a href="{% url 'fetchToken' %}?study-instance-uid={{ study.study_instance_uid }}" target ="_blank"
               class="list-group-item list-group-item-info">Studie mit ID {{ study.study_id }} ohne Beschreibung
               gefunden.</a>
-                <!-- Line added for attachments-->
-              <li class="list-group-item py-1">Attachments:  </li>
+           
           </div>
          </div> 
           {% endif %}
